@@ -8,7 +8,7 @@ import Footer from "../components/footer";
 export default function Home() {
 
   return (
-    <div className="max-w-screen min-h-screen bg-gradient-to-r from-slate-50 to-white overflow-x-hidden" style={{fontFamily: 'var(--font-poppins)'}}>
+    <div className="max-w-screen min-h-screen bg-gradient-to-r from-slate-50 to-white" style={{fontFamily: 'var(--font-poppins)'}}>
       <Header/>
 
       <main className="flex flex-col h-full w-full mt-16">
@@ -69,7 +69,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="container max-w-full rounded-xl mx-auto bg-zinc-100/10 py-8 backdrop-blur-xl px-2">
+        <section id="features" className="container max-w-full rounded-xl mx-auto bg-zinc-100/10 py-20 backdrop-blur-xl px-2">
           <div className="flex flex-col items-center w-full">
             <div className="space-y-4 mb-16">
               <h2 className="text-slate-900 text-3xl lg:text-4xl font-bold text-center">Everythin You Need for Healthcare Management</h2>
@@ -123,7 +123,7 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section className="py-16 px-4">
+        <section id="how-it-works" className="py-20 px-4">
           <div className="container mx-auto max-w-6xl">
             <div className="text-center space-y-4 mb-16">
               <h2 className="text-slate-900 font-bold text-3xl lg:text-4xl">How It Works</h2>

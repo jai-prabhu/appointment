@@ -13,7 +13,8 @@ export interface CardProps {
 export const Card: FC<CardProps> = ({ CardIcon, cardTitle, cardDescription, iconClassName, iconBackGroundColor }) => {
 
     return (
-        <div className="flex flex-col gap-4 p-4 rounded-lg shadow-md shadow-slate-300">
+        <div className="flex flex-col gap-4 p-4 rounded-lg shadow-md shadow-slate-300
+        transition-all duration-500 hover:shadow-xl">
             <div className={`w-fit ${iconBackGroundColor} rounded-lg p-2`}>
                 <CardIcon className={`${iconClassName}`}/>
             </div>
