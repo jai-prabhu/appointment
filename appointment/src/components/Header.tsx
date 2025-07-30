@@ -2,7 +2,7 @@
 export default function Header() {
 
     return (
-        <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 left-0 max-w-screen">
+        <header className="border-b bg-white/80 w-full backdrop-blur-sm z-10 fixed top-0 left-0 max-w-screen">
             <div className="container flex mx-auto px-4 justify-between items-center w-full">
                 
                 <div className="inline-flex items-center">
@@ -10,7 +10,7 @@ export default function Header() {
                     src="/Logo.png"
                     alt="Logo"
                     className="w-18 h-auto"/>
-                    <h1 className="text-slate-900 text-lg font-semibold tracking-wide">Schedula</h1>
+                    <h1 className="md:block hidden text-slate-900 text-lg font-semibold tracking-wide">Schedula</h1>
                 </div>
 
                 <nav className="md:inline-flex gap-4 items-center hidden">
