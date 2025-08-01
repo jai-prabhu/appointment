@@ -40,7 +40,7 @@ export default function Footer () {
                             </div>
                         </div>
                     </div>
-                    <h2 className="text-slate-300 text-center">© 2024 Schedula. All rights reserved.</h2>
+                    <h2 className="text-slate-300 text-center">© 2025 Schedula. All rights reserved.</h2>
                 </div>
             </div>
         </footer>
