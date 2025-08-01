@@ -7,7 +7,7 @@ import { EyeIcon, EyeOffIcon, ArrowLeftIcon, ArrowRightIcon, StethoscopeIcon, Us
 } from "lucide-react";
 import { Select, SelectItem } from "../../components/select";
 
-export default function Login () {
+export default function Register () {
 
     const [isDoctor, setIsDoctor] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false);
