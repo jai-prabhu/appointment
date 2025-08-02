@@ -16,7 +16,7 @@ export default function Register () {
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white flex items-center
         justify-center p-4" style={{fontFamily: "var(--font-poppins)"}}>
-            <div className="container max-w-screen-md">
+            <div className="container max-w-2xl">
                 <div className="text-center mb-8">
 
                     <div className="flex items-center justify-center space-x-2 mb-4">
@@ -26,7 +26,7 @@ export default function Register () {
                         className="w-20 h-auto"/>
                     </div>
 
-                    <a href="" className="inline-flex items-center text-slate-600
+                    <a href="/home" className="inline-flex items-center text-slate-600
                     hover:text-teal-600 transition-colors mb-6">
                         <ArrowLeftIcon className="w-4 h-4 mr-2"/>
                         Back to Home
@@ -372,7 +372,7 @@ export default function Register () {
                     <div className="relative w-full group overflow-x-hidden rounded-lg border-b border-slate-300">
                         <button className="relative inline-flex gap-3 justify-center items-center
                          text-white bg-transparent w-full p-4 rounded-lg z-10 cursor-pointer">
-                            Log In
+                            Register as {isDoctor ? 'Doctor' : 'Patient'}
                             <ArrowRightIcon className="transition-transform duration-500 group-hover:translate-x-10 group-active:translate-x-10"/>
                         </button>
 
@@ -384,12 +384,12 @@ export default function Register () {
 
                     <p className="text-slate-700 mt-4 pt-6 border-t border-slate-300 w-full text-center">Already have an Account? 
                         <a
-                        href=""
+                        href="/login"
                         className="text-teal-600"> Sign in here</a></p>
                 </div>
                 <div className="flex w-full justify-center items-center gap-2 text-center py-4">
                     <ShieldIcon className="w-4 h-4 text-slate-400"/>
-                    <p className="text-slate-400 text-sm">
+                    <p className="text-slate-400 text-xs sm:text-sm">
                     
                     Your data is protected with enterprise grade security & HIPAA compilance.
                 </p>
