@@ -1,6 +1,14 @@
 "use client";
 
-export const Avatar = ({ src, size }: { src: string, size: string }) => {
+import { FC } from "react";
+
+interface AvatarProps {
+
+    src: string;
+    size: string;
+}
+
+export const Avatar: FC<AvatarProps> = ({ src, size }: AvatarProps) => {
 
     return (
         

@@ -47,13 +47,13 @@ export const Select = ({ className, children, placeholder }: {className?: string
                     setSelection(!selection);
                 }
             }
-            className={className ? className : `relative flex ${selected === placeholder ? `text-slate-400` : `text-slate-900`} w-full border border-slate-400 px-4 py-2 rounded-lg text-start justify-between`}>
+            className={`relative flex ${selected === placeholder ? `text-slate-400` : `text-slate-900`} w-full ${className? className : 'border border-slate-400 rounded-lg'} px-4 py-2 text-start justify-between`}>
                 {selected}
                 <ChevronDownIcon className={`transition-all duration-500 ease-in-out text-slate-400 ${selection ? `rotate-180` : `rotate-0`}`}/>
 
                 {selection && (
-                    <div className="absolute flex flex-col items-center justify-center z-10 left-0 top-[100%] w-full bg-slate-50 shadow-xl
-                    shadow-slate-400 border border-slate-300 rounded-lg mt-2">
+                    <div className={`absolute flex flex-col items-center justify-center z-10 left-0 top-[100%] w-full bg-slate-50 shadow-xl
+                    shadow-slate-400 border border-slate-300 rounded-lg mt-2`}>
                         <div className="p-2 text-start w-full text-slate-900">
                             {
                                 Children.map(children, (child) => {
