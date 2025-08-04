@@ -65,7 +65,7 @@ export const CardContent = ({ children, className }: {children?: ReactNode; clas
 export const CardHolder = ({ children, className }: {children: ReactNode; className?: string}) => {
 
     return (
-        <div className={className ? className : "space-y-4 w-full p-4 bg-slate-50 rounded-lg shadow-md shadow-slate-300 border-t border-slate-300"}>
+        <div className={`space-y-4 w-full ${className? className : `p-4 bg-slate-50 rounded-lg`} shadow-md shadow-slate-300 border-t border-slate-300`}>
             { children }
         </div>
     );
