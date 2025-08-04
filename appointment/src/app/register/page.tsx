@@ -37,29 +37,38 @@ export default function Register () {
                 </div>
                 <div className="flex flex-col justify-center items-center bg-slate-50 pt-20 pb-8 px-8 rounded-lg
                  shadow-md shadow-slate-300 space-y-4 shadow-xl shadow-slate-300 border-t border-slate-300">
-                    <div className="flex justify-center w-full">
-                        <button 
-                        onClick={
-                            () => {
-                                setIsDoctor(false);
-                            }
-                        }
-                        className={`inline-flex gap-3 justify-center text-slate-900 px-4 
-                            border-4 border-slate-200 py-2 rounded-l-lg w-full 
-                            ${isDoctor ? `bg-slate-200` : `bg-slate-50`}`}>
-                                <UserIcon/>
-                                Patient</button>
-                        <button
-                        onClick={
-                            () => {
-                                setIsDoctor(true);
-                            }
-                        }
-                        className={`inline-flex gap-3 justify-center text-slate-900 px-4
-                            border-4 border-slate-200 py-2 rounded-r-lg w-full
-                            ${isDoctor ? `bg-slate-50`: `bg-slate-200`}`}>
-                                <StethoscopeIcon/>
-                                Doctor</button>
+                    <div className="relative w-full bg-slate-200 rounded-lg border-4 border-slate-200">
+                        <div className="relative flex justify-center w-full z-10">
+                            <button 
+                                onClick={
+                                    () => {
+                                        setIsDoctor(false);
+                                    }
+                                }
+                                className={`inline-flex gap-3 justify-center text-slate-900 px-4 
+                                     py-2 rounded-l-lg w-full
+                                    bg-transparent`}>
+                                        <UserIcon/>
+                                    Patient
+                            </button>
+                                    
+                            <button
+                                onClick={
+                                    () => {
+                                        setIsDoctor(true);
+                                    }
+                                }
+                                className={`inline-flex gap-3 justify-center text-slate-900 px-4
+                                     py-2 rounded-r-lg w-full z-10
+                                    bg-transparent`}>
+                                        <StethoscopeIcon/>
+                                        Doctor
+                            </button>
+                        </div>
+
+                        <div className={`absolute inset-0 bg-slate-50 rounded-lg w-[50%]
+                             transition-transform duration-500 ${!isDoctor ? `translate-x-0` : `translate-x-[100%]`}`}>    
+                        </div>
                     </div>
                     {!isDoctor && (<div className="flex flex-col w-full justify-center items-center space-y-4">
                         <div className="inline-flex items-center justify-center gap-1 text-blue-500 mt-4 text-xs
