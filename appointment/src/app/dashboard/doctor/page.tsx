@@ -113,7 +113,7 @@ export default function DashBoard() {
                                     name="Johyn Smith"
                                     specialization="Consultation"
                                     time="9:00 AM"
-                                    type={1}
+                                    
                                     status={0}/>
 
                                     <AppointmentSlot
@@ -121,7 +121,7 @@ export default function DashBoard() {
                                     name="Sarah Johnson"
                                     specialization="Follow-up"
                                     time="10:30 AM"
-                                    type={1}
+                                    
                                     status={1}/>
 
                                     <AppointmentSlot
@@ -129,7 +129,7 @@ export default function DashBoard() {
                                     name="Michael Brown"
                                     specialization="Check-up"
                                     time="2:00 PM"
-                                    type={1}
+                                    
                                     status={2}/>
 
                                     <AppointmentSlot
@@ -137,7 +137,7 @@ export default function DashBoard() {
                                     name="Emily Davis"
                                     specialization="Consultation"
                                     time="3:30 PM"
-                                    type={1}
+                                    
                                     status={0}/>
 
                                 </CardContent>

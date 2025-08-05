@@ -1,4 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
+
+"use client";
+
 import Header from "../components/header";
 import { ArrowRightIcon, CalendarIcon, ClockIcon, ShieldIcon, UsersIcon, CheckCircleIcon } from "lucide-react";
 import { Card } from "../components/card";
@@ -29,10 +32,11 @@ export default function Home() {
               </div>
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex w-full relative group overflow-hidden rounded-lg transition-transform hover:scale-105 ease-in-out">
-                  <a className="relative inline-flex gap-3 text-white bg-transparent rounded-lg font-semibold
+                  <a 
+                  className="relative inline-flex gap-3 text-white bg-transparent rounded-lg font-semibold
                   justify-center px-8 py-4 transition-all w-full duration-300
                   z-10"
-                  href="">
+                  href="/login">
                     
                     Book Appointment
                     <ArrowRightIcon className="group-hover:translate-x-5 transition-transform duration-300"/>

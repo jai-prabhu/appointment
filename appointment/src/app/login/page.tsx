@@ -5,11 +5,14 @@ import { useState } from "react";
 import { EyeIcon, EyeOffIcon, ArrowLeftIcon, ArrowRightIcon, StethoscopeIcon, UserIcon, ShieldIcon,
     MailIcon, LockIcon
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Login () {
 
     const [isDoctor, setIsDoctor] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false);
+
+    const router = useRouter();
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white flex items-center
@@ -184,7 +187,14 @@ export default function Login () {
                     </div>
 
                     <div className="relative w-full group overflow-x-hidden rounded-lg border-b border-slate-300">
-                        <button className="relative inline-flex gap-3 justify-center items-center
+                        <button 
+                        onClick={
+                            () => {
+                                if (!isDoctor) router.push("/dashboard/patient");
+                                else router.push("/dashboard/doctor");
+                            }
+                        }
+                        className="relative inline-flex gap-3 justify-center items-center
                          text-white bg-transparent w-full p-4 rounded-lg z-10 cursor-pointer">
                             Log In
                             <ArrowRightIcon className="transition-transform duration-500 group-hover:translate-x-10 group-active:translate-x-10"/>

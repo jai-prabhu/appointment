@@ -17,7 +17,8 @@ export default function Header() {
                     <a href="#features" className="text-gray-500">Features</a>
                     <a href="#how-it-works" className="text-gray-500">How it Works</a>
                     <a href="#about" className="text-gray-500">About</a>
-                    <a className="text-black border border-gray-500/30 px-4 py-2 rounded-lg
+                    <a 
+                    className="text-black border border-gray-500/30 px-4 py-2 rounded-lg
                     hover:bg-gray-300/10"
                     href="/login">
                         Sign in

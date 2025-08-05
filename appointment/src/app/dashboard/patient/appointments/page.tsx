@@ -17,14 +17,22 @@ export default function Appointments() {
 
         const fetchData = async () => {
 
-            const res = await fetch("http://localhost:3001/appointments");
+            const res = await fetch("http://localhost:3001/upcomming_appointments");
+            const res1 = await fetch("http://localhost:3001/past_appointments");
+            const res2 = await fetch("http://localhost:3001/canceled_appointments");
 
             if (!res.ok) {
 
                 console.error("Failed to Fetch data");
             }
 
-            setAppointments(await res.json());
+            const appointment: Appointments = {
+                upcomming_appointments: await res.json(),
+                past_appointments: await res1.json(),
+                canceled_appointments: await res2.json()
+            } 
+
+            setAppointments(appointment);
         }
 
         fetchData();

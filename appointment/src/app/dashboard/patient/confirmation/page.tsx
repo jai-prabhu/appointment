@@ -53,7 +53,7 @@ export default function Confirmation () {
                         </div>
 
                         <a
-                        href=""
+                        href="/dashboard/patient"
                         className="text-slate-900 font-semibold border border-slate-300 px-4
                         py-2 rounded-lg shadow-sm shadow-slate-300 hover:bg-slate-100 hover:scale-105 transition-all duration-500">
                             Go to Dashboard

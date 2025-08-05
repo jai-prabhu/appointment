@@ -5,7 +5,7 @@ import { ArrowLeftIcon, ArrowRightIcon, MapPinIcon, ClockIcon, CalendarIcon, Sta
 import { useState, useEffect } from "react";
 import { CardHolder, CardHeader, CardContent } from "@/components/card";
 import { Avatar } from "@/components/avatar";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { type BookingData } from "@/components/data"
 
 interface Step {
@@ -30,6 +30,7 @@ export default function Booking () {
     const [paymentMethod, setPaymentMethod] = useState(0);
     const [docsData, setDocsData] = useState<BookingData>();
 
+    const router = useRouter();
     const { id } = useParams();
 
     console.log(id);
@@ -278,8 +279,39 @@ export default function Booking () {
                                                 <div className="relative group rounded-lg overflow-hidden hover:scale-105 transition-all duration-300">
                                                     <button 
                                                     onClick={
-                                                        () => {
-                                                            if (currentStep < steps.length) setCurrentStep(currentStep + 1); 
+                                                        async () => {
+                                                            if (currentStep < steps.length) setCurrentStep(currentStep + 1);
+
+                                                            else if (currentStep === steps.length) {
+
+                                                                const res = await fetch("http://localhost:3001/upcomming_appointments", {
+
+                                                                    method: "POST",
+                                                                    headers: {
+
+                                                                        "Content-Type": "application/json",
+                                                                    },
+
+                                                                    body: JSON.stringify({
+
+                                                                        name: docsData?.name,
+                                                                        specialization: docsData?.specialization,
+                                                                        date: date,
+                                                                        time: selectedTime,
+                                                                        location: docsData?.location,
+                                                                        type: 1,
+                                                                        status: 1,
+                                                                        imgSrc: docsData?.imgSrc
+                                                                    })
+                                                                });
+
+                                                                if (!res.ok) {
+
+                                                                    console.log("Failed to Create Data");
+                                                                }
+
+                                                                router.push("/dashboard/patient/confirmation");
+                                                            }
                                                         }
                                                     }
                                                     className="relative inline-flex gap-3 items-center text-slate-50 font-semibold bg-transparent

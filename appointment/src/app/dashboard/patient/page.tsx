@@ -3,18 +3,18 @@
 import { useState, useEffect } from "react";
 import { DashboardHeaderP } from "@/components/dashboard-header";
 import { CardHolder, CardHeader, CardContent, AppointmentSlot } from "@/components/card";
-import { type Appointments } from "@/components/data";
+import { type AppointmentData } from "@/components/data";
 import { PlusIcon, CalendarIcon, FileTextIcon, HeartIcon, CircleCheckBigIcon, ClockIcon, CircleIcon } from "lucide-react";
 
 export default function DashBoard() {
 
-    const [appointments, setAppointments] = useState<Appointments>();
+    const [appointments, setAppointments] = useState<AppointmentData[]>();
 
     useEffect(() => {
 
         const fetchData = async () => {
 
-            const res = await fetch("http://localhost:3001/appointments");
+            const res = await fetch("http://localhost:3001/upcomming_appointments");
 
             if (!res.ok) {
 
@@ -92,7 +92,7 @@ export default function DashBoard() {
                                 </CardHeader>
                                 <CardContent className="space-y-4 w-full">
                                     {
-                                       appointments?.upcomming_appointments.slice(0, 3).map(
+                                       appointments?.slice(0, 3).map(
                                         (appointment, index) => {
 
                                             return (
@@ -121,7 +121,7 @@ export default function DashBoard() {
                                     href=""
                                     className="flex flex-col items-center gap-1 bg-teal-100 rounded-lg py-6 w-full px-8">
                                         <CalendarIcon className="text-teal-600 w-8 h-8"/>
-                                        <h3 className="text-teal-600 text-2xl font-bold">3</h3>
+                                        <h3 className="text-teal-600 text-2xl font-bold">{appointments?.length}</h3>
                                         <p className="text-slate-500">Upcoming</p>
                                         <p className="text-slate-500 text-xs">Next: Today 2:30 PM</p>
                                     </a>
@@ -130,7 +130,7 @@ export default function DashBoard() {
                                     href=""
                                     className="flex flex-col items-center gap-1 bg-blue-100 rounded-lg py-6 w-full px-8">
                                         <CircleCheckBigIcon className="text-blue-600 w-8 h-8"/>
-                                        <h3 className="text-blue-600 text-2xl font-bold">12</h3>
+                                        <h3 className="text-blue-600 text-2xl font-bold">2</h3>
                                         <p className="text-slate-500">Completed</p>
                                         <p className="text-slate-500 text-xs">This year</p>
                                     </a>
