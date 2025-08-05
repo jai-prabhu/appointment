@@ -1,6 +1,7 @@
 import { FC, ReactNode } from "react";
-import { LucideIcon, CalendarIcon, ClockIcon, MapPinIcon, StarIcon, ArrowRightIcon } from "lucide-react";
+import { LucideIcon, CalendarIcon, ClockIcon, MapPinIcon, StarIcon, ArrowRightIcon, MoreHorizontalIcon } from "lucide-react";
 import { Avatar } from "./avatar";
+import { StatusBadge } from "./badge";
  
 export interface CardProps {
 
@@ -85,7 +86,7 @@ export const AppointmentSlot = ({ imgSrc, name, specialization, date, time, loca
     return (
         <div className="w-full flex justify-between bg-slate-50 border border-slate-300 rounded-lg p-4">
             <div className="flex gap-2 items-center">
-                <Avatar src={imgSrc} size="16"/>
+                <Avatar src={imgSrc} size={16}/>
                 <div>
                     <h3 className="text-slate-900 font-bold text-xl">{name}</h3>
                     <p className="text-slate-500 text-sm">{specialization}</p>
@@ -139,7 +140,7 @@ export const BookCard = ({
         <div className="w-full space-y-4 bg-white p-4 rounded-lg border border-slate-400/50 shadow-lg shadow-slate-300
         hover:scale-105 transition-all duration-300">
             <div className="flex gap-2 items-center">
-                <Avatar src="/doc.png" size="16"/>
+                <Avatar src="/doc.png" size={16}/>
                 <div className="">
                     <h1 className="text-slate-900 text-xl font-bold">
                         {name}
@@ -189,5 +190,100 @@ export const BookCard = ({
                 </div>
             </div>
         </div>
+    );
+}
+
+export interface AppointmentCardProp {
+
+    imgSrc: string;
+    name: string;
+    specialization: string;
+    status: number;
+    location: string;
+    time: string;
+    date: string;
+    type: number
+}
+
+export const AppointmentCard = ({ imgSrc, name, specialization, location, time, date, status, type }: AppointmentCardProp) => {
+
+    return (
+        <CardHolder className="p-4 bg-slate-50 rounded-lg hover:shadow-lg cursor-pointer">
+            <CardHeader className="flex gap-2">
+                <div>
+                    <Avatar src={imgSrc} size={16}/>
+                </div>
+                <div className="space-y-4 w-full">
+                    <div className="flex justify-between w-full items-center">
+                        <div className="flex gap-2 items-center">
+                            
+                            <div className="flex flex-col">
+                                <h1 className="inline-flex gap-3 items-center text-slate-700 font-semibold">
+                                    { name }
+                                    <StatusBadge
+                                    status={status}/>
+                                </h1>
+                                <p className="text-sm text-slate-500">{ specialization }</p>
+                            </div>
+                        </div>
+
+                        {
+                            type === 1 && (
+
+                                <button className="p-1 hover:bg-slate-200 rounded-lg transition-colors duration-300 cursor-pointer">
+                                    <MoreHorizontalIcon className="text-slate-500/90"/>
+                                </button>
+                            )
+                        }
+
+                        {
+                            type === 2 && (
+
+                                <div className="flex gap-2 items-center justify-center text-sm">
+                                    <button className="text-slate-900 font-semibold transition-colors duration-300 cursor-pointer
+                                    border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-200 ">
+                                        View Report
+                                    </button>
+
+                                    <button className="text-slate-900 font-semibold transition-colors duration-300 cursor-pointer
+                                    border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-200 ">
+                                        Book Again
+                                    </button>
+                                </div>
+                            )
+                        }
+
+                        {
+                            type === 3 && (
+
+                                <button className="text-slate-900 font-semibold text-sm transition-colors duration-300 cursor-pointer
+                                    border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-200 ">
+                                    Book Again
+                                </button>
+                            )
+                        }
+
+                        
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-8 justify-center items-center w-full">
+                        <p className="inline-flex items-center gap-3 text-sm text-slate-500 ">
+                            <CalendarIcon className="w-4 h-4"/>
+                            {date}
+                        </p>
+
+                        <p className="inline-flex items-center gap-3 text-sm text-slate-500 ">
+                            <ClockIcon className="w-4 h-4"/>
+                            {time}
+                        </p>
+
+                        <p className="inline-flex items-center gap-3 text-sm text-slate-500 ">
+                            <MapPinIcon className="w-4 h-4"/>
+                            {location}
+                        </p>
+                    </div>
+                </div>
+            </CardHeader>
+        </CardHolder>
     );
 }

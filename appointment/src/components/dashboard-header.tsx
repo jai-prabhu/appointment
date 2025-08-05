@@ -31,7 +31,7 @@ export const DashboardHeaderD = () => {
                         <BellIcon className="text-slate-900 w-5 h-5"/>
                     </button>
                     <div className="flex gap-2 items-center">
-                        <Avatar src="/doc.png" size="16"/>
+                        <Avatar src="/doc.png" size={16}/>
 
                         <h3 className="text-slate-900 font-bold">Dr. Michael Chen
                             <p className="text-slate-400 font-normal text-xs">General Medicine</p>
@@ -76,7 +76,7 @@ export const DashboardHeaderP =  () => {
                         <BellIcon className="text-slate-900 w-5 h-5"/>
                     </button>
                     <div className="flex gap-2 items-center">
-                        <Avatar src="/doc.png" size="16"/>
+                        <Avatar src="/doc.png" size={16}/>
 
                         <h3 className="text-slate-900 font-bold">John Doe
                             <p className="text-slate-400 font-normal text-xs">Patient ID: #</p>

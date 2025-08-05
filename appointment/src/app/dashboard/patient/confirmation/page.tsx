@@ -82,7 +82,7 @@ export default function Confirmation () {
                             </CardHeader>
                             <CardContent className="flex flex-col gap-6 items-center justify-center pt-4">
                                 <div className="flex items-center justify-start w-full gap-2 border-b pb-6 border-slate-300">
-                                    <Avatar src="/doc.png" size="16"/>
+                                    <Avatar src="/doc.png" size={16}/>
 
                                     <div className="">
                                         <h3 className="text-slate-700 font-semibold text-lg">Dr. Michael Chen</h3>
