@@ -12,11 +12,11 @@ export const DashboardHeaderD = () => {
             <div className="container flex justify-between items-center gap-3 mx-auto p-2">
                 <div className="flex gap-4 justify-center items-center">
                     
-                    <h1 className="inlince flex items-center text-slate-900 font-bold">
+                    <h1 className="inlince gap-2 flex items-center text-slate-900 font-bold">
                         <img
                         src="\Logo.svg"
                         alt="Logo"
-                        className="w-16 h-auto"/>
+                        className="w-12 h-auto"/>
                         Schedula
                     </h1>
 
@@ -57,11 +57,11 @@ export const DashboardHeaderP =  () => {
             <div className="container flex justify-between items-center gap-3 mx-auto p-2">
                 <div className="flex gap-4 justify-center items-center">
                     
-                    <h1 className="inlince flex items-center text-slate-900 font-bold">
+                    <h1 className="inlince flex gap-2 items-center text-slate-900 font-bold">
                         <img
                         src="\Logo.svg"
                         alt="Logo"
-                        className="w-16 h-auto"/>
+                        className="w-12 h-auto"/>
                         Schedula
                     </h1>
 

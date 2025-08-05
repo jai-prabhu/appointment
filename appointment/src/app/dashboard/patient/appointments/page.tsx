@@ -5,11 +5,34 @@ import { ArrowLeftIcon, PlusIcon, FilterIcon } from "lucide-react";
 import { SearchBar } from "@/components/search-bar";
 import { TabHolder, TabItem } from "@/components/tab";
 import { AppointmentCard } from "@/components/card"
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { type Appointments } from "../../../../components/data";
 
 export default function Appointments() {
 
     const [selectedTab, setSelectedTab] = useState(1);
+    const [appointments, setAppointments] = useState<Appointments>();
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+
+            const res = await fetch("http://localhost:3001/appointments");
+
+            if (!res.ok) {
+
+                console.error("Failed to Fetch data");
+            }
+
+            setAppointments(await res.json());
+        }
+
+        fetchData();
+
+        
+    }, [])
+
+    console.log(appointments);
 
     return (
         <div className="max-w-screen w-ful bg-gradient-to-r from-slate-50 via-teal-50 to-white" style={{fontFamily: "var(--font-poppins)"}}>
@@ -18,7 +41,7 @@ export default function Appointments() {
                     <div className="flex justify-between items-center">
                         <div className="flex gap-4 items-center justify-center">
                             <a 
-                            href=""
+                            href="/dashboard/patient"
                             className="inline-flex gap-4 items-center justify-center px-4 py-2 rounded-lg hover:bg-slate-100
                             hover:scale-105 transition-all duration-300 text-slate-700 font-semibold">
                                 <ArrowLeftIcon className="w-4 h-4"/>
@@ -34,7 +57,7 @@ export default function Appointments() {
                         </div>
 
                         <a 
-                        href=""
+                        href="/dashboard/patient/doctors"
                         className="inline-flex gap-3 items-center justidy-center text-salte-90 font-semibold
                         bg-teal-600 rounded-lg px-4 py-2 hover:bg-teal-500 hover:scale-105 transition-all duration-300">
                             <PlusIcon className="w-4 h-4"/>
@@ -76,35 +99,26 @@ export default function Appointments() {
                     {
                         selectedTab === 1 && (
                             <div className="flex flex-col gap-8 justify-center items-center w-full">
-                                <AppointmentCard
-                                imgSrc="/doc.png"
-                                name="Dr. Sarah Johnson"
-                                specialization="Cardiology"
-                                date="Dec 15, 2024"
-                                time="2:30 PM"
-                                location="Downtown Medical Center, Room 205"
-                                status={1}
-                                type={1}/>
+                                {
+                                    appointments?.upcomming_appointments.map(
 
-                                <AppointmentCard
-                                imgSrc="/doc.png"
-                                name="Dr. Micheal Chen"
-                                specialization="General Medicine"
-                                date="Dec 18, 2024"
-                                time="10:00 AM"
-                                location="Downtown Medical Center, Room 205"
-                                status={1}
-                                type={1}/>
+                                        (appointment, index) => {
 
-                                <AppointmentCard
-                                imgSrc="/doc.png"
-                                name="Dr. Emily Davis"
-                                specialization="Dermatology"
-                                date="Dec 22, 2024"
-                                time="3:45 PM"
-                                location="Skin Care Center, Room 308"
-                                status={2}
-                                type={1}/>
+                                            return (
+                                                <AppointmentCard
+                                                key={index}
+                                                imgSrc={appointment.imgSrc}
+                                                name={appointment.name}
+                                                specialization={appointment.specialization}
+                                                date={appointment.date}
+                                                time={appointment.time}
+                                                location={appointment.location}
+                                                status={appointment.status}
+                                                type={appointment.type}/>
+                                            )
+                                        }
+                                    )
+                                }
                             </div>
                         )
                     }
@@ -112,25 +126,26 @@ export default function Appointments() {
                     {
                         selectedTab === 2 && (
                             <div className="flex flex-col gap-8 justify-center items-center w-full">
-                                <AppointmentCard
-                                imgSrc="/doc.png"
-                                name="Dr. James Wilson"
-                                specialization="Neurology"
-                                date="Nov 28, 2024"
-                                time="11:30 AM"
-                                location="Brain & Spine Institute"
-                                status={3}
-                                type={2}/>
+                                {
+                                    appointments?.past_appointments.map(
 
-                                <AppointmentCard
-                                imgSrc="/doc.png"
-                                name="Dr. Lisa Anderson"
-                                specialization="Pediatrics"
-                                date="Nov 15, 2024"
-                                time="9: 15 AM"
-                                location="Online Consultaion"
-                                status={3}
-                                type={2}/>
+                                        (appointment, index) => {
+
+                                            return (
+                                                <AppointmentCard
+                                                key={index}
+                                                imgSrc={appointment.imgSrc}
+                                                name={appointment.name}
+                                                specialization={appointment.specialization}
+                                                date={appointment.date}
+                                                time={appointment.time}
+                                                location={appointment.location}
+                                                status={appointment.status}
+                                                type={appointment.type}/>
+                                            )
+                                        }
+                                    )
+                                }
 
                             </div>
                         )
@@ -139,15 +154,26 @@ export default function Appointments() {
                     {
                         selectedTab === 3 && (
                             <div className="flex flex-col gap-8 justify-center items-center w-full">
-                                <AppointmentCard
-                                imgSrc="/doc.png"
-                                name="Dr. Robert Taylor"
-                                specialization="Orthopedics"
-                                date="Nov 10, 2024"
-                                time="1:45 PM"
-                                location="Sports Medicine Center"
-                                status={4}
-                                type={3}/>
+                                {
+                                    appointments?.canceled_appointments.map(
+
+                                        (appointment, index) => {
+
+                                            return (
+                                                <AppointmentCard
+                                                key={index}
+                                                imgSrc={appointment.imgSrc}
+                                                name={appointment.name}
+                                                specialization={appointment.specialization}
+                                                date={appointment.date}
+                                                time={appointment.time}
+                                                location={appointment.location}
+                                                status={appointment.status}
+                                                type={appointment.type}/>
+                                            )
+                                        }
+                                    )
+                                }
 
                             </div>
                         )

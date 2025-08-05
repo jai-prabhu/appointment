@@ -2,9 +2,11 @@
 "use client";
 
 import { ArrowLeftIcon, ArrowRightIcon, MapPinIcon, ClockIcon, CalendarIcon, StarIcon, CreditCardIcon, LucideIcon } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CardHolder, CardHeader, CardContent } from "@/components/card";
 import { Avatar } from "@/components/avatar";
+import { useParams } from "next/navigation";
+import { type BookingData } from "@/components/data"
 
 interface Step {
 
@@ -26,6 +28,28 @@ export default function Booking () {
     const [date, setDate] = useState("");
     const [selectedTime, setSelectedTime] = useState("");
     const [paymentMethod, setPaymentMethod] = useState(0);
+    const [docsData, setDocsData] = useState<BookingData>();
+
+    const { id } = useParams();
+
+    console.log(id);
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+            
+            const res = await fetch(`http://localhost:3001/BookingsData/${id}`);
+
+            if (!res.ok) {
+
+                console.error("Failed to fetch data");
+            }
+
+            setDocsData(await res.json());
+        }
+
+        fetchData();
+    }, [id]);
 
     const timeSlots = [
         "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM",
@@ -51,7 +75,7 @@ export default function Booking () {
             bg-slate-50 overflow-hidden">
                 <div className="container mx-auto p-4 flex gap-4 items-center">
                     <a
-                    href="" 
+                    href="/dashboard/patient/doctors" 
                     className="inline-flex gap-4 items-center">
                         
 
@@ -280,22 +304,22 @@ export default function Booking () {
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <div className="flex gap-2 items-center">
-                                    <Avatar src="/doc.png" size="16"/>
+                                    <Avatar src={docsData? docsData.imgSrc : ""} size={16}/>
                                     <div className="">
-                                        <h5 className="text-slate-900 font-bold text-lg">Dr. Michael Chen</h5>
+                                        <h5 className="text-slate-900 font-bold text-lg">{docsData?.name}</h5>
                                         <p className="text-slate-500 text-sm">
-                                            Cardiology
+                                            {docsData?.specialization}
                                         </p>
                                         <p className="inline-flex gap-2 items-center text-slate-500 text-xs">
                                             <StarIcon className="w-4 h-4 text-yellow-500"/>
-                                            <span className="text-sm font-bold text-slate-900">4.9</span>{"("}127 reviews{")"}
+                                            <span className="text-sm font-bold text-slate-900">{docsData?.rating}</span>{"("}{docsData?.reviews}{")"}
                                         </p>
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <p className="inline-flex gap-2 items-center text-slate-500 text-sm">
                                         <MapPinIcon className="w-4 h-4"/>
-                                        Downtown Medical Center
+                                        {docsData?.location}
                                     </p>
 
                                     <p className="inline-flex gap-2 items-center text-slate-500 text-sm">
@@ -305,13 +329,13 @@ export default function Booking () {
 
                                     <p className="inline-flex gap-2 items-center text-slate-500 text-sm">
                                         <CalendarIcon className="w-4 h-4"/>
-                                        Available: Today
+                                        Available: {docsData?.dateTime}
                                     </p>
                                 </div>
 
                                 <div className="flex w-full justify-between items-center border-t border-slate-300 pt-6">
                                     <p className="text-slate-500">Consultation fee</p>
-                                    <h1 className="font-bold text-2xl text-teal-600">$150</h1>
+                                    <h1 className="font-bold text-2xl text-teal-600">${docsData?.cost}</h1>
                                 </div>
                             </CardContent>
                         </CardHolder>

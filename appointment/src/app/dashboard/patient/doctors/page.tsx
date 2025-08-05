@@ -4,8 +4,29 @@
 import { ArrowLeftIcon, SearchIcon } from "lucide-react";
 import { Select, SelectItem } from "@/components/select";
 import { BookCard } from "@/components/card";
+import { useState, useEffect } from "react";
+import { type BookingData } from "@/components/data";
 
 export default function Doctors () {
+
+    const [docsData, setDocsData] = useState<BookingData[]>();
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+
+            const res = await fetch("http://localhost:3001/BookingsData");
+
+            if (!res.ok) {
+
+                console.error("Failed to fetch the data");
+            }
+
+            setDocsData(await res.json());
+        }
+
+        fetchData();
+    }, []);
 
     return (
         <div className="max-w-screen w-full "
@@ -14,7 +35,7 @@ export default function Doctors () {
             bg-slate-50 overflow-hidden">
                 <div className="container mx-auto p-4 flex gap-4 items-center">
                     <a
-                    href="" 
+                    href="/dashboard/patient" 
                     className="inline-flex gap-4 items-center">
                         
 
@@ -69,65 +90,26 @@ export default function Doctors () {
                     <h3 className="text-slate-500 text-semibold text-">6 doctors found</h3>
 
                     <div className="grid grid-cols-3 gap-4 my-8">
-                        <BookCard
-                        name="Dr. Sarah Johnson"
-                        specialization="Cardiology"
-                        rating="4.9"
-                        reviews="127"
-                        experience="15 years"
-                        location="Downtown Medical Center"
-                        dateTime="Today 2:30 PM"
-                        cost="150"/>
+                        {
+                            docsData?.map(
+                                (data, index) => {
 
-                        <BookCard
-                        name="Dr. Michael Chen"
-                        specialization="General Medicine"
-                        rating="4.8"
-                        reviews="203"
-                        experience="12 years"
-                        location="City Health Clinic"
-                        dateTime="Tomorrow 9:00 AM"
-                        cost="120"/>
-
-                        <BookCard
-                        name="Dr. Emily Davis"
-                        specialization="Dermatology"
-                        rating="4.9"
-                        reviews="156"
-                        experience="10 years"
-                        location="Skin Care Center"
-                        dateTime="Dec 15 11:30 AM"
-                        cost="180"/>
-
-                        <BookCard
-                        name="Dr. James Wilson"
-                        specialization="Neurology"
-                        rating="4.7"
-                        reviews="89"
-                        experience="18 years"
-                        location="Brain & SPine Institue"
-                        dateTime="Dec 16 3:00 PM"
-                        cost="200"/>
-
-                        <BookCard
-                        name="Dr. Lisa Anderson"
-                        specialization="Pediatrics"
-                        rating="4.9"
-                        reviews="234"
-                        experience="14 years"
-                        location="Children's Hospital"
-                        dateTime="Dec 14 10:15 AM"
-                        cost="140"/>
-
-                        <BookCard
-                        name="Dr. Robert Taylor"
-                        specialization="Orthopedics"
-                        rating="4.8"
-                        reviews="167"
-                        experience="16 years"
-                        location="Sports Medicine Center"
-                        dateTime="Dec 17 1:45 PM"
-                        cost="190"/>
+                                    return (
+                                        <BookCard
+                                        key={index}
+                                        id={data.id}
+                                        name={data.name}
+                                        specialization={data.specialization}
+                                        rating={data.rating}
+                                        reviews={data.reviews}
+                                        experience={data.experience}
+                                        location={data.location}
+                                        dateTime={data.dateTime}
+                                        cost={data.cost}/>
+                                    );
+                                }
+                            )
+                        }
                     </div>
                 </div>
             </main>

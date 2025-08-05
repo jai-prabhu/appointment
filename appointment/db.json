@@ -1,0 +1,165 @@
+{
+    "appointments": {
+
+        "upcomming_appointments": [
+
+            {
+                "id": 1,
+                "name": "Dr. Michael Chen",
+                "specialization": "General Medicine",
+                "date":"Dec 18. 2024",
+                "location": "Downtown Medical Center",
+                "time": "1:15 PM",
+                "type": 1,
+                "status": 1,
+                "imgSrc": "/doc.png"
+            },
+
+            {
+                "id": 2,
+                "name": "Dr. Sarah Johnson",
+                "specialization": "Cardiology",
+                "date":"Dec 15. 2024",
+                "location": "Downtown Medical Center",
+                "time": "2:30 PM",
+                "type": 1,
+                "status": 1,
+                "imgSrc": "/doc.png"
+            },
+
+            {
+                "id": 2,
+                "name": "Dr. Emily Davis",
+                "specialization": "Dermatology",
+                "date":"Dec 22. 2024",
+                "location": "Skin Care Center, Room 38",
+                "time": "3:45 PM",
+                "type": 1,
+                "status": 2,
+                "imgSrc": "/doc.png"
+            }
+        ],
+
+        "past_appointments": [
+
+            {
+                "imgSrc": "/doc.png",
+                "name": "Dr. James Wilson",
+                "specialization": "Neurology",
+                "date": "Nov 28, 2024",
+                "time": "11:30 AM",
+                "location": "Brain & Spine Institute",
+                "status": 3,
+                "type": 2
+            },
+
+            {
+                "imgSrc": "/doc.png",
+                "name": "Dr. Lisa Anderson",
+                "specialization": "Pediatrics",
+                "date": "Nov 15, 2024",
+                "time": "9: 15 AM",
+                "location": "Online Consultaion",
+                "status": 3,
+                "type": 2
+            }
+        ],
+
+        "canceled_appointments": [
+
+            {
+                "imgSrc": "/doc.png",
+                "name": "Dr. Robert Taylor",
+                "specialization": "Orthopedics",
+                "date": "Nov 10, 2024",
+                "time": "1:45 PM",
+                "location": "Sports Medicine Center",
+                "status": 4,
+                "type": 3
+            }
+        ]
+    },
+
+    "BookingsData": [
+
+        {
+            "id": 1,
+            "name": "Dr. Michael Chen",
+            "specialization": "General Medicine",
+            "rating": "4.8",
+            "reviews": "203",
+            "experience": "12 years",
+            "location": "City Health Clinic",
+            "dateTime": "Tomorrow 9:00 AM",
+            "imgSrc": "/doc.png",
+            "cost": "120"
+        },
+
+        {
+            "id": 2,
+            "name": "Dr. Sarah Johnson",
+            "specialization": "Cardiology",
+            "rating": "4.9",
+            "reviews": "127",
+            "experience": "15 years",
+            "location": "Downtown Medical Center",
+            "dateTime": "Today 2:30 PM",
+            "imgSrc": "/doc.png",
+            "cost": "150"
+        },
+
+        {
+            "id": 3,
+            "name": "Dr. Emily Davis",
+            "specialization": "Dermotology",
+            "rating": "4.9",
+            "reviews": "156",
+            "experience": "10 years",
+            "location": "Skin Care Center",
+            "dateTime": "Dec 13 11:30 AM",
+            "imgSrc": "/doc.png",
+            "cost": "180"
+        },
+
+        {
+            "id": 4,
+            "name": "Dr. James Wilson",
+            "specialization": "Neurology",
+            "rating": "4.7",
+            "reviews": "89",
+            "experience": "18 years",
+            "location": "Brain & Spine Institute",
+            "dateTime": "Dec 16 3:00 PM",
+            "imgSrc": "/doc.png",
+            "cost": "200"
+        },
+
+        {
+            "id": 5,
+            "name": "Dr. Lisa Anderson",
+            "specialization": "Pediatrics",
+            "rating": "4.9",
+            "reviews": "234",
+            "experience": "14 years",
+            "location": "Children's Hospital",
+            "dateTime": "Dec 14 10:15 AM",
+            "imgSrc": "/doc.png",
+            "cost": "140"
+        },
+
+        {
+            "id": 6,
+            "name": "Dr. Robert Taylor",
+            "specialization": "Orthopedics",
+            "rating": "4.8",
+            "reviews": "167",
+            "experience": "16 years",
+            "location": "Sports Medicine Center",
+            "dateTime": "Dec 17 1:45 PM",
+            "imgSrc": "/doc.png",
+            "cost": "190"
+        }
+    ]
+
+    
+}

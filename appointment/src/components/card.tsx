@@ -1,7 +1,11 @@
+"use client";
+
 import { FC, ReactNode } from "react";
 import { LucideIcon, CalendarIcon, ClockIcon, MapPinIcon, StarIcon, ArrowRightIcon, MoreHorizontalIcon } from "lucide-react";
 import { Avatar } from "./avatar";
 import { StatusBadge } from "./badge";
+import { useRouter } from "next/navigation";
+
  
 export interface CardProps {
 
@@ -14,6 +18,7 @@ export interface CardProps {
 
 export interface BookCardProps {
 
+    id: number;
     name: string;
     specialization: string;
     rating: string;
@@ -72,14 +77,13 @@ export const CardHolder = ({ children, className }: {children: ReactNode; classN
     );
 }
 
-export const AppointmentSlot = ({ imgSrc, name, specialization, date, time, location, type, status }: {
+export const AppointmentSlot = ({ imgSrc, name, specialization, date, time, location, status }: {
     imgSrc: string;
     name: string;
     specialization: string;
     date?: string;
     time: string;
     location?: string;
-    type: number;
     status?: number;
 }) => {
 
@@ -91,26 +95,21 @@ export const AppointmentSlot = ({ imgSrc, name, specialization, date, time, loca
                     <h3 className="text-slate-900 font-bold text-xl">{name}</h3>
                     <p className="text-slate-500 text-sm">{specialization}</p>
                     <div className="flex gap-2 items-center py-1">
-                        {!type &&(<p className="inline-flex gap-1 items-center text-xs text-slate-500">
+                        {status !== 2 &&(<p className="inline-flex gap-1 items-center text-xs text-slate-500">
                             <CalendarIcon className="w-3 h-3"/>
                             {date}
                         </p>)}
-                        <p className="inline-flex gap-1 items-center text-xs text-slate-500">
+                        {status !== 2 && (<p className="inline-flex gap-1 items-center text-xs text-slate-500">
                             <ClockIcon className="w-3 h-3"/>
                             {time}
-                        </p>
-                        {!type && (<p className="inline-flex gap-1 items-center text-xs text-slate-500">
+                        </p>)}
+                        {status !== 2 && (<p className="inline-flex gap-1 items-center text-xs text-slate-500">
                             <MapPinIcon className="w-3 h-3"/>
                             {location}
                         </p>)}
 
-                        {type && (
-                            <h5 className={`text-xs rounded-lg px-2 ${status === 0 ? 
-                                `bg-teal-100 text-teal-600` : status === 1 ? 
-                                `bg-blue-100 text-blue-600` : `bg-orange-100 text-orange-600`}`}>
-                                {status === 0 ? 'confirmed' : status === 1 ? 'in-progress' : 'pending'}
-                            </h5>
-                        )}
+                        <StatusBadge
+                        status={status ? status : 1}/>
                     </div>
                 </div>
             </div>
@@ -119,13 +118,13 @@ export const AppointmentSlot = ({ imgSrc, name, specialization, date, time, loca
                     href=""
                     className="text-slate-900 bg-slate-50 font-semibold px-4 py-2 border border-slate-300 rounded-lg
                     hover:bg-slate-100">
-                    {!type ? `Reschedule` : `View`}
+                    {status !== 2 ? `Reschedule` : `View`}
                 </a>
                 <a
                     href=""
                     className="text-slate-50 bg-teal-600 font-semibold px-4 py-2 rounded-lg
                     hover:bg-teal-500">
-                    {!type ? `Join` : `Start`}
+                    {status !== 2 ? `Cancel` : `Cancel`}
                 </a>
             </div>)}
         </div>
@@ -133,8 +132,10 @@ export const AppointmentSlot = ({ imgSrc, name, specialization, date, time, loca
 }
 
 export const BookCard = ({
-    name, specialization, rating, reviews, experience, location, dateTime, cost
+    id, name, specialization, rating, reviews, experience, location, dateTime, cost
 }: BookCardProps) => {
+
+    const router = useRouter();
 
     return (
         <div className="w-full space-y-4 bg-white p-4 rounded-lg border border-slate-400/50 shadow-lg shadow-slate-300
@@ -176,12 +177,16 @@ export const BookCard = ({
                     ${cost} <span className="text-lg text-slate-500 font-normal">per visit</span>
                 </h1>
                 <div className="relative rounded-lg overflow-hidden group hover:scale-105 transition-all duration-300">
-                    <a
-                    href="" 
-                    className="relative flex gap-2 items-center text-slate-50 font-bold py-2 px-4 rounded-lg z-10">
+                    <button
+                    onClick={
+                        () => {
+                            router.push(`/dashboard/patient/booking/${id}`);
+                        }
+                    }
+                    className="relative flex gap-2 items-center text-slate-50 font-bold py-2 px-4 rounded-lg z-10 cursor-pointer">
                         <ArrowRightIcon className="text-slate-50 w-4 h-4 group-hover:translate-x-2 transition-all duration-300"/>
                         Book Now
-                    </a>
+                    </button>
 
                     <div className="absolute inset-0 bg-teal-600"></div>
 

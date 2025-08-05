@@ -1,10 +1,31 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { DashboardHeaderP } from "@/components/dashboard-header";
 import { CardHolder, CardHeader, CardContent, AppointmentSlot } from "@/components/card";
+import { type Appointments } from "@/components/data";
 import { PlusIcon, CalendarIcon, FileTextIcon, HeartIcon, CircleCheckBigIcon, ClockIcon, CircleIcon } from "lucide-react";
 
 export default function DashBoard() {
+
+    const [appointments, setAppointments] = useState<Appointments>();
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+
+            const res = await fetch("http://localhost:3001/appointments");
+
+            if (!res.ok) {
+
+                console.error("Failed to fetch data");
+            }
+
+            setAppointments(await res.json());
+        }
+
+        fetchData();
+    }, []);
 
     return (
         <div className="container max-w-screen w-full" style={{fontFamily: "var(--font-poppins)"}}>
@@ -24,7 +45,7 @@ export default function DashBoard() {
                                 </CardHeader>
                                 <CardContent>
                                     <a
-                                    href=""
+                                    href="/dashboard/patient/doctors"
                                     className="flex flex-col gap-2 w-full bg-teal-600 p-4 justify-center items-center rounded-lg font-semibold
                                     hover:bg-teal-500">
                                         <PlusIcon className="text-slate-50"/>
@@ -63,39 +84,31 @@ export default function DashBoard() {
                                         <p className="text-slate-500 text-sm">Your scheduled medical appointments</p>
                                     </div>
                                     <a 
-                                    href=""
+                                    href="/dashboard/patient/appointments"
                                     className="text-slate-900 border border-slate-300 font-semibold px-4 py-2 rounded-lg
                                     hover:bg-slate-100 hover:shadow-md shadow-slate-300">
                                         View all
                                     </a>
                                 </CardHeader>
                                 <CardContent className="space-y-4 w-full">
-                                    <AppointmentSlot
-                                    imgSrc="/doc.png"
-                                    name="Dr. Sarah Johnson"
-                                    specialization="Cardiology"
-                                    date="Today"
-                                    time="2:30 PM"
-                                    location="Room 205"
-                                    type={0}/>
+                                    {
+                                       appointments?.upcomming_appointments.slice(0, 3).map(
+                                        (appointment, index) => {
 
-                                    <AppointmentSlot
-                                    imgSrc="/doc.png"
-                                    name="Dr. Michael Chen"
-                                    specialization="General Medicine"
-                                    date="Tomorrow"
-                                    time="10:00 AM"
-                                    location="Room 101"
-                                    type={0}/>
-
-                                    <AppointmentSlot
-                                    imgSrc="/doc.png"
-                                    name="Dr. Emily Davis"
-                                    specialization="Dematology"
-                                    date="Dec 15"
-                                    time="3:45 PM"
-                                    location="Room 308"
-                                    type={0}/>
+                                            return (
+                                                <AppointmentSlot
+                                                key={index}
+                                                imgSrc={appointment.imgSrc}
+                                                name={appointment.name}
+                                                specialization={appointment.specialization}
+                                                date={appointment.date}
+                                                time={appointment.time}
+                                                location={appointment.location}
+                                                status={appointment.status}/>
+                                            );
+                                        }
+                                       )
+                                    }
                                 </CardContent>
                             </CardHolder>
                             <CardHolder>
