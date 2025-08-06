@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { CardHolder, CardHeader, CardContent } from "@/components/card";
 import { Avatar } from "@/components/avatar";
 import { useParams, useRouter } from "next/navigation";
-import { type BookingData } from "@/components/data"
+import { type DocData, type UserData, type AppointmentData } from "@/components/data"
 
 interface Step {
 
@@ -28,18 +28,21 @@ export default function Booking () {
     const [date, setDate] = useState("");
     const [selectedTime, setSelectedTime] = useState("");
     const [paymentMethod, setPaymentMethod] = useState(0);
-    const [docsData, setDocsData] = useState<BookingData>();
+    const [type, setType] = useState("");
+    const [docsData, setDocsData] = useState<DocData>();
+    const [usersData, setUsersData] = useState<UserData>()
+    const [reason, setReason] = useState("");
 
     const router = useRouter();
-    const { id } = useParams();
+    const { doc_id, user_id } = useParams();
 
-    console.log(id);
+    
 
     useEffect(() => {
 
         const fetchData = async () => {
             
-            const res = await fetch(`http://localhost:3001/BookingsData/${id}`);
+            const res = await fetch(`http://localhost:5000/data/doc-query/doc/${doc_id}`);
 
             if (!res.ok) {
 
@@ -50,7 +53,7 @@ export default function Booking () {
         }
 
         fetchData();
-    }, [id]);
+    }, [doc_id]);
 
     const timeSlots = [
         "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM",
@@ -75,16 +78,18 @@ export default function Booking () {
             <header className="sticky top-0 z-20 w-full border-b shadow-lg shadow-slate-300/30 backdrop-blur-lg
             bg-slate-50 overflow-hidden">
                 <div className="container mx-auto p-4 flex gap-4 items-center">
-                    <a
-                    href="/dashboard/patient/doctors" 
-                    className="inline-flex gap-4 items-center">
+                    <button
+                    onClick={ () => {
+                        router.push(`/patient/${user_id}/doctors`)
+                    }}
+                    className="inline-flex gap-4 items-center cursor-pointer hover:bg-slate-100 rounded-lg px-4 py-2 group">
                         
 
-                        <ArrowLeftIcon className="text-slate-900 w-5 h-5"/>
+                        <ArrowLeftIcon className="text-slate-900 w-5 h-5 group-hover:-translate-x-2 transition-transform duration-300"/>
                         
                         <h3 className="text-slate-700 font-semibold">Back</h3>
                         
-                    </a>
+                    </button>
 
                     <img
                         src="/logo.svg"
@@ -176,6 +181,12 @@ export default function Booking () {
                                                                 <input
                                                                 type="radio"
                                                                 name="type"
+                                                                onChange={
+                                                                    (event) => {
+                                                                        setType(event.target.value)
+                                                                    }
+                                                                }
+                                                                value={"General Consultaion"}
                                                                 className="accent-teal-600 cursor-pointer hover:accent-teal-500"/>
                                                                 General Consultation
                                                             </p>
@@ -183,6 +194,12 @@ export default function Booking () {
                                                                 <input
                                                                 type="radio"
                                                                 name="type"
+                                                                onChange={
+                                                                    (event) => {
+                                                                        setType(event.target.value)
+                                                                    }
+                                                                }
+                                                                value="Follow-up Vsit"
                                                                 className="accent-teal-600 cursor-pointer hover:accent-teal-500"/>
                                                                 Follow-up Visit
                                                             </p>
@@ -190,6 +207,12 @@ export default function Booking () {
                                                                 <input
                                                                 type="radio"
                                                                 name="type"
+                                                                onChange={
+                                                                    (event) => {
+                                                                        setType(event.target.value)
+                                                                    }
+                                                                }
+                                                                value="Routine Check-up"
                                                                 className="accent-teal-600 cursor-pointer hover:accent-teal-500"/>
                                                                 Routine Check-up
                                                             </p>
@@ -197,6 +220,12 @@ export default function Booking () {
                                                                 <input
                                                                 type="radio"
                                                                 name="type"
+                                                                onChange={
+                                                                    (event) => {
+                                                                        setType(event.target.value)
+                                                                    }
+                                                                }
+                                                                value="Urgent Care"
                                                                 className="accent-teal-600 cursor-pointer hover:accent-teal-500"/>
                                                                 Urgent Care
                                                             </p>
@@ -204,6 +233,12 @@ export default function Booking () {
 
                                                         <h5 className="text-slate-700 pt-4">Reason for visit</h5>
                                                         <textarea
+                                                        onChange={
+                                                            (event) => {
+
+                                                                setReason(event.target.value);
+                                                            }
+                                                        }
                                                         placeholder="Please describe your reason for the visit..."
                                                         rows={5}
                                                         className="px-4 py-2 border border-slate-300 rounded-lg w-full placeholder-slate-400
@@ -284,7 +319,34 @@ export default function Booking () {
 
                                                             else if (currentStep === steps.length) {
 
-                                                                const res = await fetch("http://localhost:3001/upcomming_appointments", {
+                                                                const userRes = await fetch(`http://localhost:5000/data/user-query/user/${user_id}`);
+
+                                                                if (userRes.ok) {
+
+                                                                    setUsersData(await userRes.json());
+                                                                }
+
+                                                                else {
+                                                                    console.error("can't get user data");
+                                                                    return;
+                                                                }
+
+                                                                if (usersData && docsData)
+
+                                                               { const appointment: AppointmentData = {
+                                                                    
+                                                                    id: "",
+                                                                    user: usersData,
+                                                                    doc: docsData,
+                                                                    date: date,
+                                                                    status: 2,
+                                                                    time: selectedTime,
+                                                                    type: type,
+                                                                    details: reason
+
+                                                                }
+
+                                                                const res = await fetch("http://localhost:5000/data/appointment-query/booking/create-appointment", {
 
                                                                     method: "POST",
                                                                     headers: {
@@ -292,25 +354,18 @@ export default function Booking () {
                                                                         "Content-Type": "application/json",
                                                                     },
 
-                                                                    body: JSON.stringify({
-
-                                                                        name: docsData?.name,
-                                                                        specialization: docsData?.specialization,
-                                                                        date: date,
-                                                                        time: selectedTime,
-                                                                        location: docsData?.location,
-                                                                        type: 1,
-                                                                        status: 1,
-                                                                        imgSrc: docsData?.imgSrc
-                                                                    })
+                                                                    body: JSON.stringify(appointment)
                                                                 });
 
-                                                                if (!res.ok) {
-
-                                                                    console.log("Failed to Create Data");
+                                                                if (res.ok) {
+                                                                    const data = await res.json();
+                                                                    router.push(`/patient/${user_id}/booking/${doc_id}/${data.id}/confirmation`);
                                                                 }
+                                                                else {
+                                                                    console.log("Failed to Create Data");
+                                                                }}
 
-                                                                router.push("/dashboard/patient/confirmation");
+                                                                
                                                             }
                                                         }
                                                     }
@@ -336,22 +391,22 @@ export default function Booking () {
                             </CardHeader>
                             <CardContent className="space-y-4">
                                 <div className="flex gap-2 items-center">
-                                    <Avatar src={docsData? docsData.imgSrc : ""} size={16}/>
+                                    <Avatar src={"/doc.png"} size={16}/>
                                     <div className="">
-                                        <h5 className="text-slate-900 font-bold text-lg">{docsData?.name}</h5>
+                                        <h5 className="text-slate-900 font-bold text-lg">{docsData?.user.firstName + " " + docsData?.user.lastName}</h5>
                                         <p className="text-slate-500 text-sm">
                                             {docsData?.specialization}
                                         </p>
                                         <p className="inline-flex gap-2 items-center text-slate-500 text-xs">
                                             <StarIcon className="w-4 h-4 text-yellow-500"/>
-                                            <span className="text-sm font-bold text-slate-900">{docsData?.rating}</span>{"("}{docsData?.reviews}{")"}
+                                            <span className="text-sm font-bold text-slate-900">{docsData?.ratings}</span>{"("}{docsData?.reviews}{")"}
                                         </p>
                                     </div>
                                 </div>
                                 <div className="flex flex-col gap-2">
                                     <p className="inline-flex gap-2 items-center text-slate-500 text-sm">
                                         <MapPinIcon className="w-4 h-4"/>
-                                        {docsData?.location}
+                                        {docsData?.user.location}
                                     </p>
 
                                     <p className="inline-flex gap-2 items-center text-slate-500 text-sm">
@@ -361,7 +416,7 @@ export default function Booking () {
 
                                     <p className="inline-flex gap-2 items-center text-slate-500 text-sm">
                                         <CalendarIcon className="w-4 h-4"/>
-                                        Available: {docsData?.dateTime}
+                                        Available: {}
                                     </p>
                                 </div>
 

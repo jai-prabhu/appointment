@@ -5,11 +5,17 @@ import { useEffect, useState } from "react";
 import { CheckIcon, PhoneIcon, MailIcon, CalendarIcon, MapPinIcon, ClockIcon, DownloadIcon, ShareIcon } from "lucide-react";
 import { CardHolder, CardHeader, CardContent } from "@/components/card";
 import { Avatar } from "@/components/avatar";
+import { AppointmentData } from "@/components/data";
+import { useRouter, useParams } from "next/navigation";
 import "./animation.css";
 
 export default function Confirmation () {
 
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [appointment, setAppointment] = useState<AppointmentData>();
+
+    const router = useRouter();
+    const params = useParams();
 
     useEffect(() => {
 
@@ -22,6 +28,28 @@ export default function Confirmation () {
 
         return () => { clearTimeout(timer) };
     }, []);
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+
+            const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/${params.apt_id}`);
+
+            if (!res.ok) {
+
+                console.error("failed to fetch data");
+                return;
+            }
+
+            const data = await res.json();
+
+            console.log(data);
+
+            setAppointment(data)
+        }
+
+        fetchData()
+    }, [params.apt_id]);
 
     return (
         <div className="max-w-screen w-full" style={{fontFamily: "var(--font-poppins)"}}>
@@ -52,12 +80,14 @@ export default function Confirmation () {
                             <h3 className="text-slate-900 text-2xl font-bold">Schedula</h3>
                         </div>
 
-                        <a
-                        href="/dashboard/patient"
+                        <button
+                        onClick={() => {
+                            router.push(`/patient/${params.user_id}/dashboard`);
+                        }}
                         className="text-slate-900 font-semibold border border-slate-300 px-4
-                        py-2 rounded-lg shadow-sm shadow-slate-300 hover:bg-slate-100 hover:scale-105 transition-all duration-500">
+                        py-2 rounded-lg shadow-sm shadow-slate-300 hover:bg-slate-100 hover:scale-105 transition-all duration-500 cursor-pointer">
                             Go to Dashboard
-                        </a>
+                        </button>
                     </div>
                 </div>
             </header>
@@ -85,13 +115,13 @@ export default function Confirmation () {
                                     <Avatar src="/doc.png" size={16}/>
 
                                     <div className="">
-                                        <h3 className="text-slate-700 font-semibold text-lg">Dr. Michael Chen</h3>
+                                        <h3 className="text-slate-700 font-semibold text-lg">{appointment?.doc.user.firstName + " " + appointment?.doc.user.lastName}</h3>
 
-                                        <p className="text-slate-500 text-sm">General Medicine</p>
+                                        <p className="text-slate-500 text-sm">{appointment?.doc?.specialization}</p>
 
                                         <p className="inline-flex gap-2 items-center justify-cente text-slate-500 text-sm">
                                             <PhoneIcon className="w-4 h-4"/> 12345 6789
-                                            <MailIcon className="w-4 h-4"/> dr.michaelcyhen@schedula.com
+                                            <MailIcon className="w-4 h-4"/> {appointment?.doc.user.email}
                                         </p>
                                     </div>
                                 </div>
@@ -102,7 +132,7 @@ export default function Confirmation () {
                                         <h5 className="text-slate-600">
                                             Date
 
-                                            <p className="text-slate-500">December 15, 2024</p>
+                                            <p className="text-slate-500">{appointment?.date}</p>
                                         </h5>
                                     </div>
 
@@ -111,7 +141,7 @@ export default function Confirmation () {
                                         <h5 className="text-slate-600">
                                             Location
 
-                                            <p className="text-slate-500">Downtown Medical Center, Room 205</p>
+                                            <p className="text-slate-500">{appointment?.doc.user.location}</p>
                                         </h5>
                                     </div>
 
@@ -120,7 +150,7 @@ export default function Confirmation () {
                                         <h5 className="text-slate-600">
                                             Time
 
-                                            <p className="text-slate-500">2:30 PM</p>
+                                            <p className="text-slate-500">{appointment?.time}</p>
                                         </h5>
                                     </div>
 
@@ -137,11 +167,11 @@ export default function Confirmation () {
                                 <div className="flex w-full justify-between items-center px-4 py-6 bg-slate-100 rounded-lg">
                                     <h1 className="text-slate-700 font-semibold">
                                         Appointment ID
-                                        <p className="text-sm font-normal text-slate-500">APT-1234-56</p>
+                                        <p className="text-sm font-normal text-slate-500">{appointment?.id}</p>
                                     </h1>
 
                                     <h1 className="text-slate-700 font-semibold ">Amount Paid
-                                        <p className="text-4xl text-teal-600 font-bold text-center">$150</p>
+                                        <p className="text-4xl text-teal-600 font-bold text-center">${appointment?.doc?.cost}</p>
                                     </h1>
                                 </div>
                             </CardContent>

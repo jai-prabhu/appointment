@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, Children, isValidElement, cloneElement, ReactNode, FC, ReactElement} from "react";
+import { useState, Children, isValidElement, cloneElement, ReactNode, FC, ReactElement, useEffect} from "react";
 import { ChevronDownIcon } from "lucide-react";
 
 interface SelectItemsProbs { 
@@ -24,10 +24,16 @@ export const SelectItem: FC<SelectItemsProbs> = ({ value, className, children, o
     );
 }
 
-export const Select = ({ className, children, placeholder }: {className?: string; children: ReactNode; placeholder?: string}) => {
+export const Select = ({ className, children, placeholder, onChange }: {className?: string; children: ReactNode; placeholder?: string; onChange?: (val: string) => void}) => {
 
     const [selection, setSelection] = useState<boolean>(false);
     const [selected, setSelected] = useState<string>(placeholder ? placeholder : "");
+
+    useEffect(() => {
+       if (onChange) {
+         onChange(selected? selected : "");
+       }
+    }, [selected, onChange]);
 
     return (
         <button 

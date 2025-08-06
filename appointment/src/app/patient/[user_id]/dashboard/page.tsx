@@ -5,16 +5,20 @@ import { DashboardHeaderP } from "@/components/dashboard-header";
 import { CardHolder, CardHeader, CardContent, AppointmentSlot } from "@/components/card";
 import { type AppointmentData } from "@/components/data";
 import { PlusIcon, CalendarIcon, FileTextIcon, HeartIcon, CircleCheckBigIcon, ClockIcon, CircleIcon } from "lucide-react";
+import { useRouter, useParams } from "next/navigation";
 
 export default function DashBoard() {
 
     const [appointments, setAppointments] = useState<AppointmentData[]>();
 
+    const router = useRouter();
+    const params = useParams();
+
     useEffect(() => {
 
         const fetchData = async () => {
 
-            const res = await fetch("http://localhost:3001/upcomming_appointments");
+            const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/filter/${params.user_id}`);
 
             if (!res.ok) {
 
@@ -25,7 +29,7 @@ export default function DashBoard() {
         }
 
         fetchData();
-    }, []);
+    }, [params.user_id]);
 
     return (
         <div className="container max-w-screen w-full" style={{fontFamily: "var(--font-poppins)"}}>
@@ -44,13 +48,17 @@ export default function DashBoard() {
                                     <h3 className="text-slate-900 font-bold text-2xl">Quick Actions</h3>
                                 </CardHeader>
                                 <CardContent>
-                                    <a
-                                    href="/dashboard/patient/doctors"
+                                    <button
+                                    onClick={
+                                        () => {
+                                            router.push(`/patient/${params.user_id}/doctors`);
+                                        }
+                                    }
                                     className="flex flex-col gap-2 w-full bg-teal-600 p-4 justify-center items-center rounded-lg font-semibold
-                                    hover:bg-teal-500">
+                                    hover:bg-teal-500 cursor-pointer">
                                         <PlusIcon className="text-slate-50"/>
                                         Book Appointment
-                                    </a>
+                                    </button>
 
                                     <a
                                     href=""
@@ -98,12 +106,13 @@ export default function DashBoard() {
                                             return (
                                                 <AppointmentSlot
                                                 key={index}
-                                                imgSrc={appointment.imgSrc}
-                                                name={appointment.name}
-                                                specialization={appointment.specialization}
+                                                id={appointment.id}
+                                                imgSrc="/doc.png"
+                                                name={appointment.doc.user.firstName + " " + appointment.doc.user.lastName}
+                                                specialization={appointment.doc.specialization}
                                                 date={appointment.date}
                                                 time={appointment.time}
-                                                location={appointment.location}
+                                                location={appointment.doc.user.location}
                                                 status={appointment.status}/>
                                             );
                                         }

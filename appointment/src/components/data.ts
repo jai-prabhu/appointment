@@ -8,14 +8,14 @@ export interface Appointments {
 
 export interface AppointmentData {
 
-    name: string;
-    specialization: string;
+    id: string;
+    user: UserData;
+    doc: DocData;
     date: string;
-    location: string;
     time: string;
-    type: number;
+    type: string;
     status: number;
-    imgSrc: string;
+    details: string;
 }
 
 export interface BookingData {
@@ -45,7 +45,10 @@ export interface UserData {
 
 export interface DocData {
 
-    docPrimaryData: UserData;
+    user: UserData;
     experience: string;
-    specialization: string
+    specialization: string;
+    ratings: string;
+    reviews: string;
+    cost: string;
 }

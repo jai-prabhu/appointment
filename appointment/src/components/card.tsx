@@ -4,7 +4,7 @@ import { FC, ReactNode } from "react";
 import { LucideIcon, CalendarIcon, ClockIcon, MapPinIcon, StarIcon, ArrowRightIcon, MoreHorizontalIcon } from "lucide-react";
 import { Avatar } from "./avatar";
 import { StatusBadge } from "./badge";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 
  
 export interface CardProps {
@@ -18,14 +18,13 @@ export interface CardProps {
 
 export interface BookCardProps {
 
-    id: number;
+    id: string;
     name: string;
     specialization: string;
     rating: string;
     reviews: string;
     experience: string;
     location: string;
-    dateTime: string;
     cost: string;
 
 }
@@ -77,7 +76,8 @@ export const CardHolder = ({ children, className }: {children: ReactNode; classN
     );
 }
 
-export const AppointmentSlot = ({ imgSrc, name, specialization, date, time, location, status }: {
+export const AppointmentSlot = ({ id, imgSrc, name, specialization, date, time, location, status }: {
+    id: string;
     imgSrc: string;
     name: string;
     specialization: string;
@@ -87,6 +87,9 @@ export const AppointmentSlot = ({ imgSrc, name, specialization, date, time, loca
     status?: number;
 }) => {
 
+    const router = useRouter();
+    const params = useParams();
+    
     return (
         <div className="w-full flex justify-between bg-slate-50 border border-slate-300 rounded-lg p-4">
             <div className="flex gap-2 items-center">
@@ -114,28 +117,33 @@ export const AppointmentSlot = ({ imgSrc, name, specialization, date, time, loca
                 </div>
             </div>
             { (<div className="flex gap-2 items-center justify-center">
-                <a 
+                {status !== 4 && (<a 
                     href=""
                     className="text-slate-900 bg-slate-50 font-semibold px-4 py-2 border border-slate-300 rounded-lg
                     hover:bg-slate-100">
                     {status !== 2 ? `Reschedule` : `View`}
-                </a>
-                <a
-                    href=""
+                </a>)}
+                <button
+                    onClick={
+                        () => {
+                            router.push(`appointments/${id}/cancel`);
+                        }
+                    }
                     className="text-slate-50 bg-teal-600 font-semibold px-4 py-2 rounded-lg
-                    hover:bg-teal-500">
-                    {status !== 2 ? `Cancel` : `Cancel`}
-                </a>
+                    hover:bg-teal-500 cursor-pointer">
+                    {status === 4 ? `Book Again` : `Cancel`}
+                </button>
             </div>)}
         </div>
     );
 }
 
 export const BookCard = ({
-    id, name, specialization, rating, reviews, experience, location, dateTime, cost
+    id, name, specialization, rating, reviews, experience, location, cost
 }: BookCardProps) => {
 
     const router = useRouter();
+    const params = useParams();
 
     return (
         <div className="w-full space-y-4 bg-white p-4 rounded-lg border border-slate-400/50 shadow-lg shadow-slate-300
@@ -169,7 +177,7 @@ export const BookCard = ({
 
                 <p className="inline-flex gap-2 items-center w-full">
                     <CalendarIcon className="w-4 h-4"/>
-                    Next: {dateTime}
+                    Next: {""}
                 </p>
             </div>
             <div className="flex w-full justify-between items-center border-t border-slate-400/50 pt-4">
@@ -180,7 +188,7 @@ export const BookCard = ({
                     <button
                     onClick={
                         () => {
-                            router.push(`/dashboard/patient/booking/${id}`);
+                            router.push(`/patient/${params.user_id}/booking/${id}`);
                         }
                     }
                     className="relative flex gap-2 items-center text-slate-50 font-bold py-2 px-4 rounded-lg z-10 cursor-pointer">

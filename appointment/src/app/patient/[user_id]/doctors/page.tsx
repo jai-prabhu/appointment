@@ -5,17 +5,21 @@ import { ArrowLeftIcon, SearchIcon } from "lucide-react";
 import { Select, SelectItem } from "@/components/select";
 import { BookCard } from "@/components/card";
 import { useState, useEffect } from "react";
-import { type BookingData } from "@/components/data";
+import { type DocData } from "@/components/data";
+import { useRouter } from "next/navigation";
 
 export default function Doctors () {
 
-    const [docsData, setDocsData] = useState<BookingData[]>();
+    const [docsData, setDocsData] = useState<DocData[]>();
+
+    const router = useRouter();
 
     useEffect(() => {
 
         const fetchData = async () => {
 
-            const res = await fetch("http://localhost:3001/BookingsData");
+            
+            const res = await fetch("http://localhost:5000/data/doc-query/doc");
 
             if (!res.ok) {
 
@@ -97,14 +101,13 @@ export default function Doctors () {
                                     return (
                                         <BookCard
                                         key={index}
-                                        id={data.id}
-                                        name={data.name}
+                                        id={data.user.id? data.user.id : "-1"}
+                                        name={data.user.firstName + " " + data.user.lastName}
                                         specialization={data.specialization}
-                                        rating={data.rating}
+                                        rating={data.ratings}
                                         reviews={data.reviews}
                                         experience={data.experience}
-                                        location={data.location}
-                                        dateTime={data.dateTime}
+                                        location={data.user.location}
                                         cost={data.cost}/>
                                     );
                                 }

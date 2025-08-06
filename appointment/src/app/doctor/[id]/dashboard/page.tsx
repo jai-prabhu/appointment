@@ -2,9 +2,54 @@
 
 import { DashboardHeaderD } from "@/components/dashboard-header";
 import { CardHolder, CardHeader, CardContent, AppointmentSlot } from "@/components/card";
+import { useRouter, useParams } from "next/navigation";
+import { AppointmentData, DocData } from "@/components/data";
+import { useState, useEffect } from "react";
 import { PlusIcon, CalendarIcon, FileTextIcon, CircleCheckBigIcon, CircleAlertIcon, CircleIcon, UsersIcon, ActivityIcon, TrendingUpIcon } from "lucide-react";
 
 export default function DashBoard() {
+
+    const [appointments, setAppointments] = useState<AppointmentData[]>();
+    const [docsData, setDocsData] = useState<DocData[]>();
+
+    const router = useRouter();
+    const params = useParams();
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+
+            const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/filter/doc/${params.id}`);
+
+            if (!res.ok) {
+
+                console.error("Failed to fetch Data");
+                return;
+            }
+
+            setAppointments(await res.json());
+        }
+
+        fetchData();
+    }, [params.id]);
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+
+            const res = await fetch(`http://localhost:5000/data/doc-query/doc/${params.id}`);
+
+            if (!res.ok) {
+
+                console.error("Failed to fetch data");
+                return;
+            }
+
+            setDocsData(await res.json());
+        }
+
+        fetchData();
+    }, [params.id])
 
     return (
         <div className="container max-w-screen w-full" style={{fontFamily: "var(--font-poppins)"}}>
@@ -13,7 +58,7 @@ export default function DashBoard() {
             <main className="w-full bg-gradient-to-br from-slate-50 via-teal-30 to-slate-100 p-4">
                 <div className="container w-full mx-auto">
                     <div className="space-y-2 my-8">
-                        <h1 className="text-slate-900 text-4xl font-bold">Welcome Back, Dr. Michael</h1>
+                        <h1 className="text-slate-900 text-4xl font-bold">Welcome Back, Dr. </h1>
                         <p className="text-slate-500">You have 4 appointments scheduled for today.</p>
                         
                         <div className="flex gap-8 items-center w-full justify-center">
@@ -108,38 +153,23 @@ export default function DashBoard() {
                                     </a>
                                 </CardHeader>
                                 <CardContent className="space-y-4 w-full">
-                                    <AppointmentSlot
-                                    imgSrc="/doc.png"
-                                    name="Johyn Smith"
-                                    specialization="Consultation"
-                                    time="9:00 AM"
                                     
-                                    status={0}/>
+                                    {
+                                        appointments?.map((appointment, index) => {
 
-                                    <AppointmentSlot
-                                    imgSrc="/doc.png"
-                                    name="Sarah Johnson"
-                                    specialization="Follow-up"
-                                    time="10:30 AM"
-                                    
-                                    status={1}/>
-
-                                    <AppointmentSlot
-                                    imgSrc="/doc.png"
-                                    name="Michael Brown"
-                                    specialization="Check-up"
-                                    time="2:00 PM"
-                                    
-                                    status={2}/>
-
-                                    <AppointmentSlot
-                                    imgSrc="/doc.png"
-                                    name="Emily Davis"
-                                    specialization="Consultation"
-                                    time="3:30 PM"
-                                    
-                                    status={0}/>
-
+                                            return (
+                                                <AppointmentSlot
+                                                key={index}
+                                                id={appointment.id}
+                                                imgSrc="/doc.png"
+                                                name={appointment.user.firstName + " " + appointment.user.lastName}
+                                                specialization={appointment.type}
+                                                time={appointment.time}
+                                                
+                                                status={appointment.status}/>
+                                            )
+                                        })
+                                    }
                                 </CardContent>
                             </CardHolder>
                             <CardHolder>

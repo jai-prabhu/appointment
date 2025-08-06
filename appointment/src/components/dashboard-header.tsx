@@ -3,8 +3,34 @@
 
 import { UserIcon, BellIcon, SettingsIcon, LogOutIcon, ShieldIcon } from "lucide-react";
 import { Avatar } from "./avatar";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { DocData } from "./data";
 
 export const DashboardHeaderD = () => {
+
+    const [data, setData] = useState<DocData>();
+    
+    const params = useParams();
+
+    useEffect(() => {
+
+        const fetchData = async () => {
+
+            const res = await fetch(`http://localhost:5000/data/doc-query/doc/${params.id}`)
+                
+            const resData = await res.json();
+            if (res.ok) {
+                setData(resData);
+                console.log(data);
+            }
+            else {
+                console.error("failed to feth data")
+            }
+        }
+
+        fetchData();
+    }, [params.id]);
 
     return (
         <header className="sticky top-0 backdrop-blur-md container overflow-hidden bg-gradient-to-r from-slate-50
@@ -31,10 +57,10 @@ export const DashboardHeaderD = () => {
                         <BellIcon className="text-slate-900 w-5 h-5"/>
                     </button>
                     <div className="flex gap-2 items-center">
-                        <Avatar src="/doc.png" size={16}/>
+                        <Avatar src="/doc.png" size={12}/>
 
-                        <h3 className="text-slate-900 font-bold">Dr. Michael Chen
-                            <p className="text-slate-400 font-normal text-xs">General Medicine</p>
+                        <h3 className="text-slate-900 font-bold">{data?.user.firstName + " " + data?.user.lastName}
+                            <p className="text-slate-400 font-normal text-xs">{data?.specialization}</p>
                         </h3>
                     </div>
                     <button className="cursor-pointer hover:bg-slate-200 p-2 rounded-lg">
