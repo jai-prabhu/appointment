@@ -32,3 +32,20 @@ export interface BookingData {
     cost: string;
 
 }
+
+export interface UserData {
+
+    id?: string;
+    firstName: string;
+    lastName: string;
+    password: string;
+    location: string;
+    email: string;
+}
+
+export interface DocData {
+
+    docPrimaryData: UserData;
+    experience: string;
+    specialization: string
+}
