@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { type AppointmentData } from "@/lib/data";
-import { ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon, FilterIcon, SquareIcon, } from "lucide-react";
+import { ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon, FilterIcon } from "lucide-react";
 import { CardHolder, CardContent } from "@/components/card";
 import { DashboardHeaderD } from "@/components/dashboard-header";
 import { startOfToday, addMonths, addWeeks, addDays, format, getDaysInMonth, startOfMonth, isSameDay } from "date-fns";

@@ -1,10 +1,10 @@
-/* eslint-disable @next/next/no-img-element */
+
 "use client";
 
 import { ArrowLeftIcon, FilterIcon } from "lucide-react";
 import { SearchBar } from "@/components/search-bar";
 import { TabHolder, TabItem } from "@/components/tab";
-import { AppointmentCard, AppointmentCardP } from "@/components/card"
+import { AppointmentCardP } from "@/components/card"
 import { useState, useCallback, useEffect } from "react";
 import { type AppointmentData } from "../../../../lib/data";
 import { useRouter, useParams } from "next/navigation";
