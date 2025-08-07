@@ -5,7 +5,7 @@ import { ArrowLeftIcon, SearchIcon } from "lucide-react";
 import { Select, SelectItem } from "@/components/select";
 import { BookCard } from "@/components/card";
 import { useState, useEffect } from "react";
-import { type DocData } from "@/components/data";
+import { type DocData } from "@/lib/data";
 import { useRouter } from "next/navigation";
 
 export default function Doctors () {
@@ -38,16 +38,20 @@ export default function Doctors () {
             <header className="sticky top-0 z-20 w-full border-b shadow-lg shadow-slate-300/30 backdrop-blur-lg
             bg-slate-50 overflow-hidden">
                 <div className="container mx-auto p-4 flex gap-4 items-center">
-                    <a
-                    href="/dashboard/patient" 
-                    className="inline-flex gap-4 items-center">
+                    <button
+                    onClick={
+                        () => {
+                            router.push("dashboard");
+                        }
+                    }
+                    className="inline-flex gap-4 items-center px-4 py-2 hover:bg-slate-100 rounded-lg group cursor-pointer">
                         
 
-                        <ArrowLeftIcon className="text-slate-900 w-5 h-5"/>
+                        <ArrowLeftIcon className="text-slate-900 w-5 h-5 group-hover:-translate-x-2 transition-transform duration-300"/>
                         
                         <h3 className="text-slate-700 font-semibold">Back</h3>
                         
-                    </a>
+                    </button>
 
                     <img
                         src="/logo.svg"

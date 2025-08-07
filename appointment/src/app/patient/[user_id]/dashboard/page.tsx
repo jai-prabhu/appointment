@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { DashboardHeaderP } from "@/components/dashboard-header";
 import { CardHolder, CardHeader, CardContent, AppointmentSlot } from "@/components/card";
-import { type AppointmentData } from "@/components/data";
+import { type AppointmentData } from "@/lib/data";
 import { PlusIcon, CalendarIcon, FileTextIcon, HeartIcon, CircleCheckBigIcon, ClockIcon, CircleIcon } from "lucide-react";
 import { useRouter, useParams } from "next/navigation";
 
@@ -91,12 +91,16 @@ export default function DashBoard() {
                                         <h3 className="text-slate-900 font-bold text-2xl">Upcomming Appointments</h3>
                                         <p className="text-slate-500 text-sm">Your scheduled medical appointments</p>
                                     </div>
-                                    <a 
-                                    href="/dashboard/patient/appointments"
+                                    <button 
+                                    onClick={
+                                        () => {
+                                            router.push(`appointments`);
+                                        }
+                                    }
                                     className="text-slate-900 border border-slate-300 font-semibold px-4 py-2 rounded-lg
-                                    hover:bg-slate-100 hover:shadow-md shadow-slate-300">
+                                    hover:bg-slate-100 hover:shadow-md shadow-slate-30 cursor-pointer">
                                         View all
-                                    </a>
+                                    </button>
                                 </CardHeader>
                                 <CardContent className="space-y-4 w-full">
                                     {

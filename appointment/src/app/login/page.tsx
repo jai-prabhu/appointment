@@ -41,7 +41,7 @@ export default function Login () {
             router.push(`/${!isDoctor ? `patient` : `doctor`}/${id}/dashboard`)
         }
         else {
-            console.error("fuck off");
+            console.error("Failed to get the data");
         }
     }
 

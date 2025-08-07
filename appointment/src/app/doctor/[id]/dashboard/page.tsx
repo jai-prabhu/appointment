@@ -1,16 +1,16 @@
 "use client";
 
 import { DashboardHeaderD } from "@/components/dashboard-header";
-import { CardHolder, CardHeader, CardContent, AppointmentSlot } from "@/components/card";
+import { CardHolder, CardHeader, CardContent, PendingSlot, AppointmentSlot } from "@/components/card";
 import { useRouter, useParams } from "next/navigation";
-import { AppointmentData, DocData } from "@/components/data";
+import { AppointmentData, DocData } from "@/lib/data";
 import { useState, useEffect } from "react";
-import { PlusIcon, CalendarIcon, FileTextIcon, CircleCheckBigIcon, CircleAlertIcon, CircleIcon, UsersIcon, ActivityIcon, TrendingUpIcon } from "lucide-react";
+import { CalendarIcon, FileTextIcon, CircleCheckBigIcon, CircleAlertIcon, CircleIcon, UsersIcon, ActivityIcon, TrendingUpIcon } from "lucide-react";
 
 export default function DashBoard() {
 
     const [appointments, setAppointments] = useState<AppointmentData[]>();
-    const [docsData, setDocsData] = useState<DocData[]>();
+    const [docsData, setDocsData] = useState<DocData>();
 
     const router = useRouter();
     const params = useParams();
@@ -58,7 +58,7 @@ export default function DashBoard() {
             <main className="w-full bg-gradient-to-br from-slate-50 via-teal-30 to-slate-100 p-4">
                 <div className="container w-full mx-auto">
                     <div className="space-y-2 my-8">
-                        <h1 className="text-slate-900 text-4xl font-bold">Welcome Back, Dr. </h1>
+                        <h1 className="text-slate-900 text-4xl font-bold">Welcome Back, Dr. {docsData?.user.firstName}</h1>
                         <p className="text-slate-500">You have 4 appointments scheduled for today.</p>
                         
                         <div className="flex gap-8 items-center w-full justify-center">
@@ -106,37 +106,82 @@ export default function DashBoard() {
                                     <h3 className="text-slate-900 font-bold text-2xl">Quick Actions</h3>
                                 </CardHeader>
                                 <CardContent>
-                                    <a
-                                    href=""
-                                    className="flex flex-col gap-2 w-full bg-teal-600 p-4 justify-center items-center rounded-lg font-semibold
-                                    hover:bg-teal-500">
-                                        <PlusIcon className="text-slate-50"/>
-                                        Add Patient
-                                    </a>
+                                    <button
+                                    onClick={
+                                        () => { router.push("appointments"); }
+                                    }
+                                    className="flex flex-col gap-2 w-full bg-orange-600 text-sm p-4 justify-center items-center rounded-lg font-semibold
+                                    hover:bg-orange-500 cursor-pointer hover:scale-105 transition-all duration-300">
+                                        <CircleAlertIcon className="text-slate-50"/>
+                                        Review Requests
+                                    </button>
 
-                                    <a
-                                    href=""
+                                    <button
+                                    onClick={
+                                        () => {
+                                            router.push("calendar");
+                                        }
+                                    }
                                     className="flex flex-col gap-2 bg-slate-50 w-full p-4 justify-center items-center rounded-lg
-                                    border border-slate-300 text-slate-900 text-sm font-semibold hover:bg-slate-100">
+                                    border border-slate-300 text-slate-900 text-sm font-semibold hover:bg-slate-100 cursor-pointer hover:scale-105 transition-all duration-300">
                                         <CalendarIcon/>
                                         Calendar View
-                                    </a>
+                                    </button>
 
-                                    <a
-                                    href=""
-                                    className="flex flex-col gap-2 bg-slate-50 w-full p-4 justify-center items-center rounded-lg font-semibold
-                                    border border-slate-300 text-slate-900 hover:bg-slate-100">
+                                    <button
+                                    onClick={
+                                        () => {
+
+                                        }
+                                    }
+                                    className="flex flex-col gap-2 bg-slate-50 w-full p-4 justify-center text-sm items-center rounded-lg font-semibold
+                                    border border-slate-300 text-slate-900 hover:bg-slate-100 cursor-pointer hover:scale-105 transition-all duration-300">
                                         <FileTextIcon/>
                                         Records
-                                    </a>
+                                    </button>
 
                                     <a
                                     href=""
                                     className="flex  flex-col gap-2 bg-slate-50 w-full p-4 justify-center items-center rounded-lg font-semibold
-                                    border border-slate-300 text-slate-900 hover:bg-slate-100">
+                                    border border-slate-300 text-slate-900 text-sm hover:bg-slate-100 cursor-pointer hover:scale-105 transition-all duration-300">
                                         <ActivityIcon/>
                                         Analytics
                                     </a>
+                                </CardContent>
+                            </CardHolder>
+                            <CardHolder>
+                                <CardHeader className="flex justify-between items-center">
+                                    <div className="space-y-2">
+                                        <h3 className="text-slate-900 font-bold text-2xl">Pending Requests</h3>
+                                        <p className="text-slate-500 text-sm">Patients waiting for your approval</p>
+                                    </div>
+                                    <button 
+                                    onClick={
+                                        () => { router.push("appointments"); }
+                                    }
+                                    className="text-slate-900 border border-slate-300 font-semibold px-4 py-2 rounded-lg
+                                    hover:bg-slate-100 hover:shadow-md shadow-slate-300 cursor-pointer">
+                                        View all
+                                    </button>
+                                </CardHeader>
+                                <CardContent className="space-y-4 w-full">
+                                    {
+                                        appointments?.filter(appointment => appointment.status === 2).map((appointment, index) => {
+
+                                            return (
+                                                <PendingSlot
+                                                key={index}
+                                                id={appointment.id}
+                                                imgSrc="/man.png"
+                                                date={appointment.date}
+                                                name={appointment.user.firstName + " " + appointment.user.lastName}
+                                                specialization={appointment.type}
+                                                time={appointment.time}
+                                                
+                                                status={appointment.status}/>
+                                            )
+                                        })
+                                    }
                                 </CardContent>
                             </CardHolder>
                             <CardHolder>
@@ -155,7 +200,7 @@ export default function DashBoard() {
                                 <CardContent className="space-y-4 w-full">
                                     
                                     {
-                                        appointments?.map((appointment, index) => {
+                                        appointments?.filter(appointment => appointment.status === 1).map((appointment, index) => {
 
                                             return (
                                                 <AppointmentSlot

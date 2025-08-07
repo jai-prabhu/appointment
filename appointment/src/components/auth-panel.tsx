@@ -5,7 +5,7 @@ import { EyeIcon, EyeOffIcon, ArrowRightIcon, UserIcon, ShieldIcon,
     MailIcon, LockIcon, PhoneIcon, CalendarIcon, MapPinIcon
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { UserData, DocData } from "@/components/data";
+import { UserData, DocData } from "@/lib/data";
 import { Select, SelectItem } from "./select";
 
 export const RegisterPanelUser = () => {

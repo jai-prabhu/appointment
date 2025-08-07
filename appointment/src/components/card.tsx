@@ -1,7 +1,8 @@
 "use client";
 
 import { FC, ReactNode } from "react";
-import { LucideIcon, CalendarIcon, ClockIcon, MapPinIcon, StarIcon, ArrowRightIcon, MoreHorizontalIcon } from "lucide-react";
+import { LucideIcon, CalendarIcon, ClockIcon, EyeIcon, MapPinIcon, StarIcon, ArrowRightIcon, PhoneIcon, MoreHorizontalIcon,
+     CircleCheckBigIcon, CircleXIcon, CheckIcon, XIcon } from "lucide-react";
 import { Avatar } from "./avatar";
 import { StatusBadge } from "./badge";
 import { useRouter, useParams } from "next/navigation";
@@ -76,6 +77,131 @@ export const CardHolder = ({ children, className }: {children: ReactNode; classN
     );
 }
 
+
+export const PendingSlot = ({ id, imgSrc, name, specialization, date, time, location, status }: {
+    id: string;
+    imgSrc: string;
+    name: string;
+    specialization: string;
+    date: string;
+    time: string;
+    location?: string;
+    status?: number;
+}) => {
+
+    const router = useRouter();
+    
+    
+    return (
+        <div className="w-full flex justify-between bg-slate-50 border border-slate-300 rounded-lg p-4">
+            <div className="flex gap-2 items-center">
+                <Avatar src={imgSrc} size={16}/>
+                <div>
+                    <h3 className="text-slate-900 font-bold text-xl">{name}</h3>
+                    <p className="text-slate-500 text-sm">{specialization}</p>
+                    <div className="flex gap-2 items-center py-1">
+                        <h5 className="text-slate-500 text-sm">Requested:</h5>
+                        <p className="inline-flex gap-1 items-center text-xs text-slate-500">
+                            <CalendarIcon className="w-3 h-3"/>
+                            {date}
+                        </p>
+                        <p className="inline-flex gap-1 items-center text-xs text-slate-500">
+                            <ClockIcon className="w-3 h-3"/>
+                            {time}
+                        </p>
+                        {status !== 2 && (<p className="inline-flex gap-1 items-center text-xs text-slate-500">
+                            <MapPinIcon className="w-3 h-3"/>
+                            {location}
+                        </p>)}
+
+                        <StatusBadge
+                        status={status ? status : 1}/>
+                    </div>
+                </div>
+            </div>
+            <div className="flex gap-2 items-center justify-center">
+                <button 
+                     onClick={
+                               () => {
+
+
+                                const data = async () => {const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/update/${id}`, {
+
+                                        method: "PATCH",
+                                        headers: {
+                                            "Content-Type": "application/json"
+                                        },
+                                        body: JSON.stringify({
+                                            status: 1
+                                        })
+                                    })
+                                    
+                                    if (!res.ok) {
+
+                                        console.error("Failed to fetch data")
+                                        return;
+                                        
+                                    }
+                                    
+                                }
+
+                                data();
+
+                                setTimeout(() => {
+                                    router.push(`dashboard`);
+                                }, 2000)
+ 
+                                }
+                            } 
+                    className="inline-flex gap-3 items-center text-slate-50 bg-teal-600 font-semibold px-4 py-2 rounded-lg
+                    hover:bg-teal-500 cursor-pointer hover:scale-105 transition-all duration-300">
+                        <CircleCheckBigIcon className="w-4 h-4"/>
+                    Approve
+                </button>
+                <button
+                    onClick={
+                               () => {
+
+
+                                const data = async () => {const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/update/${id}`, {
+
+                                        method: "PATCH",
+                                        headers: {
+                                            "Content-Type": "application/json"
+                                        },
+                                        body: JSON.stringify({
+                                            status: 4
+                                        })
+                                    })
+                                    
+                                    if (!res.ok) {
+
+                                        console.error("Failed to fetch data")
+                                        return;
+                                        
+                                    }
+                                    
+                                }
+
+                                data();
+
+                                setTimeout(() => {
+                                    router.push(`dashboard`);
+                                }, 2000)
+ 
+                                }
+                            } 
+                    className="inline-flex items-center gap-3 bg-slate-50 text-red-400  px-4 py-2 rounded-lg
+                    hover:bg-salte-100 cursor-pointer border hover:scale-105 transition-all duration-300">
+                        <CircleXIcon className="w-4 h-4"/>
+                    Decline
+                </button>
+            </div>
+        </div>
+    );
+}
+
+
 export const AppointmentSlot = ({ id, imgSrc, name, specialization, date, time, location, status }: {
     id: string;
     imgSrc: string;
@@ -88,7 +214,7 @@ export const AppointmentSlot = ({ id, imgSrc, name, specialization, date, time, 
 }) => {
 
     const router = useRouter();
-    const params = useParams();
+    
     
     return (
         <div className="w-full flex justify-between bg-slate-50 border border-slate-300 rounded-lg p-4">
@@ -196,10 +322,10 @@ export const BookCard = ({
                         Book Now
                     </button>
 
-                    <div className="absolute inset-0 bg-teal-600"></div>
+                    <div className="absolute inset-0 bg-teal-600 pointer-events-none"></div>
 
                     <div className="absolute inset-0 bg-gradient-to-r from-teal-600 to-teal-400
-                    -translate-x-[100%] group-hover:translate-x-0 transition-all duration-300"></div>
+                    -translate-x-[100%] group-hover:translate-x-0 transition-all duration-300 pointer-events-none"></div>
                 </div>
             </div>
         </div>
@@ -215,10 +341,23 @@ export interface AppointmentCardProp {
     location: string;
     time: string;
     date: string;
-    type: number
+    type: string
 }
 
-export const AppointmentCard = ({ imgSrc, name, specialization, location, time, date, status, type }: AppointmentCardProp) => {
+export interface AppointmentCardPropP {
+
+    id: string;
+    imgSrc: string;
+    name: string;
+    specialization: string;
+    status: number;
+    reason: string;
+    time: string;
+    date: string;
+    type: string
+}
+
+export const AppointmentCard = ({ imgSrc, name, specialization, location, time, date, status }: AppointmentCardProp) => {
 
     return (
         <CardHolder className="p-4 bg-slate-50 rounded-lg hover:shadow-lg cursor-pointer">
@@ -241,7 +380,7 @@ export const AppointmentCard = ({ imgSrc, name, specialization, location, time, 
                         </div>
 
                         {
-                            type === 1 && (
+                            (status === 1 || status ===2) && (
 
                                 <button className="p-1 hover:bg-slate-200 rounded-lg transition-colors duration-300 cursor-pointer">
                                     <MoreHorizontalIcon className="text-slate-500/90"/>
@@ -250,7 +389,7 @@ export const AppointmentCard = ({ imgSrc, name, specialization, location, time, 
                         }
 
                         {
-                            type === 2 && (
+                            status === 3 && (
 
                                 <div className="flex gap-2 items-center justify-center text-sm">
                                     <button className="text-slate-900 font-semibold transition-colors duration-300 cursor-pointer
@@ -267,7 +406,7 @@ export const AppointmentCard = ({ imgSrc, name, specialization, location, time, 
                         }
 
                         {
-                            type === 3 && (
+                            status === 4 && (
 
                                 <button className="text-slate-900 font-semibold text-sm transition-colors duration-300 cursor-pointer
                                     border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-200 ">
@@ -297,6 +436,143 @@ export const AppointmentCard = ({ imgSrc, name, specialization, location, time, 
                     </div>
                 </div>
             </CardHeader>
+        </CardHolder>
+    );
+}
+
+
+export const AppointmentCardP = ({ id, imgSrc, name, specialization, reason, time, date, status }: AppointmentCardPropP) => {
+
+    const router = useRouter();
+
+    return (
+        <CardHolder className="p-4 bg-slate-50 rounded-lg hover:shadow-lg cursor-pointer">
+            <CardContent className="flex gap-2">
+                <div>
+                    <Avatar src={imgSrc} size={16}/>
+                </div>
+                <div className="space-y-4 w-full">
+                    <div className="flex justify-between w-full items-center">
+                        <div className="flex gap-2 items-center">
+                            
+                            <div className="flex flex-col">
+                                <h1 className="inline-flex gap-3 items-center text-slate-700 font-semibold">
+                                    { name }
+                                    <StatusBadge
+                                    status={status}/>
+                                </h1>
+                                <p className="text-sm text-slate-500">{ specialization }</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 justify-center items-center w-full">
+                        
+                        <p className=" text-sm text-slate-500 font-semibold">
+                            Reason: <span className="font-normal">{reason}</span>
+                            
+                        </p>
+                        
+                        <div className="flex flex-col gap-2 items-start">
+                            <p className="inline-flex items-center gap-3 text-sm text-slate-500 ">
+                                <CalendarIcon className="w-4 h-4"/>
+                                {date}
+                            </p>
+
+                            <p className="inline-flex items-center gap-3 text-sm text-slate-500 ">
+                                <ClockIcon className="w-4 h-4"/>
+                                {time}
+                            </p>
+
+                            <p className="inline-flex items-center gap-3 text-sm text-slate-500 ">
+                                <PhoneIcon className="w-4 h-4"/>
+                                123456789
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+                {status === 1 && (<div className="flex flex-col gap-4">
+                    <button className="inline-flex items-center gap-2 w-full whitespace-nowrap text-slate-600 text-sm border border-slate-300 px-4 py-2 rounded-lg
+                    hover:scale-105 cursor-pointer transition-all hover:bg-slate-100 duration-300 hover:shadow-sm shadow-slate-300">
+                        <EyeIcon/>
+                        View Details
+                    </button>
+
+                    <button className="w-full whitespace-nowrap text-slate-600 text-sm border border-slate-300 px-4 py-2 rounded-lg
+                    hover:scale-105 cursor-pointer transition-all hover:bg-slate-100 duration-300 hover:shadow-sm shadow-slate-300">
+                        Reschedule
+                    </button>
+                </div>)}
+
+                {status === 2 && (<div className="flex flex-col gap-4">
+                    <button className="inline-flex items-center gap-2 justify-center w-full whitespace-nowrap text-slate-600 font-semibold text-sm border border-slate-300 px-4 py-2 rounded-lg
+                    hover:scale-105 cursor-pointer transition-all hover:bg-slate-100 duration-300 hover:shadow-sm shadow-slate-300">
+                        <EyeIcon className="w-5 h-5"/>
+                        View Details
+                    </button>
+
+                    <button 
+                    onClick={
+                               () => {
+
+
+                                const data = async () => {const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/update/${id}`, {
+
+                                        method: "PATCH",
+                                        headers: {
+                                            "Content-Type": "application/json"
+                                        },
+                                        body: JSON.stringify({
+                                            status: 1
+                                        })
+                                    })
+                                    
+                                    if (!res.ok) {
+
+                                        console.error("Failed to fetch data")
+                                        return;
+                                        
+                                    }
+                                    
+                                }
+
+                                data();
+
+                                
+                                router.push(`appointments`);
+                                
+ 
+                                }
+                            }
+                    className="inline-flex items-center gap-2 justify-center w-full w-full whitespace-nowrap text-slate-50 bg-teal-600 text-sm border border-slate-300 px-4 py-2 rounded-lg
+                    hover:scale-105 cursor-pointer transition-all duration-300 hover:shadow-sm font-semibold shadow-slate-300 hover:bg-teal-500">
+                        <CheckIcon className="w-5 h-5"/>
+                        Confirm
+                    </button>
+
+                    <button className="inline-flex items-center gap-2 justify-center w-full w-full whitespace-nowrap text-red-500 text-sm border  px-4 py-2 rounded-lg
+                    hover:scale-105 cursor-pointer hover:bg-red-100 transition-all duration-300 hover:shadow-sm font-semibold shadow-slate-300">
+                        <XIcon className="w-5 h-5"/>
+                        Cancel
+                    </button>
+                </div>)}
+
+                {status === 3 && (<div className="flex flex-col gap-4">
+                    <button className="inline-flex items-center gap-2 justify-center w-full whitespace-nowrap text-slate-600 font-semibold text-sm border border-slate-300 px-4 py-2 rounded-lg
+                    hover:scale-105 cursor-pointer transition-all duration-300 hover:shadow-sm shadow-slate-300">
+                        <EyeIcon className="w-5 h-5"/>
+                        View Details
+                    </button>
+
+                    <button className="inline-flex items-center gap-2 justify-center w-full w-full whitespace-nowrap text-slate-50 bg-teal-600 text-sm border border-slate-300 px-4 py-2 rounded-lg
+                    hover:scale-105 cursor-pointer transition-all duration-300 hover:shadow-sm font-semibold shadow-slate-300 hover:bg-teal-500">
+                        <CheckIcon className="w-5 h-5"/>
+                        Book Again
+                    </button>
+                </div>)}
+            </CardContent>
         </CardHolder>
     );
 }

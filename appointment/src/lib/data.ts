@@ -52,3 +52,15 @@ export interface DocData {
     reviews: string;
     cost: string;
 }
+
+export const range = (start: number, end: number, step: number) : number [] => {
+
+    const rangeN = [];
+
+    for (let i = start; i < end; i += step) {
+
+        rangeN.push(i);
+    }
+
+    return rangeN;
+}

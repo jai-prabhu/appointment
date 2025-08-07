@@ -1,13 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { ArrowLeftIcon, PlusIcon, FilterIcon } from "lucide-react";
+import { ArrowLeftIcon, FilterIcon } from "lucide-react";
 import { SearchBar } from "@/components/search-bar";
 import { TabHolder, TabItem } from "@/components/tab";
-import { AppointmentCard } from "@/components/card"
+import { AppointmentCard, AppointmentCardP } from "@/components/card"
 import { useState, useCallback, useEffect } from "react";
 import { type AppointmentData } from "../../../../lib/data";
 import { useRouter, useParams } from "next/navigation";
+import { DashboardHeaderD } from "@/components/dashboard-header"
 
 export default function Appointments() {
 
@@ -21,7 +22,7 @@ export default function Appointments() {
 
         const fetchData = async () => {
 
-            const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/filter/${params.user_id}`);
+            const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/filter/doc/${params.id}`);
 
             if (!res.ok) {
 
@@ -34,52 +35,28 @@ export default function Appointments() {
         fetchData();
 
         
-    }, [params.user_id])
+    }, [params.id])
 
     console.log(appointments);
 
     return (
         <div className="max-w-screen w-ful bg-gradient-to-r from-slate-50 via-teal-50 to-white" style={{fontFamily: "var(--font-poppins)"}}>
-            <header className="sticky top-0 w-full bg-slate-50 border border-teal-600/30">
-                <div className="container mx-auto p-4">
-                    <div className="flex justify-between items-center">
-                        <div className="flex gap-4 items-center justify-center">
-                            <button 
-                            onClick={
-                                () => {
+            
+            <DashboardHeaderD>
+                <button 
+                onClick={
+                    () => {
+                        router.push("dashboard");
+                    }
+                }
+                className="inline-flex gap-3 items-center px-4 py-2 hover:bg-slate-100 rounded-lg
+                hover:scale-105 transition-all duration-300 text-slate-600 text-sm group cursor-pointer">
 
-                                    router.push("dashboard")
-                                }
-                            }
-                            className="inline-flex gap-4 items-center justify-center px-4 py-2 rounded-lg hover:bg-slate-100
-                            hover:scale-105 transition-all duration-300 text-slate-700 font-semibold cursor-pointer">
-                                <ArrowLeftIcon className="w-4 h-4"/>
-                                Back
-                            </button>
+                    <ArrowLeftIcon className="w-5 h-5 group-hover:-translate-x-2 transition-transform duration-300"/>
 
-                            <img
-                            src="/logo.svg"
-                            alt="logo"
-                            className="w-12 h-auto"/>
-
-                            <h1 className="text-slate-900 font-semibold text-2xl t">Appointments</h1>
-                        </div>
-
-                        <button
-                        onClick={
-                            () => {
-
-                                router.push("doctors");
-                            }
-                        }
-                        className="inline-flex gap-3 items-center justidy-center text-salte-90 font-semibold
-                        bg-teal-600 rounded-lg px-4 py-2 hover:bg-teal-500 hover:scale-105 transition-all duration-300 cursor-pointer">
-                            <PlusIcon className="w-4 h-4"/>
-                            Book New
-                        </button>
-                    </div>
-                </div>
-            </header>
+                    Back to Dashboard
+                </button>
+            </DashboardHeaderD>
 
             <main className="w-full">
                 <div className="container mx-auto">
@@ -100,13 +77,16 @@ export default function Appointments() {
                             }, [])
                         }>
                             <TabItem id={1}>
-                                Upcoming (3)
+                                Pending
                             </TabItem>
                             <TabItem id={2}>
-                                Past (2)
+                                Upcoming
                             </TabItem>
                             <TabItem id={3}>
-                                Cancelled (1)
+                                Past
+                            </TabItem>
+                            <TabItem id={4}>
+                                Cancelled
                             </TabItem>
                         </TabHolder>
 
@@ -114,19 +94,20 @@ export default function Appointments() {
                         selectedTab === 1 && (
                             <div className="flex flex-col gap-8 justify-center items-center w-full">
                                 {
-                                    appointments?.filter(appointment => appointment.status === 1 || appointment.status === 2).map(
+                                    appointments?.filter(appointment => appointment.status === 2).map(
 
                                         (appointment, index) => {
 
                                             return (
-                                                <AppointmentCard
+                                                <AppointmentCardP
                                                 key={index}
-                                                imgSrc="/doc.png"
+                                                id={appointment.id}
+                                                imgSrc="/man.png"
                                                 name={appointment.doc.user.firstName + " " + appointment.doc.user.lastName}
                                                 specialization={appointment.doc.specialization}
                                                 date={appointment.date}
                                                 time={appointment.time}
-                                                location={appointment.doc.user.location}
+                                                reason={appointment.details}
                                                 status={appointment.status}
                                                 type={appointment.type}/>
                                             )
@@ -141,19 +122,20 @@ export default function Appointments() {
                         selectedTab === 2 && (
                             <div className="flex flex-col gap-8 justify-center items-center w-full">
                                 {
-                                    appointments?.filter(appointment => appointment.status === 3).map(
+                                    appointments?.filter(appointment => appointment.status === 1).map(
 
                                         (appointment, index) => {
 
                                             return (
-                                                 <AppointmentCard
+                                                 <AppointmentCardP
                                                 key={index}
-                                                imgSrc="/doc.png"
-                                                name={appointment.doc.user.firstName + " " + appointment.doc.user.lastName}
-                                                specialization={appointment.doc.specialization}
+                                                imgSrc="/man.png"
+                                                id={appointment.id}
+                                                name={appointment.user.firstName + " " + appointment.user.lastName}
+                                                specialization={appointment.type}
                                                 date={appointment.date}
                                                 time={appointment.time}
-                                                location={appointment.doc.user.location}
+                                                reason={appointment.details}
                                                 status={appointment.status}
                                                 type={appointment.type}/>
                                             )
@@ -169,19 +151,20 @@ export default function Appointments() {
                         selectedTab === 3 && (
                             <div className="flex flex-col gap-8 justify-center items-center w-full">
                                 {
-                                    appointments?.filter(appointment => appointment.status === 4 ).map(
+                                    appointments?.filter(appointment => appointment.status === 3 ).map(
 
                                         (appointment, index) => {
 
                                             return (
-                                                 <AppointmentCard
+                                                 <AppointmentCardP
                                                 key={index}
+                                                id={appointment.id}
                                                 imgSrc="/doc.png"
                                                 name={appointment.doc.user.firstName + " " + appointment.doc.user.lastName}
                                                 specialization={appointment.doc.specialization}
                                                 date={appointment.date}
                                                 time={appointment.time}
-                                                location={appointment.doc.user.location}
+                                                reason={appointment.details}
                                                 status={appointment.status}
                                                 type={appointment.type}/>
                                             )
@@ -189,6 +172,34 @@ export default function Appointments() {
                                     )
                                 }
 
+                            </div>
+                        )
+                    }
+
+                    {
+                        selectedTab === 4 && (
+                            <div className="flex flex-col gap-8 justify-center items-center w-full">
+                                {
+                                    appointments?.filter(appointment => appointment.status === 4).map(
+
+                                        (appointment, index) => {
+
+                                            return (
+                                                <AppointmentCardP
+                                                key={index}
+                                                id={appointment.id}
+                                                imgSrc="/man.png"
+                                                name={appointment.doc.user.firstName + " " + appointment.doc.user.lastName}
+                                                specialization={appointment.doc.specialization}
+                                                date={appointment.date}
+                                                time={appointment.time}
+                                                reason={appointment.details}
+                                                status={appointment.status}
+                                                type={appointment.type}/>
+                                            )
+                                        }
+                                    )
+                                }
                             </div>
                         )
                     }

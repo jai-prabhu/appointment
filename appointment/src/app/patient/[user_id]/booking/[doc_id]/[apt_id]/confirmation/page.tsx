@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { CheckIcon, PhoneIcon, MailIcon, CalendarIcon, MapPinIcon, ClockIcon, DownloadIcon, ShareIcon } from "lucide-react";
 import { CardHolder, CardHeader, CardContent } from "@/components/card";
 import { Avatar } from "@/components/avatar";
-import { AppointmentData } from "@/components/data";
+import { AppointmentData } from "@/lib/data";
 import { useRouter, useParams } from "next/navigation";
 import "./animation.css";
 
@@ -188,7 +188,13 @@ export default function Confirmation () {
                                 <ShareIcon className="w-5 h-5"/> Share Reciept
                             </button>
 
-                            <button className="inline-flex gap-2 items-center justify-center font-semibold text-slate-700 px-4 py-2 rounded-lg border border-slate-300
+                            <button 
+                            onClick={
+                                () => {
+                                    router.push("../../../appointments");
+                                }
+                            }
+                            className="inline-flex gap-2 items-center justify-center font-semibold text-slate-700 px-4 py-2 rounded-lg border border-slate-300
                             hover:bg-slate-100 hover:scale-105 transition-all duration-300 cursor-pointer">
                                 <CalendarIcon className="w-5 h-5"/> View All Appointments
                             </button>

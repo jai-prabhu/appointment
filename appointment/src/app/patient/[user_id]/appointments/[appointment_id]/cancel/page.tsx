@@ -3,7 +3,7 @@
 
 import { useRouter, useParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { type AppointmentData } from "@/components/data"; 
+import { type AppointmentData } from "@/lib/data"; 
 import { ArrowLeftIcon, CalendarIcon, MapPinIcon, ClockIcon } from "lucide-react";
 import { CardHolder, CardHeader, CardContent } from "@/components/card";
 import { Avatar } from "@/components/avatar";
@@ -177,17 +177,20 @@ export default function Cancel() {
 
                                     
 
-                                   const data = async () => {const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/${appointment?.id}`, {
+                                   const data = async () => {const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/update/${appointment?.id}`, {
 
-                                        method: "DELETE",
+                                        method: "PATCH",
                                         headers: {
                                             "Content-Type": "application/json"
-                                        }
+                                        },
+                                        body: JSON.stringify({
+                                            status: 4
+                                        })
                                     })
                                     
                                     if (!res.ok) {
 
-                                        console.error("messed")
+                                        console.error("Failed to fetch the data")
                                         return;
                                         
                                     }

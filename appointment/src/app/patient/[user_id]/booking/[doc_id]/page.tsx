@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { CardHolder, CardHeader, CardContent } from "@/components/card";
 import { Avatar } from "@/components/avatar";
 import { useParams, useRouter } from "next/navigation";
-import { type DocData, type UserData, type AppointmentData } from "@/components/data"
+import { type DocData, type UserData, type AppointmentData } from "@/lib/data"
 
 interface Step {
 
@@ -315,9 +315,11 @@ export default function Booking () {
                                                     <button 
                                                     onClick={
                                                         async () => {
-                                                            if (currentStep < steps.length) setCurrentStep(currentStep + 1);
+                                                            if (currentStep < steps.length) {setCurrentStep(currentStep + 1); console.log(currentStep, steps.length) }
 
                                                             else if (currentStep === steps.length) {
+
+                                                                console.log("you can't even touch me")
 
                                                                 const userRes = await fetch(`http://localhost:5000/data/user-query/user/${user_id}`);
 
@@ -367,6 +369,8 @@ export default function Booking () {
 
                                                                 
                                                             }
+
+                                                            else console.log(currentStep, steps.length)
                                                         }
                                                     }
                                                     className="relative inline-flex gap-3 items-center text-slate-50 font-semibold bg-transparent
@@ -375,9 +379,9 @@ export default function Booking () {
                                                         <ArrowRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-2 duration-300"/>
                                                     </button>
 
-                                                    <div className="absolute inset-0 bg-teal-600"></div>
+                                                    <div className="absolute inset-0 bg-teal-600 pointer-events-none"></div>
                                                     <div className="absolute inset-0 bg-gradient-to-r from-teal-600 to-teal-400
-                                                    -translate-x-[100%] transistion-all duration-300 group-hover:translate-x-0"></div>
+                                                    -translate-x-[100%] transistion-all duration-300 group-hover:translate-x-0 pointer-events-none"></div>
                                                 </div>
                                             </div>
                                         </CardContent>
