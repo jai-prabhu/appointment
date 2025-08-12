@@ -7,6 +7,7 @@ import { type AppointmentData } from "@/lib/data";
 import { ArrowLeftIcon, CalendarIcon, MapPinIcon, ClockIcon } from "lucide-react";
 import { CardHolder, CardHeader, CardContent } from "@/components/card";
 import { Avatar } from "@/components/avatar";
+import { format } from "date-fns";
 import "./animation.css";
 
 export default function Cancel() {
@@ -84,11 +85,11 @@ export default function Cancel() {
                                     <div className="grid grid-cols-3 w-full">
                                         <p className="inline-flex gap-2 text-sm text-slate-500 py-2">
                                             <CalendarIcon className="w-4 h-4"/>
-                                            {appointment?.date}
+                                            {appointment?.dateTime ? format(new Date(appointment?.dateTime), "MMM dd, yyyy") : ``}
                                         </p>
                                         <p className="inline-flex gap-2 text-sm text-slate-500 py-2">
                                             <ClockIcon className="w-4 h-4"/>
-                                            {appointment?.time}
+                                            {appointment?.dateTime ? format(new Date(appointment?.dateTime), "hh:mm a") : ``}
                                         </p>
                                         <p className="inline-flex gap-2 text-sm text-slate-500 py-2">
                                             <MapPinIcon className="w-4 h-4"/>

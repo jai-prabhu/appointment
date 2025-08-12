@@ -1,11 +1,12 @@
 "use client";
 
 import { DashboardHeaderD } from "@/components/dashboard-header";
-import { CardHolder, CardHeader, CardContent, PendingSlot, AppointmentSlot } from "@/components/card";
+import { CardHolder, CardHeader, CardContent, PendingSlot, AppointmentSlot, AppointmentCard } from "@/components/card";
 import { useRouter, useParams } from "next/navigation";
 import { AppointmentData, DocData } from "@/lib/data";
 import { useState, useEffect } from "react";
-import { CalendarIcon, FileTextIcon, CircleCheckBigIcon, CircleAlertIcon, CircleIcon, UsersIcon, ActivityIcon, TrendingUpIcon } from "lucide-react";
+import { format } from "date-fns";
+import { CalendarIcon, FileTextIcon, CircleCheckBigIcon, CircleAlertIcon, CircleIcon, UsersIcon, PillIcon, TrendingUpIcon } from "lucide-react";
 
 export default function DashBoard() {
 
@@ -124,29 +125,33 @@ export default function DashBoard() {
                                     }
                                     className="flex flex-col gap-2 bg-slate-50 w-full p-4 justify-center items-center rounded-lg
                                     border border-slate-300 text-slate-900 text-sm font-semibold hover:bg-slate-100 cursor-pointer hover:scale-105 transition-all duration-300">
-                                        <CalendarIcon/>
+                                        <CalendarIcon className="text-slate-500"/>
                                         Calendar View
                                     </button>
 
                                     <button
                                     onClick={
                                         () => {
-
+                                            router.push("records")
                                         }
                                     }
                                     className="flex flex-col gap-2 bg-slate-50 w-full p-4 justify-center text-sm items-center rounded-lg font-semibold
                                     border border-slate-300 text-slate-900 hover:bg-slate-100 cursor-pointer hover:scale-105 transition-all duration-300">
-                                        <FileTextIcon/>
+                                        <FileTextIcon className="text-slate-500"/>
                                         Records
                                     </button>
 
-                                    <a
-                                    href=""
+                                    <button
+                                    onClick={
+                                        () => {
+                                            router.push("perscription");
+                                        }
+                                    }
                                     className="flex  flex-col gap-2 bg-slate-50 w-full p-4 justify-center items-center rounded-lg font-semibold
                                     border border-slate-300 text-slate-900 text-sm hover:bg-slate-100 cursor-pointer hover:scale-105 transition-all duration-300">
-                                        <ActivityIcon/>
-                                        Analytics
-                                    </a>
+                                        <PillIcon className="text-slate-500"/>
+                                        Prescription
+                                    </button>
                                 </CardContent>
                             </CardHolder>
                             <CardHolder>
@@ -173,10 +178,10 @@ export default function DashBoard() {
                                                 key={index}
                                                 id={appointment.id}
                                                 imgSrc="/man.png"
-                                                date={appointment.date}
+                                                date={appointment?.dateTime ? format(new Date(appointment?.dateTime), "MMM dd, yyyy") : ``}
                                                 name={appointment.user.firstName + " " + appointment.user.lastName}
                                                 specialization={appointment.type}
-                                                time={appointment.time}
+                                                time={appointment?.dateTime ? format(new Date(appointment?.dateTime), "hh:mm a") : ``}
                                                 
                                                 status={appointment.status}/>
                                             )
@@ -209,7 +214,8 @@ export default function DashBoard() {
                                                 imgSrc="/doc.png"
                                                 name={appointment.user.firstName + " " + appointment.user.lastName}
                                                 specialization={appointment.type}
-                                                time={appointment.time}
+                                                time={appointment?.dateTime ? format(new Date(appointment?.dateTime), "hh:mm a") : ``}
+                                                date={appointment?.dateTime ? format(appointment.dateTime, "MMM dd, yyyy"): ``}
                                                 
                                                 status={appointment.status}/>
                                             )

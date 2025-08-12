@@ -8,7 +8,8 @@ import { AppointmentCardP } from "@/components/card"
 import { useState, useCallback, useEffect } from "react";
 import { type AppointmentData } from "../../../../lib/data";
 import { useRouter, useParams } from "next/navigation";
-import { DashboardHeaderD } from "@/components/dashboard-header"
+import { DashboardHeaderD } from "@/components/dashboard-header";
+import { format } from "date-fns";
 
 export default function Appointments() {
 
@@ -105,8 +106,8 @@ export default function Appointments() {
                                                 imgSrc="/man.png"
                                                 name={appointment.doc.user.firstName + " " + appointment.doc.user.lastName}
                                                 specialization={appointment.doc.specialization}
-                                                date={appointment.date}
-                                                time={appointment.time}
+                                                date={appointment?.dateTime ? format(new Date(appointment?.dateTime), "MMM dd, yyyy") : ``}
+                                                time={appointment?.dateTime ? format(new Date(appointment?.dateTime), "hh:mm a") : ``}
                                                 reason={appointment.details}
                                                 status={appointment.status}
                                                 type={appointment.type}/>
@@ -133,8 +134,8 @@ export default function Appointments() {
                                                 id={appointment.id}
                                                 name={appointment.user.firstName + " " + appointment.user.lastName}
                                                 specialization={appointment.type}
-                                                date={appointment.date}
-                                                time={appointment.time}
+                                                date={appointment?.dateTime ? format(new Date(appointment?.dateTime), "MMM dd, yyyy") : ``}
+                                                time={appointment?.dateTime ? format(new Date(appointment?.dateTime), "hh:mm a") : ``}
                                                 reason={appointment.details}
                                                 status={appointment.status}
                                                 type={appointment.type}/>
@@ -162,8 +163,8 @@ export default function Appointments() {
                                                 imgSrc="/doc.png"
                                                 name={appointment.doc.user.firstName + " " + appointment.doc.user.lastName}
                                                 specialization={appointment.doc.specialization}
-                                                date={appointment.date}
-                                                time={appointment.time}
+                                                date={appointment?.dateTime ? format(new Date(appointment?.dateTime), "MMM dd, yyyy") : ``}
+                                                time={appointment?.dateTime ? format(new Date(appointment?.dateTime), "hh:mm a") : ``}
                                                 reason={appointment.details}
                                                 status={appointment.status}
                                                 type={appointment.type}/>
@@ -191,8 +192,8 @@ export default function Appointments() {
                                                 imgSrc="/man.png"
                                                 name={appointment.doc.user.firstName + " " + appointment.doc.user.lastName}
                                                 specialization={appointment.doc.specialization}
-                                                date={appointment.date}
-                                                time={appointment.time}
+                                                date={appointment?.dateTime ? format(new Date(appointment?.dateTime), "MMM dd, yyyy") : ``}
+                                                time={appointment?.dateTime ? format(new Date(appointment?.dateTime), "hh:mm a") : ``}
                                                 reason={appointment.details}
                                                 status={appointment.status}
                                                 type={appointment.type}/>

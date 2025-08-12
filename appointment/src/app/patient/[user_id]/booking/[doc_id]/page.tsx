@@ -7,6 +7,7 @@ import { CardHolder, CardHeader, CardContent } from "@/components/card";
 import { Avatar } from "@/components/avatar";
 import { useParams, useRouter } from "next/navigation";
 import { type DocData, type UserData, type AppointmentData } from "@/lib/data"
+import { parse } from "date-fns";
 
 interface Step {
 
@@ -340,9 +341,8 @@ export default function Booking () {
                                                                     id: "",
                                                                     user: usersData,
                                                                     doc: docsData,
-                                                                    date: date,
+                                                                    dateTime: parse(selectedTime, "h:mm a", new Date(date)).toISOString(),
                                                                     status: 2,
-                                                                    time: selectedTime,
                                                                     type: type,
                                                                     details: reason
 

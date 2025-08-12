@@ -6,7 +6,7 @@ import { type AppointmentData } from "@/lib/data";
 import { ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon, FilterIcon } from "lucide-react";
 import { CardHolder, CardContent } from "@/components/card";
 import { DashboardHeaderD } from "@/components/dashboard-header";
-import { startOfToday, addMonths, addWeeks, addDays, format, getDaysInMonth, startOfMonth, isSameDay } from "date-fns";
+import { startOfToday, addMonths, addWeeks, addDays, format, getDaysInMonth, startOfMonth, isSameDay, isSameMinute, parse } from "date-fns";
 import { range } from "@/lib/data";
 import "./calendar.css";
 
@@ -26,11 +26,19 @@ export default function Calendar() {
 
     const formattedDay = format(currentDay, "MMMM d, yyyy");
 
+    const formatted7Day = format (addDays(currentDay, 7), "MMM d, yyyy");
+
     const daysInMonth = getDaysInMonth(currentDay);
 
     const days = range(1, daysInMonth + 1, 1);
 
     const weeks = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+    const timeSlots = ["9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM", "11:00 AM",
+        "11:30 AM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM"
+    ];
+
+    
     
     useEffect(() => {
 
@@ -107,7 +115,7 @@ export default function Calendar() {
                                     <ChevronLeftIcon/>
                                 </button>
                                 <h3 className="text-slate-700 font-semibold text-xl">
-                                    { formattedDay }
+                                    { viewMode !== 1 ? formattedDay : `${formattedDay} - ${formatted7Day}` }
                                 </h3>
                                 <button
                                  onClick={
@@ -199,13 +207,23 @@ export default function Calendar() {
                         </div>
 
                         <CardHolder className="p-0 rounded-lg bg-slate-50 border border-slate-300">
-                            <CardContent className="grid grid-cols-7 divide-x divide-y border divide-solid w-full
-                            border-slate-300 divide-slate-300">
+                            <CardContent className={`grid ${viewMode === 1 ? `grid-cols-8` : `grid-cols-7`} divide-x divide-y border divide-solid w-full
+                            border-slate-300 divide-slate-300`}>
+
+                                 {
+                                    viewMode === 1 && (
+
+                                        <div className="flex min-h-[80px] justify-center p-4 last:border-r border-slate-300" >
+                                                
+                                        </div>
+                                    )
+                                }
 
                                 {
-                                    weeks.map((week, index) => {
+                                    (viewMode === 0 || viewMode === 1) && weeks.map((week, index) => {
 
                                         return (
+                                            
                                             <div key={index} className="flex min-h-[80px] justify-center p-4 last:border-r border-slate-300" >
                                                 <h1 className="text-slate-600">{week}</h1>
                                             </div>
@@ -214,7 +232,7 @@ export default function Calendar() {
                                 }
 
                                 {
-                                    range(0, startOfMonth(currentDay).getDay(), 1).map((val, index) => {
+                                     viewMode === 0 && range(0, startOfMonth(currentDay).getDay(), 1).map((val, index) => {
 
                                         
 
@@ -228,7 +246,7 @@ export default function Calendar() {
                                 }
                             
                                 {
-                                    days.map((day, index) => {
+                                     viewMode === 0 && days.map((day, index) => {
 
                                         return (
                                             <div
@@ -294,7 +312,7 @@ export default function Calendar() {
                                                 <h1 className="text-slate-600">{day}</h1>
                                                 <div className="flex flex-col gap-1 w-full flex-grow-0">
                                                     {
-                                                    appointments?.filter(appointment => isSameDay(appointment.date, addDays(startOfMonth(currentDay), day - 1))).map((appointment, index) => {
+                                                    appointments?.filter(appointment => isSameDay(appointment.dateTime, addDays(startOfMonth(currentDay), day - 1))).map((appointment, index) => {
 
                                                         
                                                         return (
@@ -315,7 +333,7 @@ export default function Calendar() {
                                                               `bg-blue-100 border-blue-200` : `bg-red-100 border-red-200`}`}>
                                                                 <p className={`text-xs font-semibold
                                                                  ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : `text-red-500`}`}>
-                                                                    {appointment.time}
+                                                                    {format(appointment.dateTime, "HH:mm")}
                                                                 </p>
                                                                 <p className={`text-xs
                                                                  ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : `text-red-500`}`}>
@@ -330,6 +348,141 @@ export default function Calendar() {
                                         );
                                     })
                                     
+                                }
+
+                               
+
+                                {
+                                    viewMode === 1 && range(0, 8 * timeSlots.length, 1).map((timeSlot, index) => {
+
+                                        return (
+                                            
+                                            <div
+                                            key={index} 
+                                            className="flex gap-1 min-h-[120px] w-full p-4 last:border-r border-slate-300 hover:bg-slate-100" >
+                                                {
+                                                    timeSlot % 8 === 0 && (
+                                                        <h1 className="text-slate-600">{timeSlots[timeSlot / 8]}</h1>
+                                                    )
+
+                                                    
+                                                }
+
+                                                {
+                                                        appointments?.filter(appointment => isSameDay(addDays(currentDay, timeSlot % 8 - 1), appointment.dateTime) && timeSlot % 8 && isSameMinute(parse(timeSlots[Math.floor(timeSlot / 8)], "h:mm a", addDays(currentDay, timeSlot % 8 - 1)), appointment.dateTime)).map((appointment, index) => {
+                                                            
+                                                            return (
+                                                                <div
+                                                            draggable = {appointment.status === 1}
+                                                            onDragStart={
+                                                                () => {
+                                                                    
+
+                                                                    setAppointmentID(appointment.id);
+                                                                }
+                                                            }
+                                                            
+                                                            key={index}
+                                                            className={`w-full px-4 py-2 rounded-lg border ${appointment.status === 1 ? `active:cursor-grabbing`: `active:cursor-not-allowed`}
+                                                            ${appointment.status === 1 ? `bg-green-100 border-teal-200` : appointment.status === 2 ?
+                                                             `bg-orange-100 border-orange-200` : appointment.status === 3 ?
+                                                              `bg-blue-100 border-blue-200` : `bg-red-100 border-red-200`}`}>
+                                                                <p className={`text-xs font-semibold
+                                                                 ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : `text-red-500`}`}>
+                                                                    {format(appointment.dateTime, "HH:mm")}
+                                                                </p>
+                                                                <p className={`text-xs
+                                                                 ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : `text-red-500`}`}>
+                                                                    {appointment.user.firstName + " " + appointment.user.lastName}
+                                                                </p>
+                                                            </div>
+                                                            );
+                                                        })
+                                                    }
+                                            </div>
+                                        )
+                                    })
+                                }
+
+                                {
+                                    viewMode === 2 && range(0, 2, 1).map((index) => {
+
+                                        return (
+                                            <div key={index} className={`flex items-center min-h-[80px] p-4 last:border-r border-slate-300 ${index ? `col-span-6` : `justify-center`}`} >
+                                                {index === 0 && (
+                                                    <h1 className="text-slate-500 text-sm text-center">{format(currentDay, "dd")}
+                                                        <p className="text-slate-700 text-lg font-semibold">{format(currentDay, "E")}</p>
+                                                    </h1>
+                                                )}
+
+                                                {
+                                                    index === 1 && (
+                                                    <h1 className="text-slate-700 text-start font-semibold text-xl">
+                                                        {format(currentDay, "MMMM dd, yyyy")}
+                                                    </h1>
+                                                    )
+                                                }
+                                            </div>
+                                        );
+                                    })
+                                }
+
+                                {
+                                    viewMode === 2 && range(0, (timeSlots.length - 1) * 2 , 1).map((timeSlot, index) => {
+
+                                       if (index % 2 === 1) {return (
+                                            
+
+                                            <div
+                                            key={index} 
+                                            className="flex gap-1 min-h-[120px] w-full p-4 last:border-r border-slate-300 hover:bg-slate-100 col-span-6" >
+                                                
+
+                                                {
+                                                        appointments?.filter(appointment => isSameDay(currentDay, appointment.dateTime) && isSameMinute(parse(timeSlots.slice(1, )[Math.floor(index / 2)], "h:mm a", currentDay), appointment.dateTime)).map((appointment, index) => {
+                                                            
+                                                            return (
+                                                                <div
+                                                            draggable = {appointment.status === 1}
+                                                            onDragStart={
+                                                                () => {
+                                                                    
+
+                                                                    setAppointmentID(appointment.id);
+                                                                }
+                                                            }
+                                                            
+                                                            key={index}
+                                                            className={`w-full px-4 py-2 rounded-lg border ${appointment.status === 1 ? `active:cursor-grabbing`: `active:cursor-not-allowed`}
+                                                            ${appointment.status === 1 ? `bg-green-100 border-teal-200` : appointment.status === 2 ?
+                                                             `bg-orange-100 border-orange-200` : appointment.status === 3 ?
+                                                              `bg-blue-100 border-blue-200` : `bg-red-100 border-red-200`}`}>
+                                                                <p className={`text-xs font-semibold
+                                                                 ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : `text-red-500`}`}>
+                                                                    {format(appointment.dateTime, "HH:mm")}
+                                                                </p>
+                                                                <p className={`text-xs
+                                                                 ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : `text-red-500`}`}>
+                                                                    {appointment.user.firstName + " " + appointment.user.lastName}
+                                                                </p>
+                                                            </div>
+                                                            );
+                                                        })
+                                                    }
+                                            </div>
+                                        )}
+
+                                        else {
+                                            return (
+                                            <div key={index}
+                                            className="flex gap-1 min-h-[120px] w-full p-4 last:border-r border-slate-300 hover:bg-slate-100" >
+                                                <p className="text-slate-600 text-sm ">
+                                                    { timeSlots[timeSlot / 2] }
+                                                </p>
+                                            </div>
+                                        );
+                                        }
+                                    })
                                 }
 
                             </CardContent>

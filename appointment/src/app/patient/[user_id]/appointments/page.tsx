@@ -8,7 +8,8 @@ import { AppointmentCard } from "@/components/card"
 import { useState, useCallback, useEffect } from "react";
 import { type AppointmentData } from "../../../../lib/data";
 import { useRouter, useParams } from "next/navigation";
-
+import { format } from "date-fns";
+ 
 export default function Appointments() {
 
     const [selectedTab, setSelectedTab] = useState(1);
@@ -124,8 +125,8 @@ export default function Appointments() {
                                                 imgSrc="/doc.png"
                                                 name={appointment.doc.user.firstName + " " + appointment.doc.user.lastName}
                                                 specialization={appointment.doc.specialization}
-                                                date={appointment.date}
-                                                time={appointment.time}
+                                                date={appointment?.dateTime ? format(new Date(appointment?.dateTime), "MMM dd, yyyy") : ``}
+                                                time={appointment?.dateTime ? format(new Date(appointment?.dateTime), "hh:mm a") : ``}
                                                 location={appointment.doc.user.location}
                                                 status={appointment.status}
                                                 type={appointment.type}/>
@@ -151,8 +152,8 @@ export default function Appointments() {
                                                 imgSrc="/doc.png"
                                                 name={appointment.doc.user.firstName + " " + appointment.doc.user.lastName}
                                                 specialization={appointment.doc.specialization}
-                                                date={appointment.date}
-                                                time={appointment.time}
+                                                date={appointment?.dateTime ? format(new Date(appointment?.dateTime), "MMM dd, yyyy") : ``}
+                                                time={appointment?.dateTime ? format(new Date(appointment?.dateTime), "hh:mm a") : ``}
                                                 location={appointment.doc.user.location}
                                                 status={appointment.status}
                                                 type={appointment.type}/>
@@ -179,8 +180,8 @@ export default function Appointments() {
                                                 imgSrc="/doc.png"
                                                 name={appointment.doc.user.firstName + " " + appointment.doc.user.lastName}
                                                 specialization={appointment.doc.specialization}
-                                                date={appointment.date}
-                                                time={appointment.time}
+                                                date={appointment?.dateTime ? format(new Date(appointment?.dateTime), "MMM dd, yyyy") : ``}
+                                                time={appointment?.dateTime ? format(new Date(appointment?.dateTime), "hh:mm a") : ``}
                                                 location={appointment.doc.user.location}
                                                 status={appointment.status}
                                                 type={appointment.type}/>

@@ -1,4 +1,4 @@
-
+import { max, isSameDay, format } from "date-fns";
 export interface Appointments {
 
     upcomming_appointments: AppointmentData[];
@@ -11,8 +11,7 @@ export interface AppointmentData {
     id: string;
     user: UserData;
     doc: DocData;
-    date: string;
-    time: string;
+    dateTime: string;
     type: string;
     status: number;
     details: string;
@@ -63,4 +62,39 @@ export const range = (start: number, end: number, step: number) : number [] => {
     }
 
     return rangeN;
+}
+
+export interface MedicationData {
+
+    name: MedicineData;
+    dosage: string;
+    freq: string;
+    duration: number;
+    quantity: number;
+    refills: number;
+    instruction: string;
+}
+
+export interface MedicineData {
+
+    name: string;
+    subName: string;
+    scale: string;
+}
+
+export const getLastDate = (appointments?: AppointmentData[]) => {
+
+    if (appointments) {
+
+        const dates = appointments.map((appointment) => {
+
+            return new Date(appointment.dateTime);
+        })
+
+        const appointment = appointments.find(appointment => isSameDay(appointment.dateTime, max(dates)));
+
+        return appointment ? format(appointment.dateTime, "MMM dd, yyyy") : undefined;
+    }
+
+    return undefined;
 }

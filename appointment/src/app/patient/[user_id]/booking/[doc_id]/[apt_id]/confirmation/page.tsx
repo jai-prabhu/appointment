@@ -7,6 +7,7 @@ import { CardHolder, CardHeader, CardContent } from "@/components/card";
 import { Avatar } from "@/components/avatar";
 import { AppointmentData } from "@/lib/data";
 import { useRouter, useParams } from "next/navigation";
+import { format } from "date-fns";
 import "./animation.css";
 
 export default function Confirmation () {
@@ -132,7 +133,7 @@ export default function Confirmation () {
                                         <h5 className="text-slate-600">
                                             Date
 
-                                            <p className="text-slate-500">{appointment?.date}</p>
+                                            <p className="text-slate-500">{appointment?.dateTime ? format(new Date(appointment?.dateTime), "MMM dd, yyyy") : ``}</p>
                                         </h5>
                                     </div>
 
@@ -150,7 +151,7 @@ export default function Confirmation () {
                                         <h5 className="text-slate-600">
                                             Time
 
-                                            <p className="text-slate-500">{appointment?.time}</p>
+                                            <p className="text-slate-500">{appointment?.dateTime ? format(new Date(appointment?.dateTime), "hh:mm a") : ``}</p>
                                         </h5>
                                     </div>
 
