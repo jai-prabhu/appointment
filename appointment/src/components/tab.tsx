@@ -5,6 +5,7 @@ import { ReactNode, FC, useState, Children, cloneElement, isValidElement, ReactE
 export interface TabItemProps {
 
     id: number;
+    className?: string;
     children?: ReactNode;
     onClick?: (val?: number) => void;
 }
@@ -74,7 +75,7 @@ export const TabHolder = ({ children, onChange }: TabProbs ) => {
     );
 }
 
-export const TabItem: FC<TabItemProps> = ({ id, children, onClick }: TabItemProps) => {
+export const TabItem: FC<TabItemProps> = ({ id, className,children, onClick }: TabItemProps) => {
 
 
     return (
@@ -88,9 +89,9 @@ export const TabItem: FC<TabItemProps> = ({ id, children, onClick }: TabItemProp
                     }
                 }
             }
-            className={`inline-flex gap-3 justify-center text-slate-900 px-4 
+            className={`inline-flex gap-3 justify-center px-4 
                     py-2 rounded-l-lg w-full
-                bg-transparent`}>
+                bg-transparent ${className ? className : `text-slate-900`}`}>
                 
                 {children}
         </button>

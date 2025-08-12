@@ -1,7 +1,7 @@
 "use client";
 
 import { DashboardHeaderD } from "@/components/dashboard-header";
-import { CardHolder, CardHeader, CardContent, PendingSlot, AppointmentSlot, AppointmentCard } from "@/components/card";
+import { CardHolder, CardHeader, CardContent, PendingSlot, AppointmentSlot } from "@/components/card";
 import { useRouter, useParams } from "next/navigation";
 import { AppointmentData, DocData } from "@/lib/data";
 import { useState, useEffect } from "react";

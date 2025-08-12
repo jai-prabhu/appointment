@@ -4,7 +4,7 @@ import { DashboardHeaderD } from "@/components/dashboard-header";
 import { useRouter, useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { CardHolder, CardHeader, CardContent } from "@/components/card";
-import { SearchIcon, FilterIcon } from "lucide-react";
+import { SearchIcon, FilterIcon, ArrowLeftIcon } from "lucide-react";
 import { type AppointmentData } from "@/lib/data";
 import { Avatar } from "@/components/avatar";
 import { getLastDate } from "@/lib/data";
@@ -41,7 +41,19 @@ export default function Records () {
 
     return (
         <div className="max-w-screen w-full min-h-screen bg-gradient-to-r from-slate-50 via-teal-50 to-white" style={{fontFamily: "var(--font-poppins)"}}>
-            <DashboardHeaderD/>
+            <DashboardHeaderD>
+                <button 
+                onClick={
+                    () => {
+                        router.push("dashboard");
+                    }
+                }
+                className="inline-flex gap-2 items-center rounded-lg px-4 py-2 hover:bg-slate-100 cursor-pointer
+                hover:scale-105 transition-all duration-300 group text-slate-900 text-sm">
+                    <ArrowLeftIcon className="w-4 h-4 group-hover:-translate-x-2 transition-transform duration-300"/>
+                    Back to Dashboard
+                </button>
+            </DashboardHeaderD>
 
             <main className="w-full py-8">
                 <div className="container mx-auto">
