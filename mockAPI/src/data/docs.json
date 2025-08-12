@@ -1,0 +1,34 @@
+{
+  "docs": [
+    {
+      "user": {
+        "id": "DID-1",
+        "firstName": "Sarah",
+        "lastName": "Johnson",
+        "password": "Password@123",
+        "location": "Downtown Healthcare Center",
+        "email": "SarahJohnson@example.com"
+      },
+      "experience": "10-15 years",
+      "specialization": "Cardiology",
+      "ratings": "0",
+      "reviews": "0",
+      "cost": "150"
+    },
+    {
+      "user": {
+        "id": "DID-2",
+        "firstName": "Michael",
+        "lastName": "Chen",
+        "password": "Password@123",
+        "location": "City Health Clinic",
+        "email": "MichaelChen@example.com"
+      },
+      "experience": "10-15 years",
+      "specialization": "General Medicine",
+      "ratings": "0",
+      "reviews": "0",
+      "cost": "150"
+    }
+  ]
+}

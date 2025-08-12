@@ -1,0 +1,20 @@
+{
+  "users": [
+    {
+      "id": "UID-1",
+      "firstName": "John",
+      "lastName": "Doe",
+      "password": "Password@123",
+      "location": "Main street, Vegas",
+      "email": "JohnDoe@example.com"
+    },
+    {
+      "id": "UID-2",
+      "firstName": "John",
+      "lastName": "Smith",
+      "password": "Password@123",
+      "location": "Downtown, Los Santos",
+      "email": "JohnSmith@example.com"
+    }
+  ]
+}
