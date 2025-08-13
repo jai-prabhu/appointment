@@ -3,11 +3,13 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { type AppointmentData } from "@/lib/data";
-import { ArrowLeftIcon, ChevronLeftIcon, ChevronRightIcon, FilterIcon } from "lucide-react";
-import { CardHolder, CardContent } from "@/components/card";
+import { ArrowLeftIcon, CalendarIcon, ChevronLeftIcon, ChevronRightIcon, ClockIcon, FilterIcon, MailIcon, CircleCheckBigIcon, PhoneIcon, MapPinIcon, UserIcon, XCircleIcon, LoaderPinwheelIcon } from "lucide-react";
+import { CardHolder, CardHeader, CardContent } from "@/components/card";
 import { DashboardHeaderD } from "@/components/dashboard-header";
 import { startOfToday, addMonths, addWeeks, addDays, format, getDaysInMonth, startOfMonth, isSameDay, isSameMinute, parse } from "date-fns";
 import { range } from "@/lib/data";
+import { Avatar } from "@/components/avatar";
+import { StatusBadge } from "@/components/badge";
 import "./calendar.css";
 
 export default function Calendar() {
@@ -15,8 +17,10 @@ export default function Calendar() {
     const [ currentDay, setCurrentDay ] = useState<Date>(startOfToday());
     const [ viewMode, setViewMode ] = useState(0);
     const [ appointments, setAppointments] = useState<AppointmentData[]>()
-    const [ appointmentID, setAppointmentID] = useState("");
+    const [ selectedAppointment, setSelectedAppointment] = useState<AppointmentData>();
+    const [ showDetails, setShowDetails ] = useState<boolean>(false);
     const [ appointmentUpdate, setAppointmentUpdate ] = useState(0); 
+    const [ showToolTip, setShowToolTip ] = useState<boolean>(true);
 
     const router = useRouter();
 
@@ -281,7 +285,9 @@ export default function Calendar() {
 
                                                     const patchData = async () => {
 
-                                                        const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/update/${appointmentID}`, {
+                                                        console.log("not even close")
+
+                                                        const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/update/${selectedAppointment ? selectedAppointment.id : ""}`, {
 
                                                             method: "PATCH",
                                                             headers: {
@@ -289,16 +295,22 @@ export default function Calendar() {
                                                                 "Content-Type": "application/json"
                                                             },
                                                             body: JSON.stringify({
-                                                                date: addDays(startOfMonth(currentDay), day - 1).toDateString()
+                                                                dateTime: selectedAppointment ? parse(format(selectedAppointment?.dateTime, "hh:mm a"), "hh:mm a", addDays(startOfMonth(currentDay), day - 1)).toISOString() : ""
                                                             })
                                                         })
-
+                                                        console.log("Patched sucessfully");
                                                         if (!res.ok) {
 
                                                             console.error("Failed");
+                                                            console.log("Patched sucessfully");
+                                                            return;
                                                         }
+
+                                                        
                                                         
                                                     }
+
+                                                    console.log("something is off")
 
                                                     patchData()
 
@@ -317,17 +329,29 @@ export default function Calendar() {
                                                         
                                                         return (
                                                             <div
+                                                            onClick={
+                                                                () => {
+
+                                                                    setShowDetails(true);
+                                                                    setSelectedAppointment(appointment);
+                                                                }
+                                                            }
                                                             draggable = {appointment.status === 1}
                                                             onDragStart={
                                                                 () => {
                                                                     
 
-                                                                    setAppointmentID(appointment.id);
+                                                                    setSelectedAppointment(appointment);
+                                                                    setShowToolTip(false);
                                                                 }
                                                             }
+                                                            onDragEnd={() => {
+
+                                                                setShowToolTip(true);
+                                                            }}
                                                             
                                                             key={index}
-                                                            className={`w-full px-4 py-2 rounded-lg border ${appointment.status === 1 ? `active:cursor-grabbing`: `active:cursor-not-allowed`}
+                                                            className={`relative w-full px-4 py-2 rounded-lg border group ${appointment.status === 1 ? `active:cursor-grabbing`: `active:cursor-not-allowed`}
                                                             ${appointment.status === 1 ? `bg-green-100 border-teal-200` : appointment.status === 2 ?
                                                              `bg-orange-100 border-orange-200` : appointment.status === 3 ?
                                                               `bg-blue-100 border-blue-200` : appointment.status === 4 ? `bg-red-100 border-red-200` : `bg-purple-100 border-purple-200`}`}>
@@ -339,6 +363,33 @@ export default function Calendar() {
                                                                  ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : appointment.status === 4 ? `text-red-500` : `text-purple-500`}`}>
                                                                     {appointment.user.firstName + " " + appointment.user.lastName}
                                                                 </p>
+
+                                                                { showToolTip && (<div className="absolute left-0 top-[120%] hidden group-hover:flex flex-col bg-slate-50 border
+                                                                border-slate-300 rounded-lg min-w-[30vw] gap-1 shadow-md shadow-slate-300 p-4 z-20">
+                                                                    <p className="text-xs text-slate-500 font-semibold whitespace-nowrap">Name: {appointment.user.firstName + " " + appointment.user.lastName}</p>
+                                                                    <p className="text-xs text-slate-500 font-semibold whitespace-nowrap">Age: 40</p>
+                                                                    <div className="grid grid-cols-2 gap-1 items-center justify-center w-full">
+                                                                        <p className="inline-flex gap-1 items-center text-xs text-slate-500 font-semibold whitespace-nowrap">
+                                                                            <CalendarIcon className="w-3 h-3"/>
+                                                                            {format(appointment.dateTime, "MMM dd, yyyy")}
+                                                                        </p>
+
+                                                                        <p className="inline-flex gap-1 items-center text-xs text-slate-500 font-semibold whitespace-nowrap">
+                                                                            <ClockIcon className="w-3 h-3"/>
+                                                                            {format(appointment.dateTime, "hh:mm a")}
+                                                                        </p>
+
+                                                                        <p className="inline-flex gap-1 items-center text-xs text-slate-500 font-semibold whitespace-nowrap col-span-2">
+                                                                            <MailIcon className="w-3 h-3"/>
+                                                                            {appointment.user.email}
+                                                                        </p>
+
+                                                                        <p className="inline-flex gap-1 items-center text-xs text-slate-500 font-semibold col-span-2">
+                                                                            
+                                                                            Reason: {appointment.details}
+                                                                        </p>
+                                                                    </div>
+                                                                </div>)}
                                                             </div>
                                                         );
                                                     })
@@ -373,12 +424,17 @@ export default function Calendar() {
                                                             
                                                             return (
                                                                 <div
+                                                                onClick={
+                                                                    () => {
+                                                                        setShowDetails(true);
+                                                                    }
+                                                                }
                                                             draggable = {appointment.status === 1}
                                                             onDragStart={
                                                                 () => {
                                                                     
 
-                                                                    setAppointmentID(appointment.id);
+                                                                    setSelectedAppointment(appointment);
                                                                 }
                                                             }
                                                             
@@ -443,14 +499,15 @@ export default function Calendar() {
                                                             
                                                             return (
                                                                 <div
-                                                            draggable = {appointment.status === 1}
-                                                            onDragStart={
-                                                                () => {
-                                                                    
+                                                                
+                                                                draggable = {appointment.status === 1}
+                                                                onDragStart={
+                                                                    () => {
+                                                                        
 
-                                                                    setAppointmentID(appointment.id);
+                                                                        setSelectedAppointment(appointment);
+                                                                    }
                                                                 }
-                                                            }
                                                             
                                                             key={index}
                                                             className={`w-full px-4 py-2 rounded-lg border ${appointment.status === 1 ? `active:cursor-grabbing`: `active:cursor-not-allowed`}
@@ -517,6 +574,88 @@ export default function Calendar() {
                         </div>
                     </div>
                 </div>
+                { showDetails && selectedAppointment && (<div className="fixed top-0 left-0 container max-4xl mx-auto z-30">
+                    <div className="flex w-screen h-screen items-center justify-center backdrop-brightness-25">
+                        <div className="w-2xl bg-white border border-slate-300 rounded-lg">
+                            <CardHolder>
+                                <CardHeader className="space-y-2">
+                                    <h1 className="inline-flex gap-2 items-center text-slate-900 font-semibold text-xl">
+                                        <CircleCheckBigIcon className={` text-green-500`}/>
+                                        Patient Appointment
+                                    </h1>
+                                    <p className="text-slate-500 text-sm">{format(selectedAppointment?.dateTime, "E, MMM dd, yyyy")}</p>
+                                </CardHeader>
+                                <CardContent className="flex flex-col gap-4 justify-center w-full">
+                                    <div className="flex gap-2 items-center">
+                                        <Avatar src="/man.png" size={12}/>
+                                        <h1 className="text-slate-900 font-bold">{ selectedAppointment.user.firstName + " " + selectedAppointment.user.lastName }
+                                            <p className="text-sm text-slate-500 font-normal">Age: 40</p>
+                                        </h1>
+                                    </div>
+                                    <div className="space-y-1 flex flex-col">
+                                        <h5 className="inline-flex gap-2 items-center text-slate-500 text-sm">
+                                            <PhoneIcon className="w-4 h-4"/>
+                                            123456 7890
+                                        </h5>
+                                        <h5 className="inline-flex gap-2 items-center text-slate-500 text-sm">
+                                            <MailIcon className="w-4 h-4"/>
+                                            { selectedAppointment.user.email }
+                                        </h5>
+                                    </div>
+                                    <div className="space-y-1 flex flex-col py-4 border-y border-slate-300">
+                                        <h5 className="inline-flex gap-2 items-center text-slate-500 text-sm">
+                                            <ClockIcon className="w-4 h-4"/>
+                                            { format(selectedAppointment.dateTime, "hh:mm a") }
+                                        </h5>
+                                        <h5 className="inline-flex gap-2 items-center text-slate-500 text-sm">
+                                            <MapPinIcon className="w-4 h-4"/>
+                                            { selectedAppointment.doc.user.location }
+                                        </h5>
+                                        <h5 className="inline-flex gap-2 items-center text-slate-500 text-sm">
+                                            <UserIcon className="w-4 h-4"/>
+                                            { selectedAppointment.type }
+                                        </h5>
+                                    </div>
+
+                                    <div>
+                                        <StatusBadge status={selectedAppointment.status}/>
+                                    </div>
+
+                                    <div className="flex gap-2 items-center w-full">
+                                        <button className="inline-flex gap-2 w-full justify-center items-center border border-teal-500 bg-teal-600 text-slate-50 font-bold
+                                        hover:bg-teal-500 text-sm rounded-lg px-4 py-2 cursor-pointer hover:shadow-md shadow-slate-300 transition-all duration-300">
+                                            <LoaderPinwheelIcon className="w-4 h-4"/>
+                                            Reschedule
+                                        </button>
+                                        <button
+                                        onClick={
+                                            () => {
+
+                                                router.push(`appointments/${selectedAppointment.id}/cancel`)
+                                            }
+                                        }
+                                        className="inline-flex gap-2 w-full justify-center items-center border border-red-500 text-red-500 text-sm rounded-lg px-4 py-2 cursor-pointer
+                                        hover:shadow-md shadow-slate-300 hover:bg-red-100 transition-all duration-300">
+                                            <XCircleIcon className="w-4 h-4"/>
+                                            Cancel
+                                        </button>
+                                        <button 
+                                        onClick={
+                                            () => {
+                                                setShowDetails(false);
+                                            }
+                                        }
+                                        className="inline-flex gap-2 w-full justify-center items-center border border-slate-300 text-sm
+                                        bg-slate-50 hover:bg-slate-100 text-slate-500 rounded-lg px-4 py-2 cursor-pointer hover:shadow-md shadow-slate-300 transition-all duration-300">
+                                            
+                                            Close
+                                        </button>
+                                    </div>
+                                </CardContent>
+                            </CardHolder>
+                        </div>
+                    </div>
+                </div>)}
             </main>
         </div>
     );

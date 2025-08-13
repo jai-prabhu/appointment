@@ -81,10 +81,16 @@ router.patch("/appointments/update/:id", async (req, res) => {
 
     const appointment = appointmentDB.data.appointments.find(appointment => appointment.id === id);
 
+    console.log(data, appointment?.dateTime);
+
     if (appointment) {
 
         await Appointments.update(appointment, data);
         res.status(203);
+    }
+
+    else {
+        res.status(404).json({"error": "data not found"});
     }
 })
 
