@@ -6,6 +6,7 @@ export interface Config {
     LAST_USER_ID: number;
     LAST_DOC_ID: number;
     LAST_APT_ID: number;
+    LAST_PRE_ID: number;
 }
 
 
@@ -50,6 +51,15 @@ export async function updateLastAPT(): Promise<void> {
     const config: Config = await getConfig();
 
     config.LAST_APT_ID += 1;
+
+    await writeConfig(config);
+}
+
+export async function updateLastPRE(): Promise<void> {
+
+    const config: Config = await getConfig();
+
+    config.LAST_PRE_ID += 1;
 
     await writeConfig(config);
 }

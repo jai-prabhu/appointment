@@ -1,0 +1,56 @@
+{
+  "prescribtions": [
+    {
+      "id": "APT-25",
+      "appointment": {
+        "id": "APT-24",
+        "user": {
+          "id": "UID-1",
+          "firstName": "John",
+          "lastName": "Doe",
+          "password": "Password@123",
+          "location": "Main street, Vegas",
+          "email": "JohnDoe@example.com"
+        },
+        "doc": {
+          "user": {
+            "id": "DID-2",
+            "firstName": "Michael",
+            "lastName": "Chen",
+            "password": "Password@123",
+            "location": "City Health Clinic",
+            "email": "MichaelChen@example.com"
+          },
+          "experience": "10-15 years",
+          "specialization": "General Medicine",
+          "ratings": "0",
+          "reviews": "0",
+          "cost": "150"
+        },
+        "dateTime": "2025-08-22T08:30:00.000Z",
+        "status": 1,
+        "type": "Follow-up Vsit",
+        "details": ""
+      },
+      "diagnosis": "Hyper Tension",
+      "icd_code": "ICD-1",
+      "priority": "Routine",
+      "medications": [
+        {
+          "medicine_name": {
+            "name": "LisinoPril",
+            "sub_name": "Lisinopril",
+            "scale": "10mg tablet"
+          },
+          "dosage": "1 tablet",
+          "freq": "Twice daily",
+          "duration": "10 days",
+          "quantity": 20,
+          "refills": 2,
+          "instruction": "Take the pills after meal."
+        }
+      ],
+      "additional_notes": "Refills are Allowed."
+    }
+  ]
+}
