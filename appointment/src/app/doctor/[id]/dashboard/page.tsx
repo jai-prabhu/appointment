@@ -94,7 +94,7 @@ export default function DashBoard() {
                             items-center bg-salte-50 p-4 border-t border-slate-300 rounded-lg">
                                 <div className="space-y-2">
                                     <p className="text-slate-500">Patient Rating</p>
-                                    <h1 className="text-slate-900 text-2xl font-bold">4.9</h1>
+                                    <h1 className="text-slate-900 text-2xl font-bold">{4.9}</h1>
                                 </div>
                                 <TrendingUpIcon className="text-teal-600 w-8 h-8"/>
                             </div>
