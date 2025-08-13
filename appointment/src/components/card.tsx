@@ -2,7 +2,8 @@
 
 import { FC, ReactNode } from "react";
 import { LucideIcon, CalendarIcon, ClockIcon, EyeIcon, MapPinIcon, StarIcon, ArrowRightIcon, PhoneIcon, MoreHorizontalIcon,
-     CircleCheckBigIcon, CircleXIcon, CheckIcon, XIcon } from "lucide-react";
+     CircleCheckBigIcon, CircleXIcon, CheckIcon, XIcon, 
+     PillIcon} from "lucide-react";
 import { Avatar } from "./avatar";
 import { StatusBadge } from "./badge";
 import { useRouter, useParams } from "next/navigation";
@@ -202,8 +203,9 @@ export const PendingSlot = ({ id, imgSrc, name, specialization, date, time, loca
 }
 
 
-export const AppointmentSlot = ({ id, imgSrc, name, specialization, date, time, location, status }: {
+export const AppointmentSlot = ({ id, pres_id, imgSrc, name, specialization, date, time, location, status }: {
     id: string;
+    pres_id: string;
     imgSrc: string;
     name: string;
     specialization: string;
@@ -242,13 +244,13 @@ export const AppointmentSlot = ({ id, imgSrc, name, specialization, date, time, 
                     </div>
                 </div>
             </div>
-            { (<div className="flex gap-2 items-center justify-center">
-                {status !== 4 && (<a 
+            {status === 1 || status === 2 && (<div className="flex gap-2 items-center justify-center">
+                (<a 
                     href=""
                     className="text-slate-900 bg-slate-50 font-semibold px-4 py-2 border border-slate-300 rounded-lg
                     hover:bg-slate-100">
                     {status !== 2 ? `Reschedule` : `View`}
-                </a>)}
+                </a>)
                 <button
                     onClick={
                         () => {
@@ -257,8 +259,20 @@ export const AppointmentSlot = ({ id, imgSrc, name, specialization, date, time, 
                     }
                     className="text-slate-50 bg-teal-600 font-semibold px-4 py-2 rounded-lg
                     hover:bg-teal-500 cursor-pointer">
-                    {status === 4 ? `Book Again` : `Cancel`}
+                    cancel
                 </button>
+            </div>)}
+            {status === 5 && (<div className="flex gap-2 items-center justify-center">
+                (<button
+                    onClick={() => {
+
+                        router.push(`perscription/${pres_id}/preview-perscription`);
+                    }}
+                    className="inline-flex gap-3 items-center text-white bg-teal-600 font-semibold px-4 py-2 border border-slate-300 rounded-lg
+                    hover:bg-teal-500 cursor-pointer">
+                        <PillIcon className="w-5 h-5"/>
+                    View Prescription
+                </button>)
             </div>)}
         </div>
     );
@@ -444,6 +458,7 @@ export const AppointmentCard = ({ imgSrc, name, specialization, location, time, 
 export const AppointmentCardP = ({ id, imgSrc, name, specialization, reason, time, date, status }: AppointmentCardPropP) => {
 
     const router = useRouter();
+    
 
     return (
         <CardHolder className="p-4 bg-slate-50 rounded-lg hover:shadow-lg cursor-pointer">
@@ -494,9 +509,37 @@ export const AppointmentCardP = ({ id, imgSrc, name, specialization, reason, tim
                 </div>
 
                 {status === 1 && (<div className="flex flex-col gap-4">
+
+                    <button 
+                    onClick={async () => {
+
+                        const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/update/${id}`, {
+                            method: "PATCH",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                status: 3
+                            })
+                        });
+
+                        if (!res.ok) {
+
+                            console.error("failed to Patch");
+                            return;
+                        }
+
+                        router.push("appointments ")
+                    }}
+                    className="inline-flex items-center gap-2 w-full whitespace-nowrap text-white bg-teal-600 font-bold text-sm border border-slate-300 px-4 py-2 rounded-lg
+                    hover:scale-105 cursor-pointer transition-all hover:bg-teal-500 duration-300 hover:shadow-sm shadow-slate-300">
+                        <CheckIcon className="text-white w-5 h-5"/>
+                        Mark Complete
+                    </button>
+
                     <button className="inline-flex items-center gap-2 w-full whitespace-nowrap text-slate-600 text-sm border border-slate-300 px-4 py-2 rounded-lg
                     hover:scale-105 cursor-pointer transition-all hover:bg-slate-100 duration-300 hover:shadow-sm shadow-slate-300">
-                        <EyeIcon/>
+                        <EyeIcon className="w-5 h-5"/>
                         View Details
                     </button>
 
@@ -571,6 +614,27 @@ export const AppointmentCardP = ({ id, imgSrc, name, specialization, reason, tim
                         <CheckIcon className="w-5 h-5"/>
                         Book Again
                     </button>
+
+                    <button
+                    onClick={
+                        () => {
+                            router.push(`perscription/${id}/create-perscription`)
+                        }
+                    }
+                    className="inline-flex items-center gap-2 justify-center w-full w-full whitespace-nowrap text-slate-50 bg-teal-600 text-sm border border-slate-300 px-4 py-2 rounded-lg
+                    hover:scale-105 cursor-pointer transition-all duration-300 hover:shadow-sm font-semibold shadow-slate-300 hover:bg-teal-500">
+                        <PillIcon className="w-5 h-5"/>
+                        Prescribe
+                    </button>
+                </div>)}
+
+                {status === 5 && (<div className="flex flex-col gap-4">
+                    <button className="inline-flex items-center gap-2 w-full whitespace-nowrap text-slate-600 text-sm border border-slate-300 px-4 py-2 rounded-lg
+                    hover:scale-105 cursor-pointer transition-all hover:bg-slate-100 duration-300 hover:shadow-sm shadow-slate-300">
+                        <EyeIcon/>
+                        View Prescription
+                    </button>
+
                 </div>)}
             </CardContent>
         </CardHolder>

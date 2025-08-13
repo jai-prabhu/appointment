@@ -61,7 +61,6 @@ export default function CreatePrescription () {
         fetchData();
     }, [params.apt_id]);
 
-
     return (
         <div className="max-w-screen min-h-screen w-full bg-gradient-to-r from-slate-50 via-teal-50 to-white" style={{fontFamily: "var(--font-poppins)"}}>
             <DashboardHeaderD>
@@ -278,6 +277,8 @@ export default function CreatePrescription () {
 
                                 const data: { message: string; id: string } = await res.json()
 
+                                
+
                                 router.push(`../../perscription/preview-prescribtion/${data.id}/view-prescribtion`);
                                 
                             }}
@@ -335,7 +336,7 @@ export default function CreatePrescription () {
                     </div>
                 </div> 
                 {showMedication && (
-                    <div className="fixed min-h-screen flex left-0 top-0 justify-center  min-w-screen items-center backdrop-brightness-25 z-20">
+                    <div className="fixed min-h-screen flex left-0 top-0 justify-center  min-w-screen items-center backdrop-brightness-25 z-50">
                         <div className="container max-w-4xl mx-auto">
                             <CardHolder>
                                 <CardHeader className="flex justify-between w-full text-slate-700 font-semibold text-xl">

@@ -330,13 +330,13 @@ export default function Calendar() {
                                                             className={`w-full px-4 py-2 rounded-lg border ${appointment.status === 1 ? `active:cursor-grabbing`: `active:cursor-not-allowed`}
                                                             ${appointment.status === 1 ? `bg-green-100 border-teal-200` : appointment.status === 2 ?
                                                              `bg-orange-100 border-orange-200` : appointment.status === 3 ?
-                                                              `bg-blue-100 border-blue-200` : `bg-red-100 border-red-200`}`}>
+                                                              `bg-blue-100 border-blue-200` : appointment.status === 4 ? `bg-red-100 border-red-200` : `bg-purple-100 border-purple-200`}`}>
                                                                 <p className={`text-xs font-semibold
-                                                                 ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : `text-red-500`}`}>
+                                                                 ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : appointment.status === 4 ? `text-red-500` : `text-purple-500`}`}>
                                                                     {format(appointment.dateTime, "HH:mm")}
                                                                 </p>
                                                                 <p className={`text-xs
-                                                                 ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : `text-red-500`}`}>
+                                                                 ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : appointment.status === 4 ? `text-red-500` : `text-purple-500`}`}>
                                                                     {appointment.user.firstName + " " + appointment.user.lastName}
                                                                 </p>
                                                             </div>
@@ -386,13 +386,13 @@ export default function Calendar() {
                                                             className={`w-full px-4 py-2 rounded-lg border ${appointment.status === 1 ? `active:cursor-grabbing`: `active:cursor-not-allowed`}
                                                             ${appointment.status === 1 ? `bg-green-100 border-teal-200` : appointment.status === 2 ?
                                                              `bg-orange-100 border-orange-200` : appointment.status === 3 ?
-                                                              `bg-blue-100 border-blue-200` : `bg-red-100 border-red-200`}`}>
+                                                              `bg-blue-100 border-blue-200` : appointment.status === 4 ? `bg-red-100 border-red-200` : `bg-purple-100 border-purple-200`}`}>
                                                                 <p className={`text-xs font-semibold
-                                                                 ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : `text-red-500`}`}>
+                                                                 ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : appointment.status === 4 ? `text-red-500` : `text-purple-500`}`}>
                                                                     {format(appointment.dateTime, "HH:mm")}
                                                                 </p>
                                                                 <p className={`text-xs
-                                                                 ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : `text-red-500`}`}>
+                                                                 ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : appointment.status === 4 ? `text-red-500` : `text-purple-500`}`}>
                                                                     {appointment.user.firstName + " " + appointment.user.lastName}
                                                                 </p>
                                                             </div>
@@ -456,13 +456,13 @@ export default function Calendar() {
                                                             className={`w-full px-4 py-2 rounded-lg border ${appointment.status === 1 ? `active:cursor-grabbing`: `active:cursor-not-allowed`}
                                                             ${appointment.status === 1 ? `bg-green-100 border-teal-200` : appointment.status === 2 ?
                                                              `bg-orange-100 border-orange-200` : appointment.status === 3 ?
-                                                              `bg-blue-100 border-blue-200` : `bg-red-100 border-red-200`}`}>
+                                                              `bg-blue-100 border-blue-200` : appointment.status === 4 ? `bg-red-100 border-red-200` : `bg-purple-100 border-purple-200`}`}>
                                                                 <p className={`text-xs font-semibold
-                                                                 ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : `text-red-500`}`}>
+                                                                 ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : appointment.status === 4 ? `text-red-500` : `text-purple-500`}`}>
                                                                     {format(appointment.dateTime, "HH:mm")}
                                                                 </p>
                                                                 <p className={`text-xs
-                                                                 ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : `text-red-500`}`}>
+                                                                 ${appointment.status === 1 ? `text-teal-600` : appointment.status === 2 ? `text-orange-600` : appointment.status === 3 ? `text-blue-600` : appointment.status === 4 ? `text-red-500` : `text-purple-500`}`}>
                                                                     {appointment.user.firstName + " " + appointment.user.lastName}
                                                                 </p>
                                                             </div>
@@ -507,6 +507,11 @@ export default function Calendar() {
                             <p className="inline-flex items-center gap-2 text-slate-600 text-sm font-medium">
                                 <span className="w-4 h-4 bg-red-200 border border-red-300 rounded-sm"></span>
                                 Canceled
+                            </p>
+
+                            <p className="inline-flex items-center gap-2 text-slate-600 text-sm font-medium">
+                                <span className="w-4 h-4 bg-purple-200 border border-purple-300 rounded-sm"></span>
+                                Prescribed
                             </p>
 
                         </div>

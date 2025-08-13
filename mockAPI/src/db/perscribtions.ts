@@ -1,4 +1,4 @@
-import { Appointment } from "./appointment";
+import { Appointment, Appointments } from "./appointment";
 import { Low } from "lowdb";
 import { JSONFile } from "lowdb/node";
 import { Config, getConfig, updateLastPRE } from "../config/configuration";
@@ -31,6 +31,8 @@ export interface Prescribtion {
     priority: string;
     medications: Medication[];
     additional_notes: string;
+    created_at: string;
+    updated_at: string;
 }
 
 export interface PrescribtionData {
@@ -58,6 +60,12 @@ export class Prescribtions {
 
             data.id = "RXP-" + config.LAST_PRE_ID;
 
+            data.created_at = new Date().toISOString();
+
+            data.updated_at = new Date().toISOString();
+
+            Appointments.update(data.appointment, {pres_id: data.id});
+
             presDB?.data.prescribtions.push(data);
 
             await presDB.write();
@@ -78,6 +86,8 @@ export class Prescribtions {
     static async update(prescribtion: Prescribtion, data: Partial<Prescribtion>): Promise<boolean> {
 
         if (data) {
+
+            data.updated_at = new Date().toISOString();
 
             Object.assign(prescribtion, data);
 

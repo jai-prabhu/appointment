@@ -26,9 +26,71 @@
         "cost": "150"
       },
       "dateTime": "2025-08-22T08:30:00.000Z",
-      "status": 1,
+      "status": 5,
       "type": "Follow-up Vsit",
-      "details": ""
+      "details": "",
+      "pres_id": "APT-25"
+    },
+    {
+      "id": "APT-25",
+      "user": {
+        "id": "UID-2",
+        "firstName": "John",
+        "lastName": "Smith",
+        "password": "Password@123",
+        "location": "Downtown, Los Santos",
+        "email": "JohnSmith@example.com"
+      },
+      "doc": {
+        "user": {
+          "id": "DID-2",
+          "firstName": "Michael",
+          "lastName": "Chen",
+          "password": "Password@123",
+          "location": "City Health Clinic",
+          "email": "MichaelChen@example.com"
+        },
+        "experience": "10-15 years",
+        "specialization": "General Medicine",
+        "ratings": "0",
+        "reviews": "0",
+        "cost": "150"
+      },
+      "dateTime": "2025-08-21T11:00:00.000Z",
+      "status": 5,
+      "type": "General Consultaion",
+      "details": "Head ache"
+    },
+    {
+      "id": "APT-26",
+      "user": {
+        "id": "UID-1",
+        "firstName": "John",
+        "lastName": "Doe",
+        "password": "Password@123",
+        "location": "Main street, Vegas",
+        "email": "JohnDoe@example.com"
+      },
+      "doc": {
+        "user": {
+          "id": "DID-2",
+          "firstName": "Michael",
+          "lastName": "Chen",
+          "password": "Password@123",
+          "location": "City Health Clinic",
+          "email": "MichaelChen@example.com"
+        },
+        "experience": "10-15 years",
+        "specialization": "General Medicine",
+        "ratings": "0",
+        "reviews": "0",
+        "cost": "150"
+      },
+      "dateTime": "2025-08-25T04:00:00.000Z",
+      "status": 1,
+      "type": "General Consultaion",
+      "details": "general",
+      "date": "Wed Aug 27 2025"
     }
   ]
 }

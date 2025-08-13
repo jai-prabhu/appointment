@@ -15,6 +15,7 @@ export interface AppointmentData {
     type: string;
     status: number;
     details: string;
+    pres_id: string;
 }
 
 export interface BookingData {
@@ -108,4 +109,6 @@ export interface PerscribtionData {
     priority: string;
     medications: MedicationData[];
     additional_notes: string;
+    created_at: string;
+    updated_at: string;
 }

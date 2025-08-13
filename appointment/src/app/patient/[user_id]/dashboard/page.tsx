@@ -37,9 +37,9 @@ export default function DashBoard() {
         <div className="container max-w-screen w-full" style={{fontFamily: "var(--font-poppins)"}}>
             <DashboardHeaderP/>
 
-            <main className="w-full bg-gradient-to-br from-slate-50 via-teal-30 to-slate-100 p-4">
+            <main className="w-full bg-gradient-to-br from-slate-50 via-teal-30 to-slate-100 p-4 py-16">
                 <div className="container w-full mx-auto">
-                    <div className="space-y-2 my-8">
+                    <div className="space-y-2">
                         <h1 className="text-slate-900 text-4xl font-bold">Welcome Back, John</h1>
                         <p className="text-slate-500">Here`s what`s happening with your health today.</p>
                     </div>
@@ -115,6 +115,7 @@ export default function DashBoard() {
                                                 <AppointmentSlot
                                                 key={index}
                                                 id={appointment.id}
+                                                pres_id={appointment.pres_id}
                                                 imgSrc="/doc.png"
                                                 name={appointment.doc.user.firstName + " " + appointment.doc.user.lastName}
                                                 specialization={appointment.doc.specialization}

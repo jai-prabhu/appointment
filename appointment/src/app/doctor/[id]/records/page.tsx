@@ -85,7 +85,7 @@ export default function Records () {
                                 <p className="text-slate-500">Click on a patient to view detailed information.</p>
                             </CardHeader>
 
-                            <CardContent className="flex flex-col items-center w-full">
+                            <CardContent className="flex flex-col gap-4 items-center w-full">
                                 {
                                     patients.map((patient, index) => {
 

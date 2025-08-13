@@ -131,7 +131,7 @@ export const DashboardHeaderP =  ({ children } :{ children?: ReactNode }) => {
                         <BellIcon className="text-slate-900 w-5 h-5"/>
                     </button>
                     <div className="flex gap-2 items-center">
-                        <Avatar src="/doc.png" size={12}/>
+                        <Avatar src="/man.png" size={12}/>
 
                         <h3 className="text-slate-900 font-bold">{data?.firstName + " " + data?.lastName}
                             <p className="text-slate-400 font-normal text-xs">Patient ID: #{data?.id}</p>

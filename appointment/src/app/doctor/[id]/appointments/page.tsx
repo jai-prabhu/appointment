@@ -41,7 +41,7 @@ export default function Appointments() {
     console.log(appointments);
 
     return (
-        <div className="max-w-screen w-ful bg-gradient-to-r from-slate-50 via-teal-50 to-white" style={{fontFamily: "var(--font-poppins)"}}>
+        <div className="max-w-screen w-full min-h-screen bg-gradient-to-r from-slate-50 via-teal-50 to-white" style={{fontFamily: "var(--font-poppins)"}}>
             
             <DashboardHeaderD>
                 <button 
@@ -152,7 +152,7 @@ export default function Appointments() {
                         selectedTab === 3 && (
                             <div className="flex flex-col gap-8 justify-center items-center w-full">
                                 {
-                                    appointments?.filter(appointment => appointment.status === 3 ).map(
+                                    appointments?.filter(appointment => appointment.status === 3 || appointment.status === 5).map(
 
                                         (appointment, index) => {
 

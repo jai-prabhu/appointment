@@ -171,6 +171,11 @@ export default function DashBoard() {
                                 </CardHeader>
                                 <CardContent className="space-y-4 w-full">
                                     {
+                                        !appointments?.filter(appointment => appointment.status === 2).length && (
+                                            <h1 className="text-slate-500 text-center text-2xl">No Pending Requests</h1>
+                                        )
+                                    }
+                                    {
                                         appointments?.filter(appointment => appointment.status === 2).map((appointment, index) => {
 
                                             return (
@@ -195,23 +200,31 @@ export default function DashBoard() {
                                         <h3 className="text-slate-900 font-bold text-2xl">Upcomming Appointments</h3>
                                         <p className="text-slate-500 text-sm">Your scheduled medical appointments</p>
                                     </div>
-                                    <a 
-                                    href=""
+                                    <button 
+                                    onClick={() => {
+
+                                        router.push("appointments");
+                                    }}
                                     className="text-slate-900 border border-slate-300 font-semibold px-4 py-2 rounded-lg
                                     hover:bg-slate-100 hover:shadow-md shadow-slate-300">
                                         View all
-                                    </a>
+                                    </button>
                                 </CardHeader>
                                 <CardContent className="space-y-4 w-full">
-                                    
+                                    {
+                                        !appointments?.filter(appointment => appointment.status === 1).length && (
+                                            <h1 className="text-slate-500 text-2xl text-center">No Upcomming appointments</h1>
+                                        )
+                                    }
                                     {
                                         appointments?.filter(appointment => appointment.status === 1).map((appointment, index) => {
 
                                             return (
                                                 <AppointmentSlot
                                                 key={index}
+                                                pres_id={appointment.pres_id}
                                                 id={appointment.id}
-                                                imgSrc="/doc.png"
+                                                imgSrc="/man.png"
                                                 name={appointment.user.firstName + " " + appointment.user.lastName}
                                                 specialization={appointment.type}
                                                 time={appointment?.dateTime ? format(new Date(appointment?.dateTime), "hh:mm a") : ``}

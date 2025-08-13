@@ -51,6 +51,142 @@
         }
       ],
       "additional_notes": "Refills are Allowed."
+    },
+    {
+      "id": "RXP-1",
+      "appointment": {
+        "id": "APT-25",
+        "user": {
+          "id": "UID-2",
+          "firstName": "John",
+          "lastName": "Smith",
+          "password": "Password@123",
+          "location": "Downtown, Los Santos",
+          "email": "JohnSmith@example.com"
+        },
+        "doc": {
+          "user": {
+            "id": "DID-2",
+            "firstName": "Michael",
+            "lastName": "Chen",
+            "password": "Password@123",
+            "location": "City Health Clinic",
+            "email": "MichaelChen@example.com"
+          },
+          "experience": "10-15 years",
+          "specialization": "General Medicine",
+          "ratings": "0",
+          "reviews": "0",
+          "cost": "150"
+        },
+        "dateTime": "2025-08-21T11:00:00.000Z",
+        "status": 3,
+        "type": "General Consultaion",
+        "details": "Head ache",
+        "pres_id": "RXP-1"
+      },
+      "diagnosis": "Hypertension",
+      "icd_code": "I10",
+      "priority": "Routine",
+      "medications": [
+        {
+          "medicine_name": {
+            "name": "LisinoPril",
+            "sub_name": "Lisinopril",
+            "scale": "10mg tablet"
+          },
+          "dosage": "1 tablet",
+          "freq": "Three times daily",
+          "duration": "30 days",
+          "quantity": 90,
+          "refills": 3,
+          "instruction": "Take the pills after the meal"
+        },
+        {
+          "medicine_name": {
+            "name": "Atrovastatin",
+            "sub_name": "Atorvastatin Calcium",
+            "scale": "20mg tablet"
+          },
+          "dosage": "1",
+          "freq": "Once daily",
+          "duration": "1",
+          "quantity": 1,
+          "refills": 2,
+          "instruction": "Take the pills after the meal"
+        }
+      ],
+      "additional_notes": "",
+      "created_at": "2025-08-13T05:17:23.246Z",
+      "updated_at": "2025-08-13T05:17:23.246Z"
+    },
+    {
+      "id": "RXP-2",
+      "appointment": {
+        "id": "APT-25",
+        "user": {
+          "id": "UID-2",
+          "firstName": "John",
+          "lastName": "Smith",
+          "password": "Password@123",
+          "location": "Downtown, Los Santos",
+          "email": "JohnSmith@example.com"
+        },
+        "doc": {
+          "user": {
+            "id": "DID-2",
+            "firstName": "Michael",
+            "lastName": "Chen",
+            "password": "Password@123",
+            "location": "City Health Clinic",
+            "email": "MichaelChen@example.com"
+          },
+          "experience": "10-15 years",
+          "specialization": "General Medicine",
+          "ratings": "0",
+          "reviews": "0",
+          "cost": "150"
+        },
+        "dateTime": "2025-08-21T11:00:00.000Z",
+        "status": 3,
+        "type": "General Consultaion",
+        "details": "Head ache",
+        "pres_id": "RXP-2"
+      },
+      "diagnosis": "Hypertension",
+      "icd_code": "I10",
+      "priority": "Routine",
+      "medications": [
+        {
+          "medicine_name": {
+            "name": "LisinoPril",
+            "sub_name": "Lisinopril",
+            "scale": "10mg tablet"
+          },
+          "dosage": "1 tablet",
+          "freq": "Three times daily",
+          "duration": "30 days",
+          "quantity": 90,
+          "refills": 3,
+          "instruction": "Take the pills after the meal"
+        },
+        {
+          "medicine_name": {
+            "name": "Atrovastatin",
+            "sub_name": "Atorvastatin Calcium",
+            "scale": "20mg tablet"
+          },
+          "dosage": "1",
+          "freq": "Once daily",
+          "duration": "1",
+          "quantity": 1,
+          "refills": 2,
+          "instruction": "Take the pills after the meal"
+        }
+      ],
+      "additional_notes": "",
+      "created_at": "2025-08-13T05:17:36.701Z",
+      "updated_at": "2025-08-13T05:17:36.701Z"
     }
   ]
 }

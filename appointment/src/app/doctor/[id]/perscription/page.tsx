@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { AppointmentData } from "@/lib/data";
 import { StatusBadge } from "@/components/badge";
 import { format } from "date-fns";
-import { Avatar } from "@/components/avatar";
+import { Avatar } from "@/components/avatar";;
 
 export default function Perscription () {
 
@@ -70,12 +70,12 @@ export default function Perscription () {
                             </CardContent>
                         </CardHolder>
 
-                        <div className="grid lg:grid-cols-3 items-center justify-center w-full">
+                        <div className="grid lg:grid-cols-3 gap-8 items-start justify-center w-full">
                             {
-                                appointments?.filter(appointment => appointment.status === 1).map((appointment, index) => {
+                                appointments?.filter(appointment => appointment.status === 3 || appointment.status === 5).map((appointment, index) => {
 
                                     return (
-                                        <CardHolder key={index}>
+                                        <CardHolder key={index} className="rounded-lg bg-slate-50 p-4 w-full">
                                             <CardHeader className="flex items-center justify-between">
                                                 <div className="flex items-center w-full gap-2">
                                                     <Avatar src="/man.png" size={16}/>
@@ -83,7 +83,7 @@ export default function Perscription () {
                                                         <p className="text-sm text-slate-300">ID: {appointment.user.id}</p>
                                                     </h5>
                                                 </div>
-                                                <StatusBadge status={3}/>
+                                                <StatusBadge status={appointment.status}/>
                                             </CardHeader>
                                             <CardContent className="flex flex-col gap-4 justify-center py-2">
                                                 <p className="inline-flex gap-2 text-sm text-slate-500 items-center">
@@ -98,7 +98,9 @@ export default function Perscription () {
                                                     <span className="text-slate-600 font-semibold">Reason:</span>
                                                     { appointment.details }
                                                 </p>
-                                                <button
+
+                                                <p className="text-slate-500 text-sm">Last Updated: {format(new Date(), "MMM dd, yyyy")}</p>
+                                                {appointment.status !== 5 && (<button
                                                 onClick={() => {
 
                                                     router.push(`perscription/${appointment.id}/create-perscription`);
@@ -106,7 +108,36 @@ export default function Perscription () {
                                                 className="text-slate-50 bg-teal-600 px-4 py-2 rounded-lg hover:bg-teal-500
                                                 cursor-pointer hover:scale-105 transition-all duration-300 font-semibold">
                                                     Provide Perscription
-                                                </button>
+                                                </button>)}
+
+                                                
+                                                        
+
+                                                {appointment.status === 5 && (
+                                                    <>
+                                                        <div className="grid grid-cols-2 gap-4">
+                                                            <button
+                                                            onClick={() => {
+
+                                                                router.push(`perscription/preview-prescribtion/${appointment.pres_id}/view-prescribtion`);
+                                                            }}
+                                                            className="text-slate-50 bg-teal-600 px-4 py-2 rounded-lg hover:bg-teal-500
+                                                            cursor-pointer hover:scale-105 transition-all duration-300 font-semibold">
+                                                                View Details
+                                                            </button>
+
+                                                            <button
+                                                            onClick={() => {
+
+                                                                router.push(`perscription/${appointment.id}/create-perscription`);
+                                                            }}
+                                                            className="text-slate-50 bg-teal-600 px-4 py-2 rounded-lg hover:bg-teal-500
+                                                            cursor-pointer hover:scale-105 transition-all duration-300 font-semibold">
+                                                                Provide prescription
+                                                            </button>
+                                                        </div>
+                                                    </>
+                                                )}
                                             </CardContent>
                                         </CardHolder>
                                     );

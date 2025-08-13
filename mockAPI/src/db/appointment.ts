@@ -13,6 +13,7 @@ export interface Appointment {
     type:string;
     status: number;
     details: string;
+    pres_id: string;
 }
 
 export interface AppointmentData {
