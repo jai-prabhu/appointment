@@ -6,14 +6,16 @@ import { useState, useEffect } from "react";
 import { ArrowLeftIcon, PhoneIcon, MailIcon, DownloadIcon, PillIcon, HomeIcon, FileTextIcon, HeartIcon, ActivityIcon, RulerIcon, WeightIcon, ThermometerIcon} from "lucide-react";
 import { Avatar } from "@/components/avatar";
 import { CardHolder, CardHeader, CardContent, AppointmentCardP } from "@/components/card";
-import { type AppointmentData, getLastDate } from "@/lib/data";
+import { type AppointmentData, getLastDate, PerscribtionData } from "@/lib/data";
 import { TabHolder, TabItem } from "@/components/tab";
 import { format } from "date-fns";
+import { StatusBadge } from "@/components/badge";
 
 export default function Record() {
 
     const [ appointments, setAppointments ] = useState<AppointmentData[]>([]);
     const [ selectedTab, setSelectedTab ] = useState(1);
+    const [ prescriptions, setPrescriptions ] = useState<PerscribtionData[]>([]);
 
     const router = useRouter();
     const params = useParams();
@@ -30,6 +32,23 @@ export default function Record() {
             }
 
             setAppointments(await res.json());
+        }
+
+        fetchData();
+    }, [params.user_id]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+
+            const res = await fetch(`http://localhost:5000/data/pres-query/prescribtions/filter/user/${params.user_id}`);
+
+            if (!res.ok) {
+
+                console.error("Failed to fetch data");
+                return;
+            }
+
+            setPrescriptions(await res.json());
         }
 
         fetchData();
@@ -176,6 +195,44 @@ export default function Record() {
                                     <CardHeader>
                                         <h1 className="text-xl text-slate-900 font-bold">Perscription History</h1>
                                     </CardHeader>
+                                    <CardContent className="flex flex-col gap-4 items-center justify-center">
+                                        {
+                                            prescriptions.map((prescription, index) => {
+
+                                                return (
+                                                    <div key={index}
+                                                    className="flex flex-col justify-center border border-slate-300 w-full rounded-lg p-4">
+                                                        <div className="flex justify-between w-full items-center">
+                                                            <h1 className="text-slate-900 font-bold">New Prescribtion
+                                                                <p className="font-normal text-slate-500">Date: Aug 13, 2025</p>
+                                                            </h1>
+                                                            <StatusBadge status={5}/>
+                                                        </div>
+                                                        {
+                                                            prescription.medications.map((medication, index) => {
+
+                                                                return (
+                                                                    <div 
+                                                                    key={index}
+                                                                    className="flex justify-between items-center rounded-lg bg-slate-100 p-4 space-y-2">
+                                                                        <div>
+                                                                            <h1 className="text-slate-900">
+                                                                                {medication.medicine_name.sub_name + " " + medication.medicine_name.scale.split(" ").slice(0, 1)}
+                                                                                <p className="text-slate-500">{medication.freq + " - " + medication.duration}</p>
+                                                                            </h1>
+
+                                                                            <p className="text-slate-500">{medication.instruction}</p>
+                                                                        </div>
+                                                                        <PillIcon className="text-purple-600"/>
+                                                                    </div>
+                                                                );
+                                                            })
+                                                        }
+                                                    </div>
+                                                );
+                                            })
+                                        }
+                                    </CardContent>
                                 </CardHolder>
                             )
                         }

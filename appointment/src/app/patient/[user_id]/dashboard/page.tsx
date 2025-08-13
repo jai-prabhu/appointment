@@ -6,6 +6,8 @@ import { CardHolder, CardHeader, CardContent, AppointmentSlot } from "@/componen
 import { type AppointmentData } from "@/lib/data";
 import { PlusIcon, CalendarIcon, FileTextIcon, HeartIcon, CircleCheckBigIcon, ClockIcon, CircleIcon } from "lucide-react";
 import { useRouter, useParams } from "next/navigation";
+import { format } from "date-fns";
+import Footer from "@/components/footer";
 
 export default function DashBoard() {
 
@@ -60,13 +62,15 @@ export default function DashBoard() {
                                         Book Appointment
                                     </button>
 
-                                    <a
-                                    href=""
+                                    <button
+                                    onClick={() => {
+                                        router.push(`calendar`);
+                                    }}
                                     className="flex flex-col gap-2 bg-slate-50 w-full p-4 justify-center items-center rounded-lg
-                                    border border-slate-300 text-slate-900 text-sm font-semibold hover:bg-slate-100">
+                                    border border-slate-300 text-slate-900 text-sm font-semibold hover:bg-slate-100 cursor-pointer">
                                         <CalendarIcon/>
                                         Calendar View
-                                    </a>
+                                    </button>
 
                                     <a
                                     href=""
@@ -114,8 +118,8 @@ export default function DashBoard() {
                                                 imgSrc="/doc.png"
                                                 name={appointment.doc.user.firstName + " " + appointment.doc.user.lastName}
                                                 specialization={appointment.doc.specialization}
-                                                date={appointment.date}
-                                                time={appointment.time}
+                                                date={format(appointment.dateTime, "MMM, dd, yyyy")}
+                                                time={format(appointment.dateTime, "hh:mm a")}
                                                 location={appointment.doc.user.location}
                                                 status={appointment.status}/>
                                             );
@@ -194,6 +198,7 @@ export default function DashBoard() {
                     </div>
                 </div>
             </main>
+            <Footer/>
         </div>
     );
 }

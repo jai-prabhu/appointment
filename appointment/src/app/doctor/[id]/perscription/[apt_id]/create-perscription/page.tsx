@@ -3,7 +3,7 @@
 import { useRouter, useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { DashboardHeaderD } from "@/components/dashboard-header";
-import { ArrowLeftIcon, UserIcon, MailIcon, PhoneIcon, MapPinIcon, FileTextIcon, PillIcon, PlusIcon, XIcon, SearchIcon, Trash2Icon } from "lucide-react";
+import { ArrowLeftIcon, UserIcon, MailIcon, PhoneIcon, MapPinIcon, FileTextIcon, PillIcon, PlusIcon, XIcon, SearchIcon, Trash2Icon, SendIcon } from "lucide-react";
 import { type AppointmentData, type MedicationData, type MedicineData } from "@/lib/data";
 import { CardHolder, CardHeader, CardContent } from "@/components/card";
 import { Select, SelectItem } from "@/components/select";
@@ -25,19 +25,20 @@ export default function CreatePrescription () {
     const [ diagnmosis, setDiagnosis ] = useState("");
     const [ priority, setPriority ]= useState("");
     const [ ICT, setICT ] = useState("");
+    const [ additionalNotes, setAdditionalNotes ] = useState("");
 
     const router = useRouter();
     const params = useParams();
 
     const medicines: MedicineData[] = [
-        {name: "LisinoPril", subName: "Lisinopril", scale: "10mg tablet"},
-        {name: "Metformin", subName: "Metformin HCL", scale: "500mg tablet"},
-        {name: "Atrovastatin", subName: "Atorvastatin Calcium", scale: "20mg tablet"},
-        {name: "Amlodipine", subName: "Amlodipine Besylate", scale: "5mg tablet"},
-        {name: "Omerprazole", subName: "Omerprazole", scale: "20mg Capsule"},
-        {name: "Levothyroxine", subName: "Levothyroxine Sodium", scale: "50mcg tablet"},
-        {name: "Albuterol", subName: "Albuterol Sulfate", scale: "90mcg tablet"},
-        {name: "Hydrochlorothiazide", subName: "Hydrochlorothiazide", scale: "25mg tablet"},
+        {name: "LisinoPril", sub_name: "Lisinopril", scale: "10mg tablet"},
+        {name: "Metformin", sub_name: "Metformin HCL", scale: "500mg tablet"},
+        {name: "Atrovastatin", sub_name: "Atorvastatin Calcium", scale: "20mg tablet"},
+        {name: "Amlodipine", sub_name: "Amlodipine Besylate", scale: "5mg tablet"},
+        {name: "Omerprazole", sub_name: "Omerprazole", scale: "20mg Capsule"},
+        {name: "Levothyroxine", sub_name: "Levothyroxine Sodium", scale: "50mcg tablet"},
+        {name: "Albuterol", sub_name: "Albuterol Sulfate", scale: "90mcg tablet"},
+        {name: "Hydrochlorothiazide", sub_name: "Hydrochlorothiazide", scale: "25mg tablet"},
     ];
 
     console.log(medications);
@@ -207,8 +208,8 @@ export default function CreatePrescription () {
                                                 className="p-4 space-y-4 border rounded-lg border-slate-300 w-full border-l-teal-600">
                                                     <div className="flex items-center justify-between w-full">
                                                         <h5 className="text-xl text-slate-700 font-semibold">
-                                                        {medication.name.name}
-                                                        <p className="text-slate-400 text-sm font-normal">{medication.name.subName} - {medication.name.scale.split(' ').slice(0, 1)}</p>
+                                                        {medication.medicine_name.name}
+                                                        <p className="text-slate-400 text-sm font-normal">{medication.medicine_name.sub_name} - {medication.medicine_name.scale.split(' ').slice(0, 1)}</p>
                                                         </h5>
                                                         <button 
                                                         onClick={() => {
@@ -241,11 +242,51 @@ export default function CreatePrescription () {
                                 </CardHeader>
                                 <CardContent className="py-4">
                                     <textarea
+                                    onChange={(event) => {
+                                        setAdditionalNotes(event.target.value);
+                                    }}
                                     rows={5}
                                     placeholder="Any additional notes for pharmacist or patient..."
                                     className="w-full border border-slate-300 focus:outline-none rounded-lg px-4 py-2 placeholder-slate-400 text-slate-700"/>
                                 </CardContent>
                             </CardHolder>
+                            <button 
+                            onClick={async () => {
+
+
+                                const res = await fetch("http://localhost:5000/data/pres-query/create-prescribtion", {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-type": "application/json"
+                                    },
+                                    body: JSON.stringify({
+                                        id: "",
+                                        appointment: appointment,
+                                        diagnosis: diagnmosis,
+                                        icd_code: ICT,
+                                        priority: priority,
+                                        medications: medications,
+                                        additional_notes: additionalNotes
+                                    })
+                                });
+
+                                if (!res.ok) {
+
+                                    console.error("Failed to create data");
+                                    return;
+                                }
+
+                                const data: { message: string; id: string } = await res.json()
+
+                                router.push(`../../perscription/preview-prescribtion/${data.id}/view-prescribtion`);
+                                
+                            }}
+                            className="inline-flex items-center gap-2 bg-teal-600 w-full justify-center px-4 py-2
+                            rounded-lg text-white bg:bg-teal-500 hover:scale-102 transition-all duration-300 cursor-pointer group
+                            border shadow-sm shadow-slate-200">
+                                <SendIcon className="w-5 h-5"/>
+                                Cofirm Perscription
+                            </button>
                         </div>
                         <div className="flex flex-col gap-8 items-center justify-center w-full">
                             <CardHolder>
@@ -335,7 +376,7 @@ export default function CreatePrescription () {
                                                     ${selectedMedicine === index ? `border-2 border-teal-500 border-l-slate-100 border-t-slate-100` : ``}`}>
                                                         <h1 className="text-slate-700 text-md font-semibold">{medicine.name}</h1>
 
-                                                        <p className="text-slate-400">{medicine.subName}</p>
+                                                        <p className="text-slate-400">{medicine.sub_name}</p>
 
                                                         <p className="text-sm text-slate-400">{medicine.scale}</p>
                                                     </div>
@@ -438,10 +479,10 @@ export default function CreatePrescription () {
                                                     () => {
 
                                                         setMedications([...medications, {
-                                                            name: medicines[selectedMedicine],
+                                                            medicine_name: medicines[selectedMedicine],
                                                             dosage: dosage,
                                                             freq: freq,
-                                                            duration: parseInt(duration),
+                                                            duration: duration,
                                                             quantity: parseInt(quantity),
                                                             refills: parseInt(refill),
                                                             instruction: instruction

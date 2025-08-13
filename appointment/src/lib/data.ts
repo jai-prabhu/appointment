@@ -66,10 +66,10 @@ export const range = (start: number, end: number, step: number) : number [] => {
 
 export interface MedicationData {
 
-    name: MedicineData;
+    medicine_name: MedicineData;
     dosage: string;
     freq: string;
-    duration: number;
+    duration: string;
     quantity: number;
     refills: number;
     instruction: string;
@@ -78,7 +78,7 @@ export interface MedicationData {
 export interface MedicineData {
 
     name: string;
-    subName: string;
+    sub_name: string;
     scale: string;
 }
 
@@ -97,4 +97,15 @@ export const getLastDate = (appointments?: AppointmentData[]) => {
     }
 
     return undefined;
+}
+
+export interface PerscribtionData {
+
+    id: string;
+    appointment: AppointmentData;
+    diagnosis: string;
+    icd_code: string;
+    priority: string;
+    medications: MedicationData[];
+    additional_notes: string;
 }

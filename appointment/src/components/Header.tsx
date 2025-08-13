@@ -2,7 +2,7 @@
 export default function Header() {
 
     return (
-        <header className="border-b bg-white/80 w-full backdrop-blur-sm z-10 sticky top-0 left-0 max-w-screen">
+        <header className="border-b bg-white/80 w-full backdrop-blur-sm z-10 sticky top-0 left-0 max-w-screen z-30">
             <div className="container flex mx-auto px-4 justify-between items-center w-full">
                 
                 <div className="inline-flex items-center">

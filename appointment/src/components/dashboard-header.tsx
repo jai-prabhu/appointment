@@ -34,7 +34,7 @@ export const DashboardHeaderD = ({ children } :{ children?: ReactNode }) => {
 
     return (
         <header className="sticky top-0 backdrop-blur-md container overflow-hidden bg-gradient-to-r from-slate-50
-         to-white max-w-screen w-full select-none border-b shadow-md shadow-slate-300 z-30">
+         to-white max-w-screen w-full select-none border-b shadow-md shadow-slate-300 z-30 print:hidden">
             <div className="container flex justify-between items-center gap-3 mx-auto p-2">
                 <div className="flex gap-4 justify-center items-center">
 
@@ -81,7 +81,7 @@ export const DashboardHeaderD = ({ children } :{ children?: ReactNode }) => {
     )
 }
 
-export const DashboardHeaderP =  () => {
+export const DashboardHeaderP =  ({ children } :{ children?: ReactNode }) => {
 
     const [data, setData] = useState<UserData>();
     
@@ -111,7 +111,7 @@ export const DashboardHeaderP =  () => {
          to-white max-w-screen w-full select-none border-b shadow-md shadow-slate-300">
             <div className="container flex justify-between items-center gap-3 mx-auto p-2">
                 <div className="flex gap-4 justify-center items-center">
-                    
+                    {children}
                     <h1 className="inlince flex gap-2 items-center text-slate-900 font-bold">
                         <img
                         src="\Logo.svg"

@@ -65,9 +65,9 @@ export default function Home() {
             <div className="relative flex justify-center">
               <div className="relative z-10">
                 <img
-                src="/Logo.png"
+                src="/portrait.png"
                 alt="Logo"
-                className="w-[360px] h-[600px] shadow-sm shadow-gray-500/30 rounded-2xl"/>
+                className="w-[360px] h-[600px]"/>
               </div>
               <div className="absolute inset-0 bg-gradient-to-br blur-3xl from-teal-200/40 to-blue-200/40"></div>
             </div>

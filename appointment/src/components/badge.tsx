@@ -73,6 +73,17 @@ export const StatusBadge: FC<StatusBadgeProps> = ({ children, status }: StatusBa
                     </Badge>
                 )
             }
+
+            {
+                status === 5 && (
+                    <Badge
+                    bgColor="bg-purple100"
+                    textColor="text-purple-600"
+                    borderColor="border-purple-600">
+                        {children? children: 'Prescribed'}
+                    </Badge>
+                )
+            }
         </>
     )
 }
