@@ -37,8 +37,6 @@ export default function Records () {
         return appointment.user;
     }) )];
 
-    console.log(patients);
-
     return (
         <div className="max-w-screen w-full min-h-screen bg-gradient-to-r from-slate-50 via-teal-50 to-white" style={{fontFamily: "var(--font-poppins)"}}>
             <DashboardHeaderD>

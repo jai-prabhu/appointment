@@ -174,8 +174,6 @@ export default function Reschedule() {
 
                                 setDisabled(true);
 
-                                console.log("before patch");
-
                                 const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/update/${params.appointment_id}`, {
 
                                     method: "PATCH",

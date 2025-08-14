@@ -54,7 +54,6 @@ export default function Calendar() {
 
             setAppointments(await res.json());
 
-            console.log("running")
         }
 
         fetchData()
@@ -274,9 +273,7 @@ export default function Calendar() {
                                                 (e) => {
 
                                                     setAppointmentUpdate(appointmentUpdate + 1);
-
-                                                    console.log("i did run u know")
-
+                                                    
                                                     e.preventDefault();
 
                                                     const patchData = async () => {

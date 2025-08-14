@@ -9,8 +9,6 @@ router.get("/user/:id", async (req, res) => {
 
     const user = userDB.data.users.find((user) => user.id === id );
 
-    console.log(user)
-
     if (user) {
 
         

@@ -44,8 +44,6 @@ export default function Confirmation () {
 
             const data = await res.json();
 
-            console.log(data);
-
             setAppointment(data)
         }
 

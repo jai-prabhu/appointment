@@ -37,8 +37,6 @@ export default function Appointments() {
         
     }, [params.user_id])
 
-    console.log(appointments);
-
     return (
         <div className="max-w-screen w-ful bg-gradient-to-r from-slate-50 via-teal-50 to-white" style={{fontFamily: "var(--font-poppins)"}}>
             <header className="sticky top-0 w-full bg-slate-50 border border-teal-600/30">

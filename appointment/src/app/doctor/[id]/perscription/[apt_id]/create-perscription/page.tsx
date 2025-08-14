@@ -41,8 +41,6 @@ export default function CreatePrescription () {
         {name: "Hydrochlorothiazide", sub_name: "Hydrochlorothiazide", scale: "25mg tablet"},
     ];
 
-    console.log(medications);
-
     useEffect(() => {
 
         const fetchData = async () => {
@@ -214,7 +212,6 @@ export default function CreatePrescription () {
                                                         onClick={() => {
                                                             medications.splice(index, 1);
                                                             setMedications([...medications]);
-                                                            console.log(index)
                                                         }}
                                                         className=" p-2 hover:bg-red-100 cursor-pointer rounded-lg">
                                                             <Trash2Icon className="text-red-500 w-5 h-5"/>

@@ -44,8 +44,6 @@ export class Docs {
     
                 return true;
             }
-
-            console.log("here")
     
             return false;
         }

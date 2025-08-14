@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { type AppointmentData } from "@/lib/data";
-import { ArrowLeftIcon, CalendarIcon, ChevronLeftIcon, ChevronRightIcon, ClockIcon, FilterIcon, MailIcon, CircleCheckBigIcon, PhoneIcon, MapPinIcon, UserIcon, XCircleIcon, LoaderPinwheelIcon, RotateCwIcon } from "lucide-react";
+import { ArrowLeftIcon, CalendarIcon, ChevronLeftIcon, ChevronRightIcon, ClockIcon, FilterIcon, MailIcon, CircleCheckBigIcon, PhoneIcon, MapPinIcon, UserIcon, XCircleIcon, RotateCwIcon } from "lucide-react";
 import { CardHolder, CardHeader, CardContent } from "@/components/card";
 import { DashboardHeaderD } from "@/components/dashboard-header";
 import { startOfToday, addMonths, addWeeks, addDays, format, getDaysInMonth, startOfMonth, isSameDay, isSameMinute, parse } from "date-fns";
@@ -58,7 +58,6 @@ export default function Calendar() {
 
             setAppointments(await res.json());
 
-            console.log("running")
         }
 
         fetchData()
@@ -279,13 +278,9 @@ export default function Calendar() {
 
                                                     setAppointmentUpdate(appointmentUpdate + 1);
 
-                                                    console.log("i did run u know")
-
                                                     e.preventDefault();
 
                                                     const patchData = async () => {
-
-                                                        console.log("not even close")
 
                                                         const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/update/${selectedAppointment ? selectedAppointment.id : ""}`, {
 
@@ -298,19 +293,16 @@ export default function Calendar() {
                                                                 dateTime: selectedAppointment ? parse(format(selectedAppointment?.dateTime, "hh:mm a"), "hh:mm a", addDays(startOfMonth(currentDay), day - 1)).toISOString() : ""
                                                             })
                                                         })
-                                                        console.log("Patched sucessfully");
+
                                                         if (!res.ok) {
 
                                                             console.error("Failed");
-                                                            console.log("Patched sucessfully");
                                                             return;
                                                         }
 
                                                         
                                                         
                                                     }
-
-                                                    console.log("something is off")
 
                                                     patchData()
 

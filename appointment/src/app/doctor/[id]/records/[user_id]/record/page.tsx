@@ -56,8 +56,6 @@ export default function Record() {
 
     const user = appointments[0] ? appointments[0].user : undefined;
 
-    console.log(appointments)
-
     return (
         <div className="max-w-screen w-full min-h-screen bg-gradient-to-r from-slate-50 via-teal-50 to-white" style={{fontFamily: "var(--font-poppins)"}}>
             <DashboardHeaderD>

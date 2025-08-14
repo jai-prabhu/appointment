@@ -24,14 +24,11 @@ router.post("/user/login", async (req, res) => {
 
     const data: Login = req.body;
 
-    console.log(data.email)
 
     const user = userDB.data.users?.find(( user ) => user.email.toLowerCase() === data.email.toLowerCase() && user.password === data.password);
 
-    console.log(userDB.data.users[0]?.email);
     
     if (user) {
-        console.log(user.id);
         res.status(200).json({"id": `${user.id}`});
     }
 
@@ -45,8 +42,6 @@ router.post("/doc/register", async (req, res) => {
 
     const newUser: Doc = req.body;
     const reqRes = await Docs.create(newUser);
-
-    console.log("I am here")
 
     if (reqRes) {
 
@@ -63,14 +58,10 @@ router.post("/doc/login", async (req, res) => {
 
     const data: Login = req.body;
 
-    console.log(data.password)
-
     const user = docDB.data.docs?.find(( doc ) => doc.user.email.toLowerCase() === data.email.toLowerCase() && doc.user.password === data.password);
-    
-    console.log(user);
 
     if (user) {
-        console.log(user.user.id);
+
         res.status(200).json({"id": `${user.user.id}`});
     }
 

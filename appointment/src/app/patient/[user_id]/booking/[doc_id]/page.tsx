@@ -316,11 +316,9 @@ export default function Booking () {
                                                     <button 
                                                     onClick={
                                                         async () => {
-                                                            if (currentStep < steps.length) {setCurrentStep(currentStep + 1); console.log(currentStep, steps.length) }
+                                                            if (currentStep < steps.length) {setCurrentStep(currentStep + 1); }
 
                                                             else if (currentStep === steps.length) {
-
-                                                                console.log("you can't even touch me")
 
                                                                 const userRes = await fetch(`http://localhost:5000/data/user-query/user/${user_id}`);
 
@@ -337,7 +335,7 @@ export default function Booking () {
                                                                 if (usersData && docsData)
 
                                                                {
-                                                                console.log(selectedTime);
+
                                                                 const appointment: AppointmentData = {
                                                                     
                                                                     id: "",
@@ -373,7 +371,7 @@ export default function Booking () {
                                                                 
                                                             }
 
-                                                            else console.log(currentStep, steps.length)
+                                                        
                                                         }
                                                     }
                                                     className="relative inline-flex gap-3 items-center text-slate-50 font-semibold bg-transparent

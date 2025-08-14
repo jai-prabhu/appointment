@@ -41,8 +41,6 @@ router.patch("/doc/update/:id", async (req, res) => {
 
     const doc = docDB.data.docs.find(doc => doc.user.id === id);
 
-    console.log(data, doc?.user.id);
-
     if (doc) {
 
         await Docs.update(doc, data);
