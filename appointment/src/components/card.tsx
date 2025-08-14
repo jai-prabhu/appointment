@@ -1,9 +1,11 @@
 "use client";
 
 import { FC, ReactNode } from "react";
-import { LucideIcon, CalendarIcon, ClockIcon, EyeIcon, MapPinIcon, StarIcon, ArrowRightIcon, PhoneIcon, MoreHorizontalIcon,
-     CircleCheckBigIcon, CircleXIcon, CheckIcon, XIcon, 
-     PillIcon} from "lucide-react";
+import { LucideIcon, CalendarIcon, ClockIcon, EyeIcon, MapPinIcon, StarIcon, ArrowRightIcon, PhoneIcon,
+     CircleCheckBigIcon, CircleXIcon, CheckIcon, XIcon, RotateCwIcon, 
+     PillIcon,
+     PlusIcon,
+     SendIcon} from "lucide-react";
 import { Avatar } from "./avatar";
 import { StatusBadge } from "./badge";
 import { useRouter, useParams } from "next/navigation";
@@ -298,7 +300,7 @@ export const BookCard = ({
                         {specialization}
                     </p>
                     <p className="inline-flex gap-1 items-center text-slate-500 text-sm">
-                        <StarIcon className="text-yellow-500 w-4 h-4"/>
+                        <StarIcon className="text-yellow-500 w-4 h-4 fill-yellow-500"/>
                         <span className="text-slate-900 font-semibold text">{rating}</span>
                         {"("}{reviews} reviews{")"}
                     </p>
@@ -348,6 +350,8 @@ export const BookCard = ({
 
 export interface AppointmentCardProp {
 
+    id: string;
+    pres_id: string;
     imgSrc: string;
     name: string;
     specialization: string;
@@ -371,84 +375,151 @@ export interface AppointmentCardPropP {
     type: string
 }
 
-export const AppointmentCard = ({ imgSrc, name, specialization, location, time, date, status }: AppointmentCardProp) => {
+export const AppointmentCard = ({id, pres_id, imgSrc, name, specialization, location, time, date, status }: AppointmentCardProp) => {
+
+    const router = useRouter();
+    
 
     return (
         <CardHolder className="p-4 bg-slate-50 rounded-lg hover:shadow-lg cursor-pointer">
-            <CardHeader className="flex gap-2">
-                <div>
-                    <Avatar src={imgSrc} size={16}/>
-                </div>
-                <div className="space-y-4 w-full">
-                    <div className="flex justify-between w-full items-center">
-                        <div className="flex gap-2 items-center">
-                            
-                            <div className="flex flex-col">
-                                <h1 className="inline-flex gap-3 items-center text-slate-700 font-semibold">
-                                    { name }
-                                    <StatusBadge
-                                    status={status}/>
-                                </h1>
-                                <p className="text-sm text-slate-500">{ specialization }</p>
+            <CardHeader className="flex gap-2 justify-between">
+                <div className="flex gap-2 items-center">
+                    <div>
+                        <Avatar src={imgSrc} size={16}/>
+                    </div>
+                    <div className="space-y-4">
+                        <div className="flex justify-between  items-center">
+                            <div className="flex gap-2 items-center">
+                                
+                                <div className="flex flex-col">
+                                    <h1 className="inline-flex gap-3 items-center text-slate-700 font-semibold">
+                                        { name }
+                                        <StatusBadge
+                                        status={status}/>
+                                    </h1>
+                                    <p className="text-sm text-slate-500">{ specialization }</p>
+                                </div>
                             </div>
-                        </div>
 
-                        {
-                            (status === 1 || status ===2) && (
+                            
 
-                                <button className="p-1 hover:bg-slate-200 rounded-lg transition-colors duration-300 cursor-pointer">
-                                    <MoreHorizontalIcon className="text-slate-500/90"/>
-                                </button>
-                            )
-                        }
+                            
 
-                        {
-                            status === 3 && (
+                            {
+                                status === 4 && (
 
-                                <div className="flex gap-2 items-center justify-center text-sm">
-                                    <button className="text-slate-900 font-semibold transition-colors duration-300 cursor-pointer
-                                    border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-200 ">
-                                        View Report
-                                    </button>
-
-                                    <button className="text-slate-900 font-semibold transition-colors duration-300 cursor-pointer
-                                    border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-200 ">
+                                    <button className="text-slate-900 font-semibold text-sm transition-colors duration-300 cursor-pointer
+                                        border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-200 ">
                                         Book Again
                                     </button>
-                                </div>
-                            )
-                        }
+                                )
+                            }
 
-                        {
-                            status === 4 && (
+                            
+                        </div>
 
-                                <button className="text-slate-900 font-semibold text-sm transition-colors duration-300 cursor-pointer
-                                    border border-slate-300 px-4 py-2 rounded-lg hover:bg-slate-200 ">
-                                    Book Again
-                                </button>
-                            )
-                        }
+                        <div className="grid grid-cols-3 gap-8 justify-center items-center w-full">
+                            <p className="inline-flex items-center gap-3 text-sm text-slate-500 ">
+                                <CalendarIcon className="w-4 h-4"/>
+                                {date}
+                            </p>
 
-                        
-                    </div>
+                            <p className="inline-flex items-center gap-3 text-sm text-slate-500 ">
+                                <ClockIcon className="w-4 h-4"/>
+                                {time}
+                            </p>
 
-                    <div className="grid grid-cols-3 gap-8 justify-center items-center w-full">
-                        <p className="inline-flex items-center gap-3 text-sm text-slate-500 ">
-                            <CalendarIcon className="w-4 h-4"/>
-                            {date}
-                        </p>
-
-                        <p className="inline-flex items-center gap-3 text-sm text-slate-500 ">
-                            <ClockIcon className="w-4 h-4"/>
-                            {time}
-                        </p>
-
-                        <p className="inline-flex items-center gap-3 text-sm text-slate-500 ">
-                            <MapPinIcon className="w-4 h-4"/>
-                            {location}
-                        </p>
+                            <p className="inline-flex items-center gap-3 text-sm text-slate-500 ">
+                                <MapPinIcon className="w-4 h-4"/>
+                                {location}
+                            </p>
+                        </div>
                     </div>
                 </div>
+                {status === 2 && (<div className="flex flex-col gap-2 items-center justify-center">
+                    <button 
+                    onClick={
+                        () => {
+                            router.push(`appointments/${id}/reschedule`);
+                        }
+                    }
+                    className="inline-flex gap-2 text-sm items-center bg-teal-600 rounded-lg px-4 py-2 cursor-pointer text-white
+                    hover:bg-teal-400 hover:shadow-md shadow-slate-300">
+                        <RotateCwIcon className="w-4 h-4"/>
+                        Reschedule
+                    </button>
+                    <button className="inline-flex gap-2 w-full justify-center text-sm items-center bg-slate-50 rounded-lg px-4 py-2 cursor-pointer text-red-500
+                    border border-red-500 hover:bg-red-100 hover:shadow-md shadow-slate-300">
+                        <CircleXIcon className="w-4 h-4"/>
+                        Cancel
+                    </button>
+                </div>)}
+                {status === 1 && (<div className="flex flex-col gap-2 items-center justify-center">
+                    <button className="inline-flex gap-2 text-sm items-center bg-teal-600 rounded-lg px-4 py-2 cursor-pointer text-white
+                    hover:bg-teal-400 hover:shadow-md shadow-slate-300">
+                        <RotateCwIcon className="w-4 h-4"/>
+                        Reschedule
+                    </button>
+                    <button className="inline-flex gap-2 w-full justify-center text-sm items-center bg-slate-50 rounded-lg px-4 py-2 cursor-pointer text-red-500
+                    border border-red-500 hover:bg-red-100 hover:shadow-md shadow-slate-300">
+                        <CircleXIcon className="w-4 h-4"/>
+                        Cancel
+                    </button>
+                </div>)}
+                {status === 5 && (<div className="flex flex-col gap-2 items-center justify-center">
+                    <button 
+                    onClick={() => {
+
+                        router.push(`perscription/${pres_id}/preview-perscription`);
+                    }}
+                    className="inline-flex gap-2 text-sm items-center bg-teal-600 w-full rounded-lg px-4 py-2 cursor-pointer text-white
+                    hover:bg-teal-400 hover:shadow-md shadow-slate-300">
+                        <PillIcon className="w-4 h-4"/>
+                        Prescription
+                    </button>
+                    <button className="inline-flex gap-2 text-sm items-center bg-teal-600 w-full rounded-lg px-4 py-2 cursor-pointer text-white
+                    hover:bg-teal-400 hover:shadow-md shadow-slate-300">
+                        <PlusIcon className="w-4 h-4"/>
+                        Book Again
+                    </button>
+                    <button
+                    onClick={
+                        () => {
+
+                            router.push(`appointments/${id}/reviews`)
+                        }
+                    }
+                    className="inline-flex gap-2 text-sm items-center bg-slate-50 w-full  rounded-lg px-4 py-2 cursor-pointer text-slate-900
+                    hover:bg-slate-100 hover:shadow-md shadow-slate-300 border border-slate-400">
+                        <SendIcon className="w-4 h-4"/>
+                        Give Feedback
+                    </button>
+                </div>)}
+
+                {status === 3 && (<div className="flex flex-col gap-2 items-center justify-center">
+                    <button className="inline-flex gap-2 text-sm items-center bg-teal-600 w-full rounded-lg px-4 py-2 cursor-pointer text-white
+                    hover:bg-teal-400 hover:shadow-md shadow-slate-300">
+                        <PillIcon className="w-4 h-4"/>
+                        Prescription
+                    </button>
+                    <button className="inline-flex gap-2 text-sm items-center bg-teal-600 w-full rounded-lg px-4 py-2 cursor-pointer text-white
+                    hover:bg-teal-400 hover:shadow-md shadow-slate-300">
+                        <PlusIcon className="w-4 h-4"/>
+                        Book Again
+                    </button>
+                    <button
+                    onClick={
+                        () => {
+
+                            router.push(`appointments/${id}/reviews`)
+                        }
+                    }
+                    className="inline-flex gap-2 text-sm items-center bg-slate-50 w-full  rounded-lg px-4 py-2 cursor-pointer text-slate-900
+                    hover:bg-slate-100 hover:shadow-md shadow-slate-300 border border-slate-400">
+                        <SendIcon className="w-4 h-4"/>
+                        Give Feedback
+                    </button>
+                </div>)}
             </CardHeader>
         </CardHolder>
     );

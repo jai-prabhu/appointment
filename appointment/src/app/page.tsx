@@ -2,7 +2,7 @@
 
 "use client";
 
-import Header from "../components/header";
+import Header from "@/components/header";
 import { ArrowRightIcon, CalendarIcon, ClockIcon, ShieldIcon, UsersIcon, CheckCircleIcon } from "lucide-react";
 import { Card } from "../components/card";
 import Footer from "../components/footer";

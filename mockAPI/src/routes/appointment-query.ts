@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { type Appointment, Appointments, appointmentDB } from "../db/appointment"
-
 const router = Router();
 
 router.post("/booking/create-appointment", async (req, res) => {
@@ -86,12 +85,13 @@ router.patch("/appointments/update/:id", async (req, res) => {
     if (appointment) {
 
         await Appointments.update(appointment, data);
-        res.status(203);
+        res.status(203).json({"message": "patched"});
     }
 
     else {
         res.status(404).json({"error": "data not found"});
     }
 })
+
 
 export default router;

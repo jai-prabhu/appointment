@@ -58,7 +58,7 @@ export default function Booking () {
 
     const timeSlots = [
         "9:00 AM", "9:30 AM", "10:00 AM", "10:30 AM",
-        "11:00 AM", "11:30 AM", "2:00 PM", "2:30PM",
+        "11:00 AM", "11:30 AM", "2:00 PM", "2:30 PM",
         "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM"
     ]
 
@@ -336,9 +336,12 @@ export default function Booking () {
 
                                                                 if (usersData && docsData)
 
-                                                               { const appointment: AppointmentData = {
+                                                               {
+                                                                console.log(selectedTime);
+                                                                const appointment: AppointmentData = {
                                                                     
                                                                     id: "",
+                                                                    pres_id: "",
                                                                     user: usersData,
                                                                     doc: docsData,
                                                                     dateTime: parse(selectedTime, "h:mm a", new Date(date)).toISOString(),

@@ -108,7 +108,7 @@ export const DashboardHeaderP =  ({ children } :{ children?: ReactNode }) => {
 
     return (
         <header className="sticky top-0 backdrop-blur-md container overflow-hidden bg-gradient-to-r from-slate-50
-         to-white max-w-screen w-full select-none border-b shadow-md shadow-slate-300">
+         to-white max-w-screen w-full select-none border-b shadow-md shadow-slate-300 z-30">
             <div className="container flex justify-between items-center gap-3 mx-auto p-2">
                 <div className="flex gap-4 justify-center items-center">
                     {children}

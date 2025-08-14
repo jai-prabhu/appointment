@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { type AppointmentData } from "@/lib/data";
-import { ArrowLeftIcon, CalendarIcon, ChevronLeftIcon, ChevronRightIcon, ClockIcon, FilterIcon, MailIcon, CircleCheckBigIcon, PhoneIcon, MapPinIcon, UserIcon, XCircleIcon, LoaderPinwheelIcon } from "lucide-react";
+import { ArrowLeftIcon, CalendarIcon, ChevronLeftIcon, ChevronRightIcon, ClockIcon, FilterIcon, MailIcon, CircleCheckBigIcon, PhoneIcon, MapPinIcon, UserIcon, XCircleIcon, LoaderPinwheelIcon, RotateCwIcon } from "lucide-react";
 import { CardHolder, CardHeader, CardContent } from "@/components/card";
 import { DashboardHeaderD } from "@/components/dashboard-header";
 import { startOfToday, addMonths, addWeeks, addDays, format, getDaysInMonth, startOfMonth, isSameDay, isSameMinute, parse } from "date-fns";
@@ -622,9 +622,13 @@ export default function Calendar() {
                                     </div>
 
                                     <div className="flex gap-2 items-center w-full">
-                                        <button className="inline-flex gap-2 w-full justify-center items-center border border-teal-500 bg-teal-600 text-slate-50 font-bold
+                                        <button 
+                                        onClick={() => {
+                                            router.push(`appointments/${selectedAppointment.id}/reschedule`);
+                                        }}
+                                        className="inline-flex gap-2 w-full justify-center items-center border border-teal-500 bg-teal-600 text-slate-50 font-bold
                                         hover:bg-teal-500 text-sm rounded-lg px-4 py-2 cursor-pointer hover:shadow-md shadow-slate-300 transition-all duration-300">
-                                            <LoaderPinwheelIcon className="w-4 h-4"/>
+                                            <RotateCwIcon className="w-4 h-4"/>
                                             Reschedule
                                         </button>
                                         <button

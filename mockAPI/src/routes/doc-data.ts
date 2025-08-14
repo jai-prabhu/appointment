@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { docDB, type Doc } from "../db/doc";
+import { docDB, Docs, type Doc } from "../db/doc";
 
 const router = Router();
 
@@ -32,5 +32,26 @@ router.get("/doc", async (req, res) => {
 
     return res.status(404).json({"error": "Data not found"});
 });
+
+router.patch("/doc/update/:id", async (req, res) => {
+
+    const id = req.params.id;
+
+    const data = req.body;
+
+    const doc = docDB.data.docs.find(doc => doc.user.id === id);
+
+    console.log(data, doc?.user.id);
+
+    if (doc) {
+
+        await Docs.update(doc, data);
+        res.status(203).json({"message": "patched"});
+    }
+
+    else {
+        res.status(404).json({"error": "data not found"});
+    }
+})
 
 export default router;

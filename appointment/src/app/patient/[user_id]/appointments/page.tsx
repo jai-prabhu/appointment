@@ -101,13 +101,13 @@ export default function Appointments() {
                             }, [])
                         }>
                             <TabItem id={1}>
-                                Upcoming (3)
+                                Upcoming
                             </TabItem>
                             <TabItem id={2}>
-                                Past (2)
+                                Past
                             </TabItem>
                             <TabItem id={3}>
-                                Cancelled (1)
+                                Cancelled
                             </TabItem>
                         </TabHolder>
 
@@ -122,6 +122,8 @@ export default function Appointments() {
                                             return (
                                                 <AppointmentCard
                                                 key={index}
+                                                id={appointment.id}
+                                                pres_id={appointment.pres_id}
                                                 imgSrc="/doc.png"
                                                 name={appointment.doc.user.firstName + " " + appointment.doc.user.lastName}
                                                 specialization={appointment.doc.specialization}
@@ -142,13 +144,15 @@ export default function Appointments() {
                         selectedTab === 2 && (
                             <div className="flex flex-col gap-8 justify-center items-center w-full">
                                 {
-                                    appointments?.filter(appointment => appointment.status === 3).map(
+                                    appointments?.filter(appointment => appointment.status === 3 || appointment.status === 5).map(
 
                                         (appointment, index) => {
 
                                             return (
                                                  <AppointmentCard
                                                 key={index}
+                                                id={appointment.id}
+                                                pres_id={appointment.pres_id}
                                                 imgSrc="/doc.png"
                                                 name={appointment.doc.user.firstName + " " + appointment.doc.user.lastName}
                                                 specialization={appointment.doc.specialization}
@@ -177,6 +181,8 @@ export default function Appointments() {
                                             return (
                                                  <AppointmentCard
                                                 key={index}
+                                                id={appointment.id}
+                                                pres_id={appointment.pres_id}
                                                 imgSrc="/doc.png"
                                                 name={appointment.doc.user.firstName + " " + appointment.doc.user.lastName}
                                                 specialization={appointment.doc.specialization}

@@ -56,5 +56,19 @@ export class Docs {
     
             return exist;
         }
+
+        static async update(doc: Doc, data: Partial<Doc>): Promise<boolean> {
+        
+            if (data) {
+    
+                Object.assign(doc, data);
+    
+                await docDB.write();
+    
+                return true;
+            }
+            
+            return false;
+        }
 }
 

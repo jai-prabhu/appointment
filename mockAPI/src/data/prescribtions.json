@@ -187,6 +187,116 @@
       "additional_notes": "",
       "created_at": "2025-08-13T05:17:36.701Z",
       "updated_at": "2025-08-13T05:17:36.701Z"
+    },
+    {
+      "id": "RXP-3",
+      "appointment": {
+        "id": "APT-29",
+        "pres_id": "RXP-3",
+        "user": {
+          "id": "UID-2",
+          "firstName": "John",
+          "lastName": "Smith",
+          "password": "Password@123",
+          "location": "Downtown, Los Santos",
+          "email": "JohnSmith@example.com"
+        },
+        "doc": {
+          "user": {
+            "id": "DID-2",
+            "firstName": "Michael",
+            "lastName": "Chen",
+            "password": "Password@123",
+            "location": "City Health Clinic",
+            "email": "MichaelChen@example.com"
+          },
+          "experience": "10-15 years",
+          "specialization": "General Medicine",
+          "ratings": "5.0",
+          "reviews": "1",
+          "cost": "150"
+        },
+        "dateTime": "2025-08-25T09:00:00.000Z",
+        "status": 3,
+        "type": "General Consultaion",
+        "details": "Hypertension"
+      },
+      "diagnosis": "Hypertension",
+      "icd_code": "1",
+      "priority": "Routine",
+      "medications": [
+        {
+          "medicine_name": {
+            "name": "LisinoPril",
+            "sub_name": "Lisinopril",
+            "scale": "10mg tablet"
+          },
+          "dosage": "1 tablet",
+          "freq": "Twice daily",
+          "duration": "30 days",
+          "quantity": 60,
+          "refills": 2,
+          "instruction": "Take after meal"
+        }
+      ],
+      "additional_notes": "",
+      "created_at": "2025-08-14T11:20:44.909Z",
+      "updated_at": "2025-08-14T11:20:44.909Z"
+    },
+    {
+      "id": "RXP-4",
+      "appointment": {
+        "id": "APT-30",
+        "pres_id": "RXP-4",
+        "user": {
+          "id": "UID-2",
+          "firstName": "John",
+          "lastName": "Smith",
+          "password": "Password@123",
+          "location": "Downtown, Los Santos",
+          "email": "JohnSmith@example.com"
+        },
+        "doc": {
+          "user": {
+            "id": "DID-2",
+            "firstName": "Michael",
+            "lastName": "Chen",
+            "password": "Password@123",
+            "location": "City Health Clinic",
+            "email": "MichaelChen@example.com"
+          },
+          "experience": "10-15 years",
+          "specialization": "General Medicine",
+          "ratings": "5.0",
+          "reviews": "1",
+          "cost": "150"
+        },
+        "dateTime": "2025-08-23T09:00:00.000Z",
+        "status": 3,
+        "type": "General Consultaion",
+        "details": "Hypertension"
+      },
+      "diagnosis": "Hypertension",
+      "icd_code": "1",
+      "priority": "Routine",
+      "medications": [
+        {
+          "medicine_name": {
+            "name": "LisinoPril",
+            "sub_name": "Lisinopril",
+            "scale": "10mg tablet"
+          },
+          "dosage": "1 tablet",
+          "freq": "Once daily",
+          "duration": "30 days",
+          "quantity": 20,
+          "refills": 1,
+          "instruction": ""
+        }
+      ],
+      "additional_notes": "",
+      "created_at": "2025-08-14T11:25:02.056Z",
+      "updated_at": "2025-08-14T11:25:02.056Z"
     }
   ]
 }
