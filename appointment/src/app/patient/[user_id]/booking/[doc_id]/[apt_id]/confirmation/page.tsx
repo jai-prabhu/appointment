@@ -34,7 +34,7 @@ export default function Confirmation () {
 
         const fetchData = async () => {
 
-            const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/${params.apt_id}`);
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/data/appointment-query/appointments/${params.apt_id}`);
 
             if (!res.ok) {
 
