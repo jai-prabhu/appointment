@@ -21,7 +21,7 @@ export default function Login () {
 
     const handleLogin = async () => {
 
-        const res = await fetch(`http://localhost:5000/api/auth/${!isDoctor? `user` : `doc`}/login`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/${!isDoctor? `user` : `doc`}/login`, {
 
             method: "POST",
             headers: {

@@ -83,8 +83,8 @@
         },
         "experience": "10-15 years",
         "specialization": "General Medicine",
-        "ratings": "5.0",
-        "reviews": "1",
+        "ratings": "4.8",
+        "reviews": "2",
         "cost": "150"
       },
       "dateTime": "2025-08-30T11:00:00.000Z",
@@ -211,7 +211,7 @@
         "reviews": "1",
         "cost": "150"
       },
-      "dateTime": "2025-08-31T09:30:00.000Z",
+      "dateTime": "2025-08-11T09:30:00.000Z",
       "status": 1,
       "type": "Follow-up Vsit",
       "details": "Hypertention"

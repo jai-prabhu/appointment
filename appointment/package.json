@@ -11,14 +11,16 @@
   },
   "dependencies": {
     "date-fns": "^4.1.0",
+    "dotenv": "^17.2.2",
     "lucide-react": "^0.533.0",
-    "next": "15.4.4",
+    "next": "^15.5.2",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/dotenv": "^6.1.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
