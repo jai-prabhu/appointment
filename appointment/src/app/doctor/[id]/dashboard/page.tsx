@@ -16,11 +16,13 @@ export default function DashBoard() {
     const router = useRouter();
     const params = useParams();
 
+    const apiURL = process.env.NEXT_PUBLIC_API_URL;
+
     useEffect(() => {
 
         const fetchData = async () => {
 
-            const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/filter/doc/${params.id}`);
+            const res = await fetch(`${apiURL}/data/appointment-query/appointments/filter/doc/${params.id}`);
 
             if (!res.ok) {
 
@@ -38,7 +40,7 @@ export default function DashBoard() {
 
         const fetchData = async () => {
 
-            const res = await fetch(`http://localhost:5000/data/doc-query/doc/${params.id}`);
+            const res = await fetch(`${apiURL}/data/doc-query/doc/${params.id}`);
 
             if (!res.ok) {
 

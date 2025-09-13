@@ -19,11 +19,13 @@ export default function ViewPres () {
 
     const today = format(new Date(), "MMM dd, yyyy");
 
+    const apiURL = process.env.NEXT_PUBLIC_API_URL;
+
     useEffect(() => {
 
         const fetchData = async () => {
 
-            const res = await fetch(`http://localhost:5000/data/pres-query/prescribtions/${params.pre_id}`);
+            const res = await fetch(`${apiURL}/data/pres-query/prescribtions/${params.pre_id}`);
 
             if (!res.ok) {
 

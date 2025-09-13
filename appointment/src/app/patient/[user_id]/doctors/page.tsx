@@ -14,12 +14,14 @@ export default function Doctors () {
 
     const router = useRouter();
 
+    const apiURL = process.env.NEXT_PUBLIC_API_URL;
+
     useEffect(() => {
 
         const fetchData = async () => {
 
             
-            const res = await fetch("http://localhost:5000/data/doc-query/doc");
+            const res = await fetch(`${apiURL}/data/doc-query/doc`);
 
             if (!res.ok) {
 

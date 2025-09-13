@@ -20,10 +20,12 @@ export default function Record() {
     const router = useRouter();
     const params = useParams();
 
+    const apiURL = process.env.NEXT_PUBLIC_API_URL;
+
     useEffect(() => {
         const fetchData = async () => {
 
-            const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/filter/${params.user_id}`);
+            const res = await fetch(`${apiURL}/data/appointment-query/appointments/filter/${params.user_id}`);
 
             if (!res.ok) {
 
@@ -40,7 +42,7 @@ export default function Record() {
     useEffect(() => {
         const fetchData = async () => {
 
-            const res = await fetch(`http://localhost:5000/data/pres-query/prescribtions/filter/user/${params.user_id}`);
+            const res = await fetch(`${apiURL}/data/pres-query/prescribtions/filter/user/${params.user_id}`);
 
             if (!res.ok) {
 

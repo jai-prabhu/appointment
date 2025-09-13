@@ -37,13 +37,13 @@ export default function Booking () {
     const router = useRouter();
     const { doc_id, user_id } = useParams();
 
-    
+    const apiURL = process.env.NEXT_PUBLIC_API_URL;
 
     useEffect(() => {
 
         const fetchData = async () => {
             
-            const res = await fetch(`http://localhost:5000/data/doc-query/doc/${doc_id}`);
+            const res = await fetch(`${apiURL}/data/doc-query/doc/${doc_id}`);
 
             if (!res.ok) {
 
@@ -320,7 +320,7 @@ export default function Booking () {
 
                                                             else if (currentStep === steps.length) {
 
-                                                                const userRes = await fetch(`http://localhost:5000/data/user-query/user/${user_id}`);
+                                                                const userRes = await fetch(`${apiURL}/data/user-query/user/${user_id}`);
 
                                                                 if (userRes.ok) {
 
@@ -349,7 +349,7 @@ export default function Booking () {
 
                                                                 }
 
-                                                                const res = await fetch("http://localhost:5000/data/appointment-query/booking/create-appointment", {
+                                                                const res = await fetch("${apiURL}/data/appointment-query/booking/create-appointment", {
 
                                                                     method: "POST",
                                                                     headers: {

@@ -41,11 +41,13 @@ export default function CreatePrescription () {
         {name: "Hydrochlorothiazide", sub_name: "Hydrochlorothiazide", scale: "25mg tablet"},
     ];
 
+    const apiURL = process.env.NEXT_PUBLIC_API_URL;
+
     useEffect(() => {
 
         const fetchData = async () => {
 
-            const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/${params.apt_id}`);
+            const res = await fetch(`${apiURL}/data/appointment-query/appointments/${params.apt_id}`);
 
             if (!res.ok) {
 
@@ -250,7 +252,7 @@ export default function CreatePrescription () {
                             onClick={async () => {
 
 
-                                const res = await fetch("http://localhost:5000/data/pres-query/create-prescribtion", {
+                                const res = await fetch("${apiURL}/data/pres-query/create-prescribtion", {
                                     method: "POST",
                                     headers: {
                                         "Content-type": "application/json"

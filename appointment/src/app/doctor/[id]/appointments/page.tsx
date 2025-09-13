@@ -19,11 +19,13 @@ export default function Appointments() {
     const router = useRouter();
     const params = useParams();
 
+    const apiURL = process.env.NEXT_PUBLIC_API_URL;
+
     useEffect(() => {
 
         const fetchData = async () => {
 
-            const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/filter/doc/${params.id}`);
+            const res = await fetch(`${apiURL}/data/appointment-query/appointments/filter/doc/${params.id}`);
 
             if (!res.ok) {
 

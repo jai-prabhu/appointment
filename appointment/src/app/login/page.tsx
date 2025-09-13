@@ -17,11 +17,15 @@ export default function Login () {
     const [password, setPassword] = useState<string>("");
     const [passwordError, setPasswordError] = useState<string>("");
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
     const router = useRouter();
+
+    console.log(apiUrl);
 
     const handleLogin = async () => {
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/${!isDoctor? `user` : `doc`}/login`, {
+        const res = await fetch(`${apiUrl}/api/auth/${!isDoctor? `user` : `doc`}/login`, {
 
             method: "POST",
             headers: {

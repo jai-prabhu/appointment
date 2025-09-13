@@ -18,11 +18,13 @@ export default function Cancel() {
     const router = useRouter();
     const params = useParams();
 
+    const apiURL = process.env.NEXT_PUBLIC_API_URL;
+
     useEffect(() => {
 
         const fetchData = async () => {
 
-            const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/${params.appointment_id}`);
+            const res = await fetch(`${apiURL}/data/appointment-query/appointments/${params.appointment_id}`);
 
             if (!res.ok) {
 
@@ -178,7 +180,7 @@ export default function Cancel() {
 
                                     
 
-                                   const data = async () => {const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/update/${appointment?.id}`, {
+                                   const data = async () => {const res = await fetch(`${apiURL}/data/appointment-query/appointments/update/${appointment?.id}`, {
 
                                         method: "PATCH",
                                         headers: {

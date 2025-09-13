@@ -33,6 +33,8 @@ export interface BookCardProps {
 
 }
 
+const apiURL = process.env.NEXT_PUBLIC_API_URL;
+
 export const Card: FC<CardProps> = ({ CardIcon, cardTitle, cardDescription, iconClassName, iconBackGroundColor }) => {
 
     return (
@@ -128,7 +130,7 @@ export const PendingSlot = ({ id, imgSrc, name, specialization, date, time, loca
                                () => {
 
 
-                                const data = async () => {const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/update/${id}`, {
+                                const data = async () => {const res = await fetch(`${apiURL}/data/appointment-query/appointments/update/${id}`, {
 
                                         method: "PATCH",
                                         headers: {
@@ -166,7 +168,7 @@ export const PendingSlot = ({ id, imgSrc, name, specialization, date, time, loca
                                () => {
 
 
-                                const data = async () => {const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/update/${id}`, {
+                                const data = async () => {const res = await fetch(`${apiURL}/data/appointment-query/appointments/update/${id}`, {
 
                                         method: "PATCH",
                                         headers: {
@@ -584,7 +586,7 @@ export const AppointmentCardP = ({ id, imgSrc, name, specialization, reason, tim
                     <button 
                     onClick={async () => {
 
-                        const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/update/${id}`, {
+                        const res = await fetch(`${apiURL}/data/appointment-query/appointments/update/${id}`, {
                             method: "PATCH",
                             headers: {
                                 "Content-Type": "application/json"
@@ -632,7 +634,7 @@ export const AppointmentCardP = ({ id, imgSrc, name, specialization, reason, tim
                                () => {
 
 
-                                const data = async () => {const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/update/${id}`, {
+                                const data = async () => {const res = await fetch(`${apiURL}/data/appointment-query/appointments/update/${id}`, {
 
                                         method: "PATCH",
                                         headers: {

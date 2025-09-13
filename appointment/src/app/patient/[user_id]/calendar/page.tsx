@@ -38,13 +38,13 @@ export default function Calendar() {
         "11:30 AM", "2:00 PM", "2:30 PM", "3:00 PM", "3:30 PM", "4:00 PM", "4:30 PM"
     ];
 
-    
+    const apiURL = process.env.NEXT_PUBLIC_API_URL;
     
     useEffect(() => {
 
         const fetchData = async () => {
 
-            const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/filter/${params.user_id}`);
+            const res = await fetch(`${apiURL}/data/appointment-query/appointments/filter/${params.user_id}`);
 
             if (!res.ok) {
 
@@ -278,7 +278,7 @@ export default function Calendar() {
 
                                                     const patchData = async () => {
 
-                                                        const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/update/${appointmentID}`, {
+                                                        const res = await fetch(`${apiURL}/data/appointment-query/appointments/update/${appointmentID}`, {
 
                                                             method: "PATCH",
                                                             headers: {

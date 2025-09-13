@@ -7,6 +7,8 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState, ReactNode } from "react";
 import { type DocData, type UserData } from "../lib/data";
 
+const apiURL = process.env.NEXT_PUBLIC_API_URL;
+
 export const DashboardHeaderD = ({ children } :{ children?: ReactNode }) => {
 
     const [data, setData] = useState<DocData>();
@@ -18,7 +20,7 @@ export const DashboardHeaderD = ({ children } :{ children?: ReactNode }) => {
 
         const fetchData = async () => {
 
-            const res = await fetch(`http://localhost:5000/data/doc-query/doc/${params.id}`)
+            const res = await fetch(`${apiURL}/data/doc-query/doc/${params.id}`)
                 
             const resData = await res.json();
             if (!res.ok) {
@@ -92,7 +94,7 @@ export const DashboardHeaderP =  ({ children } :{ children?: ReactNode }) => {
 
         const fetchData = async () => {
 
-            const res = await fetch(`http://localhost:5000/data/user-query/user/${params.user_id}`)
+            const res = await fetch(`${apiURL}/data/user-query/user/${params.user_id}`)
                 
             const resData = await res.json();
             if (!res.ok) {

@@ -45,11 +45,13 @@ export default function Review() {
     const router = useRouter();
     const params = useParams();
 
+    const apiURL = process.env.NEXT_PUBLIC_API_URL;
+
     useEffect(() => {
 
         const fetchData = async () => {
 
-            const res = await fetch(`http://localhost:5000/data/appointment-query/appointments/${params.appointment_id}`);
+            const res = await fetch(`${apiURL}/data/appointment-query/appointments/${params.appointment_id}`);
             
             if (!res.ok) {
 
@@ -149,7 +151,7 @@ export default function Review() {
                                 onClick={
                                     async () => {
 
-                                        const res_doc = await fetch(`http://localhost:5000/data/doc-query/doc/update/${appoitnment ? appoitnment?.doc.user.id : 'DID'}`, {
+                                        const res_doc = await fetch(`${apiURL}/data/doc-query/doc/update/${appoitnment ? appoitnment?.doc.user.id : 'DID'}`, {
 
                                             method: "PATCH",
                                             headers: {
@@ -161,7 +163,7 @@ export default function Review() {
                                             })
                                         });
 
-                                        const res_apt = await fetch(`http://localhost:5000/data/appointment-query/appointments/update/${params.appointment_id}`, {
+                                        const res_apt = await fetch(`${apiURL}/data/appointment-query/appointments/update/${params.appointment_id}`, {
 
                                             method: "PATCH",
                                             headers: {

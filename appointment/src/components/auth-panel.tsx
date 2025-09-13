@@ -26,6 +26,8 @@ export const RegisterPanelUser = () => {
     const [address, setAddress] = useState<string>("");
 
     const router = useRouter();
+
+    const apiURL = process.env.NEXT_PUBLIC_API_URL;
     
         const handleUserRegister = async () => {
     
@@ -38,7 +40,7 @@ export const RegisterPanelUser = () => {
                 email: email
             }
     
-            const res = await fetch("http://localhost:5000/api/auth/user/register", {
+            const res = await fetch(`${apiURL}/api/auth/user/register`, {
                 
                 method: "POST",
                 headers: {
@@ -344,6 +346,8 @@ export const RegisterPanelDoc = () => {
     const [address, setAddress] = useState<string>("");
     const [specialization, setSpecialization] = useState<string>("");
     const [experience, setExperience] = useState<string>("");
+
+    const apiURL = process.env.NEXT_PUBLIC_API_URL;
     
     const router = useRouter();
     
@@ -368,7 +372,7 @@ export const RegisterPanelDoc = () => {
                 cost: "150"
             }
     
-            const res = await fetch("http://localhost:5000/api/auth/doc/register", {
+            const res = await fetch(`${apiURL}/api/auth/doc/register`, {
                 
                 method: "POST",
                 headers: {
